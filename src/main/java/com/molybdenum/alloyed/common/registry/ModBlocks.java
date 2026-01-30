@@ -8,6 +8,7 @@ import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
 import com.molybdenum.alloyed.common.content.blocks.AlloyedShaftBlock;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
+import com.molybdenum.alloyed.common.util.Platform;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.content.contraptions.behaviour.DoorMovingInteraction;
 import com.simibubi.create.content.decoration.MetalLadderBlock;
@@ -48,12 +49,11 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.neoforged.neoforge.registries.datamaps.builtin.Oxidizable;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Supplier;
 
 import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
 import static com.simibubi.create.foundation.data.BlockStateGen.axisBlock;
@@ -62,17 +62,14 @@ import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
 @SuppressWarnings({"unused", "removal"})
 public class ModBlocks {
 
-    private static final CreateRegistrate REGISTRATE = Alloyed.REGISTRATE.setCreativeTab(ModCreativeModeTab.MAIN_TAB).defaultCreativeTab((ResourceKey<CreativeModeTab>) null);;
+    private static final CreateRegistrate REGISTRATE = Alloyed.REGISTRATE.setCreativeTab(ModCreativeModeTab.MAIN_TAB).defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
 
-    // BRONZE
+	// BRONZE
 
-    public static final CopperBlockSet BRONZE_BLOCKS = new CopperBlockSet( // Ignore that it says COPPER block set. The code works for any oxidizing metal.
-            REGISTRATE,
-            "bronze_block",
-            "bronze_block",
-            new CopperBlockSet.Variant<?>[] { CopperBlockSet.BlockVariant.INSTANCE },
-            "bronze/"
-    );
+    public static final List<BlockEntry<? extends Block>> BRONZE_BLOCK = registerBronzeSet("bronze_block", WeatheringCopper.WeatherState.UNAFFECTED);
+    public static final List<BlockEntry<? extends Block>> EXPOSED_BRONZE_BLOCK = registerBronzeSet("exposed_bronze_block", WeatheringCopper.WeatherState.EXPOSED);
+    public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_BLOCK = registerBronzeSet("weathered_bronze_block", WeatheringCopper.WeatherState.WEATHERED);
+    public static final List<BlockEntry<? extends Block>> OXIDIZED_BRONZE_BLOCK = registerBronzeSet("oxidized_bronze_block", WeatheringCopper.WeatherState.OXIDIZED);
 
     public static final List<BlockEntry<? extends Block>> CUT_BRONZE = registerCutBronzeSet("cut_bronze", WeatheringCopper.WeatherState.UNAFFECTED);
     public static final List<BlockEntry<? extends Block>> CUT_EXPOSED_BRONZE = registerCutBronzeSet("cut_exposed_bronze", WeatheringCopper.WeatherState.EXPOSED);
@@ -211,7 +208,7 @@ public class ModBlocks {
     public static final BlockEntry<MetalScaffoldingBlock> STEEL_SCAFFOLD =
             REGISTRATE.block("steel_scaffolding", MetalScaffoldingBlock::new)
                     .transform(ModTransformers.scaffold("steel",
-                            () -> DataIngredient.tag(AllTags.commonItemTag("ingots/steel")), MapColor.COLOR_GRAY,
+                            () -> DataIngredient.tag(AllTags.forgeItemTag("ingots/steel")), MapColor.COLOR_GRAY,
                             ModSpriteShifts.STEEL_SCAFFOLD, ModSpriteShifts.STEEL_SCAFFOLD_INSIDE, ModSpriteShifts.STEEL_CASING))
                     .properties(ModBlocks::steelProperties)
                     .register();
@@ -298,7 +295,7 @@ public class ModBlocks {
             .register();
 
     public static final BlockEntry<TrapDoorBlock> STEEL_TRAPDOOR = REGISTRATE
-            .block("steel_trapdoor", properties -> new TrapDoorBlock(ModBlockSetTypes.STEEL, properties))
+            .block("steel_trapdoor", properties -> new TrapDoorBlock(properties, ModBlockSetTypes.STEEL))
             .initialProperties(() -> Blocks.IRON_TRAPDOOR)
             .properties(ModBlocks::steelProperties)
             .blockstate((ctx, prov) ->
@@ -359,23 +356,21 @@ public class ModBlocks {
     }
 
     private static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state, CTSpriteShiftEntry pillar, CTSpriteShiftEntry cap) {
-        var block = REGISTRATE.block(id, (properties)-> new WeatheringBronzePillarBlock(state, properties))
+        BlockEntry<? extends Block> block = REGISTRATE.block(id, (properties)-> new WeatheringBronzePillarBlock(state, properties))
                 .properties(ModBlocks::bronzeProperties).item().build()
                 .onRegister(CreateRegistrate.connectedTextures(() -> new RotatedPillarCTBehaviour(pillar, cap)))
                 .register();
-        var waxedBlock = REGISTRATE.block("waxed_"+id, ConnectedPillarBlock::new)
+        BlockEntry<? extends Block> waxedBlock = REGISTRATE.block("waxed_"+id, ConnectedPillarBlock::new)
                 .properties(ModBlocks::bronzeProperties).item().build()
                 .onRegister(CreateRegistrate.connectedTextures(() -> new RotatedPillarCTBehaviour(pillar, cap)))
                 .register();
+        Platform.addWaxable(block, waxedBlock);
         return List.of(block, waxedBlock);
     }
 
-
-    private static List<BlockEntry<? extends Block>> registerCutBronzeSet(String id, WeatheringCopper.WeatherState state) {
-        var block = registerCutBronze(id, state);
-        var stairs = registerCutBronzeStairs(id, state);
-        var slab = registerCutBronzeSlab(id, state);
-        var waxedBlock = REGISTRATE
+    private static List<BlockEntry<? extends Block>> registerBronzeSet(String id, WeatheringCopper.WeatherState state) {
+        BlockEntry<? extends Block> block = registerCutBronze(id, state);
+        BlockEntry<? extends Block> waxedBlock = REGISTRATE
                 .block("waxed_"+id,(Block::new))
                 .initialProperties(() -> Blocks.CUT_COPPER)
                 .properties(ModBlocks::steelProperties)
@@ -384,7 +379,25 @@ public class ModBlocks {
                 .tag(BlockTags.NEEDS_STONE_TOOL)
                 .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
                 .register();
-        var waxedStairs = REGISTRATE
+        Platform.addWaxable(block, waxedBlock);
+        return List.of(block, waxedBlock);
+    }
+
+
+    private static List<BlockEntry<? extends Block>> registerCutBronzeSet(String id, WeatheringCopper.WeatherState state) {
+        BlockEntry<? extends Block> block = registerCutBronze(id, state);
+        BlockEntry<? extends Block> stairs = registerCutBronzeStairs(id, state);
+        BlockEntry<? extends Block> slab = registerCutBronzeSlab(id, state);
+        BlockEntry<? extends Block> waxedBlock = REGISTRATE
+                .block("waxed_"+id,(Block::new))
+                .initialProperties(() -> Blocks.CUT_COPPER)
+                .properties(ModBlocks::steelProperties)
+                .simpleItem()
+                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .tag(BlockTags.NEEDS_STONE_TOOL)
+                .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
+                .register();
+        BlockEntry<? extends Block> waxedStairs = REGISTRATE
                 .block("waxed_"+id+"_stairs", properties ->
                         new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties))
                 .initialProperties(() -> Blocks.CUT_COPPER)
@@ -397,7 +410,7 @@ public class ModBlocks {
                         prov.modLoc("block/cut_bronze")))
                 .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
                 .register();
-        var waxedSlab = REGISTRATE
+        BlockEntry<? extends Block> waxedSlab = REGISTRATE
                 .block("waxed_"+id+"_slab", SlabBlock::new)
                 .initialProperties(() -> Blocks.CUT_COPPER)
                 .properties(ModBlocks::steelProperties)
@@ -410,6 +423,9 @@ public class ModBlocks {
                         prov.modLoc("block/cut_bronze")))
                 .onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
                 .register();
+        Platform.addWaxable(block, waxedBlock);
+        Platform.addWaxable(slab, waxedSlab);
+        Platform.addWaxable(stairs, waxedStairs);
         return List.of(block, stairs, slab, waxedBlock, waxedStairs, waxedSlab);
     }
 
@@ -472,8 +488,7 @@ public class ModBlocks {
                 .register();
     }
 
-    private static BlockBuilder<SteelDoorBlock, CreateRegistrate> steelDoorBlock(boolean locked,
-                                                                                 @Nullable BlockEntry<SteelDoorBlock> normalDoor) {
+    private static BlockBuilder<SteelDoorBlock, CreateRegistrate> steelDoorBlock(boolean locked, BlockEntry<SteelDoorBlock> normalDoor) {
         String path = "block/" + (locked ? "locked_" : "") + "steel_door/";
         String name = (locked ? "locked_" : "") + "steel_door";
 

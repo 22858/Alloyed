@@ -1,21 +1,22 @@
 package com.molybdenum.alloyed.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
-import com.molybdenum.alloyed.common.content.extensions.BeltModelExtension;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
+import com.molybdenum.alloyed.fabric.AlloyedRenderData;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltBlock;
 import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltModel;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
+//? forge
+/*import net.minecraftforge.client.model.data.ModelData;*/
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,7 +24,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BeltBlockEntity.class)
 public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBlockEntityExtension {
@@ -36,7 +36,8 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
         super(typeIn, pos, state);
     }
 
-    @Inject(
+    //? forge {
+    /*@Inject(
             method = "getModelData",
             at = @At("TAIL"),
             remap = false,
@@ -49,15 +50,28 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
                 .with(BeltModel.COVER_PROPERTY, covered)
                 .build());
     }
+    *///?} else {
+    @WrapMethod(
+            method = "getRenderData()Ljava/lang/Object;",
+            remap = false
+    )
+    private Object setModelDetails(Operation<BeltBlockEntity.RenderData> original) {
+        if (create_alloyed$alloyedCasing != AlloyedCasingType.NONE) {
+            return new AlloyedRenderData(create_alloyed$alloyedCasing, covered);
+        }
+        return original.call();
 
+    }
+
+    //?}
 
     @Inject(method = "write", at = @At(value = "RETURN"), remap = false)
-    private void writeAlloyedCasingNBT(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
+    private void writeAlloyedCasingNBT(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
         NBTHelper.writeEnum(compound, "AlloyedCasing", create_alloyed$alloyedCasing);
     }
 
     @Inject(method = "read", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/nbt/CompoundTag;getBoolean(Ljava/lang/String;)Z", ordinal = 1))
-    private void readAlloyedCasingNBT(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci, @Local BeltBlockEntity.CasingType casingBefore, @Local(ordinal = 1) boolean coverBefore) {
+    private void readAlloyedCasingNBT(CompoundTag compound, boolean clientPacket, CallbackInfo ci, @Local BeltBlockEntity.CasingType casingBefore, @Local(ordinal = 1) boolean coverBefore) {
         AlloyedCasingType previous = create_alloyed$alloyedCasing;
         create_alloyed$alloyedCasing = NBTHelper.readEnum(compound, "AlloyedCasing", AlloyedCasingType.class);
 

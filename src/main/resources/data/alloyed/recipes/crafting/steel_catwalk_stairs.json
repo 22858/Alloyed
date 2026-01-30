@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " -",
+    "-#"
+  ],
+  "key": {
+    "-": {
+      "item": "alloyed:steel_catwalk"
+    },
+    "#": {
+      "item": "alloyed:steel_bars"
+    }
+  },
+  "result": {
+    "item": "alloyed:steel_catwalk_stairs",
+    "count": 2
+  },
+  "conditions": [ {
+    "type": "forge:mod_loaded",
+    "modid": "createdeco"
+  } ],
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "createdeco"
+      ]
+    }
+  ]
+}

@@ -13,23 +13,32 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
+//? forge {
+/*import net.minecraftforge.client.model.data.ModelData;
+*///?} else {
+import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+//?}
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Mixin(BeltModel.class)
 public class BeltModelMixin implements BeltModelExtension {
 
-    @Inject(
+    //? forge {
+    /*@Inject(
             method = "getQuads",
             at = @At(value = "RETURN", ordinal = 1),
             cancellable = true,
@@ -78,8 +87,7 @@ public class BeltModelMixin implements BeltModelExtension {
 
         cir.setReturnValue(newQuads);
     }
-
-    @Inject(
+     @Inject(
             method = "getParticleIcon",
             at = @At("HEAD"),
             cancellable = true,
@@ -96,4 +104,9 @@ public class BeltModelMixin implements BeltModelExtension {
             cir.cancel();
         }
     }
+    *///?} else {
+    //?}
+
+
+
 }
