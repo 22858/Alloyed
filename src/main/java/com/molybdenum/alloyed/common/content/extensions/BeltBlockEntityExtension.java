@@ -6,6 +6,8 @@ public interface BeltBlockEntityExtension {
 
     AlloyedCasingType getAlloyedCasingType();
 
+    boolean create_alloyed$isCovered();
+
     enum AlloyedCasingType {
         NONE, STEEL, BRONZE
     }

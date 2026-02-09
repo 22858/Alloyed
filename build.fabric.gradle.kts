@@ -194,7 +194,7 @@ dependencies {
     modImplementation("io.github.tropheusj:milk-lib:${property("deps.milk")}")
 
 
-    val modules = listOf("accessors", "asm", "base", "client_events", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories")
+    val modules = listOf("accessors", "asm", "base", "client_events", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "tags")
     for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
 
 }

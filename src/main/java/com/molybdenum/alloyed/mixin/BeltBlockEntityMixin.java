@@ -143,4 +143,8 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
     public AlloyedCasingType getAlloyedCasingType() {
         return create_alloyed$alloyedCasing;
     }
+
+    public boolean create_alloyed$isCovered() {
+        return covered;
+    }
 }
