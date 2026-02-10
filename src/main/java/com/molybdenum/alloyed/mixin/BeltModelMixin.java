@@ -25,9 +25,10 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-//? forge {
-/*import net.minecraftforge.client.model.data.ModelData;
+//? neoforge {
+/*import net.neoforged.neoforge.client.model.data.ModelData;
 *///?} else {
+import com.simibubi.create.infrastructure.fabric.client.BakedModelWrapper;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
 import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
@@ -47,11 +48,17 @@ import java.util.function.Supplier;
 @Mixin(BeltModel.class)
 public class BeltModelMixin
 		//? fabric
-		extends ForwardingBakedModel
+		extends BakedModelWrapper<BakedModel>
 		implements BeltModelExtension {
 
 
-    //? forge {
+	//? fabric {
+	public BeltModelMixin(BakedModel originalModel) {
+		super(originalModel);
+	}
+	//?}
+
+	//? neoforge {
     /*@Inject(
             method = "getQuads",
             at = @At(value = "RETURN", ordinal = 1),

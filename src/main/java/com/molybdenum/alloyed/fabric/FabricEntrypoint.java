@@ -9,8 +9,8 @@ import static com.molybdenum.alloyed.Alloyed.REGISTRATE;
 public class FabricEntrypoint implements ModInitializer {
 	@Override
 	public void onInitialize() {
+		REGISTRATE.registerEventListeners();
 		Alloyed.init();
-		REGISTRATE.register();
 		CommonEventsHandler.setupCommon();
 	}
 }

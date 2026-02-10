@@ -22,7 +22,7 @@ public class WeatheringBronzePillarBlock extends ConnectedPillarBlock implements
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        this.applyChangeOverTime(state, level, pos, random);
+        this.changeOverTime(state, level, pos, random);
     }
 
     @Override

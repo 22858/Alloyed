@@ -34,8 +34,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-//? forge
-/*import net.minecraftforge.client.model.generators.ConfiguredModel;*/
+//? neoforge
+/*import net.neoforged.neoforge.client.model.generators.ConfiguredModel;*/
 
 import java.util.function.Supplier;
 

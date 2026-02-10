@@ -12,12 +12,13 @@ import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
 import com.simibubi.create.content.kinetics.belt.BeltModel;
 import net.createmod.catnip.nbt.NBTHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-//? forge {
-/*import net.minecraftforge.client.model.data.ModelData;
+//? neoforge {
+/*import net.neoforged.neoforge.client.model.data.ModelData;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 *///?}
 import org.objectweb.asm.Opcodes;
@@ -39,7 +40,7 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
         super(typeIn, pos, state);
     }
 
-    //? forge {
+    //? neoforge {
     /*@Inject(
             method = "getModelData",
             at = @At("TAIL"),
@@ -56,12 +57,12 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
     *///?}
 
     @Inject(method = "write", at = @At(value = "RETURN"), remap = false)
-    private void writeAlloyedCasingNBT(CompoundTag compound, boolean clientPacket, CallbackInfo ci) {
+    private void writeAlloyedCasingNBT(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci) {
         NBTHelper.writeEnum(compound, "AlloyedCasing", create_alloyed$alloyedCasing);
     }
 
     @Inject(method = "read", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/nbt/CompoundTag;getBoolean(Ljava/lang/String;)Z", ordinal = 1))
-    private void readAlloyedCasingNBT(CompoundTag compound, boolean clientPacket, CallbackInfo ci, @Local BeltBlockEntity.CasingType casingBefore, @Local(ordinal = 1) boolean coverBefore) {
+    private void readAlloyedCasingNBT(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket, CallbackInfo ci, @Local BeltBlockEntity.CasingType casingBefore, @Local(ordinal = 1) boolean coverBefore) {
         AlloyedCasingType previous = create_alloyed$alloyedCasing;
         create_alloyed$alloyedCasing = NBTHelper.readEnum(compound, "AlloyedCasing", AlloyedCasingType.class);
 
@@ -69,8 +70,10 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
         if (previous == create_alloyed$alloyedCasing) return;
         if (casingBefore != casing || coverBefore != covered) return; // BE will be updated anyway
 
-        if (!isVirtual())
-            requestModelDataUpdate();
+        if (!isVirtual()) {
+            //? neoforge
+			/*requestModelDataUpdate();*/
+		}
         if (hasLevel()) {
             assert level != null;
             level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 16);
@@ -103,7 +106,8 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
             casing = BeltBlockEntity.CasingType.NONE;
 
             level.setBlock(worldPosition, blockState.setValue(BeltBlock.CASING, shouldBlockHaveCasing), 0);
-            requestModelDataUpdate();
+            //? neoforge
+            /*requestModelDataUpdate();*/
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), 16);
             return;
         }

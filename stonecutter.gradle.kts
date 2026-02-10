@@ -8,10 +8,10 @@ plugins {
     id("org.moddedmc.wiki.toolkit") version "0.4.1"
 }
 
-stonecutter active "1.20.1-fabric"
+stonecutter active "1.21.1-fabric"
 
 stonecutter parameters {
-    constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "forge", "neoforge")
+    constants.match(node.metadata.project.substringAfterLast('-'), "fabric", "neoforge")
     filters.include("**/*.fsh", "**/*.vsh")
 }
 

@@ -6,9 +6,9 @@ import com.molybdenum.alloyed.common.registry.*;
 import com.molybdenum.alloyed.common.util.Platform;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.resources.ResourceLocation;
-//? forge {
-/*import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.eventbus.api.IEventBus;
+//? neoforge {
+/*import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.bus.api.IEventBus;
 *///?}
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,28 +26,28 @@ public class Alloyed {
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MOD_ID);
 
     public static void init(
-            //? forge
+            //? neoforge
             /*IEventBus bus*/
     ) {
 
         isFarmersDelightLoaded = Platform.isLoaded("farmersdelight");
         isCreateDecoLoaded = Platform.isLoaded("createdeco");
 
-        //? forge
-        /*ForgeMod.enableMilkFluid();*/
+        //? neoforge
+        /*NeoForgeMod.enableMilkFluid();*/
 
         ModBlockSetTypes.register();
         ModBlocks.register();
         ModItems.register();
         ModCreativeModeTab.register(
-                //? forge
+                //? neoforge
                 /*bus*/
         );
         ModCompatItems.register();
         if (isCreateDecoLoaded)
             ModCompatBlocks.register();
         ModSoundEvents.register(
-                //? forge
+                //? neoforge
                 /*bus*/
         );
     }
@@ -63,7 +63,7 @@ public class Alloyed {
 
     @SuppressWarnings("all")
     public static ResourceLocation asResource(String forge, String name) {
-        return new ResourceLocation(forge, name);
+        return ResourceLocation.fromNamespaceAndPath(forge, name);
     }
 
 }

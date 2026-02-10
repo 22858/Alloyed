@@ -8,6 +8,10 @@ import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
+//? fabric {
+import io.github.fabricators_of_create.porting_lib.registry.DeferredHolder;
+import io.github.fabricators_of_create.porting_lib.registry.DeferredRegister;
+//?}
 import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
 import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
@@ -18,11 +22,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
-//? forge {
-/*import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+//? neoforge {
+/*import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 *///?} else {
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.impl.itemgroup.FabricItemGroupBuilderImpl;
@@ -32,35 +35,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class ModCreativeModeTab {
-    //? forge {
-    /*private static final DeferredRegister<CreativeModeTab> REGISTER =
+    private static final DeferredRegister<CreativeModeTab> REGISTER =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Alloyed.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> MAIN_TAB = REGISTER.register("main_tab",
-            () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = REGISTER.register("main_tab",
+            //? neoforge
+            /*() -> CreativeModeTab.builder()*/
+            //? fabric
+            ()-> FabricItemGroup.builder()
                     .title(Component.translatable("itemGroup.alloyed.main_group"))
                     .icon(ModItems.STEEL_INGOT::asStack)
                     .displayItems(new DisplayItemsGenerator())
                     .build());
-    *///?} else {
-    public static final ResourceKey<CreativeModeTab> MAIN_TAB = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Alloyed.asResource("main_tab"));
-    public static final CreativeModeTab MAIN_TAB_GROUP = FabricItemGroup.builder()
-            .title(Component.translatable("itemGroup.alloyed.main_group"))
-            .icon(ModItems.STEEL_INGOT::asStack)
-            .displayItems(new DisplayItemsGenerator())
-            .build();
-    //?}
 
     public static void register(
-            //? forge
+            //? neoforge
             /*IEventBus modEventBus*/
     ) {
-        //? forge
+        //? neoforge
         /*REGISTER.register(modEventBus);*/
         //? fabric
-        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, MAIN_TAB, MAIN_TAB_GROUP);
+        REGISTER.register();
     }
 
     public static void registerLang() {
@@ -74,9 +72,9 @@ public class ModCreativeModeTab {
             Set<Item> hiddenItems = new ReferenceOpenHashSet<>();
 
             for (ModCompat mod : ModCompat.values()) {
-                List<ItemProviderEntry<?>> entries = mod.getEntries();
+                List<ItemProviderEntry<?, ?>> entries = mod.getEntries();
 
-                for (ItemProviderEntry<?> entry : entries) {
+                for (ItemProviderEntry<?, ?> entry : entries) {
                     if (mod.shouldHide()) hiddenItems.add(entry.asItem());
                 }
             }
@@ -98,7 +96,7 @@ public class ModCreativeModeTab {
 
         private List<Item> getBlocksUnless(Predicate<Item> shouldHidePredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for (RegistryEntry<Block> entry : Alloyed.REGISTRATE.getAll(Registries.BLOCK)) {
+            for (RegistryEntry<Block, Block> entry : Alloyed.REGISTRATE.getAll(Registries.BLOCK)) {
                 Item item = entry.get()
                         .asItem();
                 if (item == Items.AIR)
@@ -112,7 +110,7 @@ public class ModCreativeModeTab {
 
         private List<Item> getItemsUnless(Predicate<Item> shouldHidePredicate) {
             List<Item> items = new ReferenceArrayList<>();
-            for (RegistryEntry<Item> entry : Alloyed.REGISTRATE.getAll(Registries.ITEM)) {
+            for (RegistryEntry<Item, Item> entry : Alloyed.REGISTRATE.getAll(Registries.ITEM)) {
                 Item item = entry.get();
                 if (item instanceof BlockItem)
                     continue;

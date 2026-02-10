@@ -39,15 +39,15 @@ public class ModTags {
         public static final TagKey<Item> CASING = createTag("casing");
 
 
-        private static TagKey<Item> createTag(String name) {
+        protected static TagKey<Item> createTag(String name) {
             return TagKey.create(Registries.ITEM,Alloyed.asResource(name));
         }
 
-        private static TagKey<Item> createCommonTag(String name) {
-            return TagKey.create(Registries.ITEM, Alloyed.asResource("forge", name));
+        protected static TagKey<Item> createCommonTag(String name) {
+            return TagKey.create(Registries.ITEM, Alloyed.asResource("c", name));
         }
 
-        private static TagKey<Item> createSpecialTag(String modId, String path) {
+        protected static TagKey<Item> createSpecialTag(String modId, String path) {
             return TagKey.create(Registries.ITEM, Alloyed.asResource(modId, path));
         }
     }
@@ -66,7 +66,7 @@ public class ModTags {
         }
 
         private static TagKey<Block> createCommonTag(String name) {
-            return TagKey.create(Registries.BLOCK, Alloyed.asResource("forge", name));
+            return TagKey.create(Registries.BLOCK, Alloyed.asResource("c", name));
         }
     }
 
@@ -82,7 +82,7 @@ public class ModTags {
 
 
         private static TagKey<Item> createCommonTag(String name) {
-            return TagKey.create(Registries.ITEM, Alloyed.asResource("forge", name));
+            return TagKey.create(Registries.ITEM, Alloyed.asResource("c", name));
         }
     }
 

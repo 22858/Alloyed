@@ -24,7 +24,7 @@ import java.util.List;
 public class ModItems {
     private static final CreateRegistrate REGISTRATE = Alloyed.REGISTRATE.setCreativeTab(ModCreativeModeTab.MAIN_TAB);
 
-    public static List<ItemProviderEntry<?>> getHiddenItems() {
+    public static List<ItemProviderEntry<?, ?>> getHiddenItems() {
         return List.of(INCOMPLETE_STEEL_SMITHING_UPGRADE_TEMPLATE, ModBlocks.STEEL_ENCASED_COGWHEEL, ModBlocks.STEEL_ENCASED_SHAFT, ModBlocks.STEEL_ENCASED_LARGE_COGWHEEL);
     }
 
@@ -81,30 +81,30 @@ public class ModItems {
 
     public static final ItemEntry<SwordItem> STEEL_SWORD = handheldItem(
             "steel_sword",
-            properties -> new SwordItem(ModItemTiers.STEEL, 3, -2.4F, properties)
+            properties -> new SwordItem(ModItemTiers.STEEL, properties)
     );
 
 
     public static final ItemEntry<PickaxeItem> STEEL_PICKAXE = handheldItem(
             "steel_pickaxe",
-            properties -> new PickaxeItem(ModItemTiers.STEEL, 1, -2.8F,properties)
+            properties -> new PickaxeItem(ModItemTiers.STEEL, properties)
     );
 
     public static final ItemEntry<AxeItem> STEEL_AXE = handheldItem(
             "steel_axe",
-            properties -> new AxeItem(ModItemTiers.STEEL, 5.0F, -3.0F,properties)
+            properties -> new AxeItem(ModItemTiers.STEEL, properties)
     );
 
 
     public static final ItemEntry<ShovelItem> STEEL_SHOVEL = handheldItem(
             "steel_shovel",
-            properties -> new ShovelItem(ModItemTiers.STEEL, 1.5F, -3.0F, properties)
+            properties -> new ShovelItem(ModItemTiers.STEEL, properties)
     );
 
 
     public static final ItemEntry<HoeItem> STEEL_HOE = handheldItem(
             "steel_hoe",
-            properties -> new HoeItem(ModItemTiers.STEEL, -3, 0.0F, properties)
+            properties -> new HoeItem(ModItemTiers.STEEL, properties)
     );
 
 
@@ -136,12 +136,9 @@ public class ModItems {
             .item("steel_boots", properties -> new ArmorItem(ModArmourMaterials.STEEL, ArmorItem.Type.BOOTS, properties.durability(390)))
             .register();
 
-    public static final ItemEntry<HorseArmorItem> STEEL_HORSE_ARMOR = REGISTRATE
-            .item("steel_horse_armor", properties -> new HorseArmorItem(7,
-                    //? forge
-                    /*Alloyed.asResource("textures/entity/horse/armor/horse_armor_steel.png")*/
-                    //? fabric
-                    "alloyed_steel"
+    public static final ItemEntry<AnimalArmorItem> STEEL_HORSE_ARMOR = REGISTRATE
+            .item("steel_horse_armor", properties -> new AnimalArmorItem(
+                    ModArmourMaterials.STEEL, AnimalArmorItem.BodyType.EQUESTRIAN, false
                     , properties.stacksTo(1)))
             .register();
 

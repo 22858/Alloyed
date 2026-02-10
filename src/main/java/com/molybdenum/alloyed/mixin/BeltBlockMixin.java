@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.block.IBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -31,11 +32,11 @@ public abstract class BeltBlockMixin implements IBE<BeltBlockEntity> {
     public abstract void updateCoverProperty(LevelAccessor world, BlockPos pos, BlockState state);
 
     @Inject(
-            method = "use",
+            method = "useItemOn",
             at = @At("TAIL"),
             cancellable = true
     )
-    private void tryEncaseWithAlloyedCasings(BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit, CallbackInfoReturnable<InteractionResult> cir) {
+    private void tryEncaseWithAlloyedCasings(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
         ItemStack heldItem = player.getItemInHand(handIn);
 
         if (heldItem.is(ModTags.Items.CASING)) {
@@ -48,7 +49,7 @@ public abstract class BeltBlockMixin implements IBE<BeltBlockEntity> {
                         ((BeltBlockEntityExtension) be).create_alloyed$setAlloyedCasingType(BeltBlockEntityExtension.AlloyedCasingType.BRONZE));
             }
             updateCoverProperty(world, pos, world.getBlockState(pos));
-            cir.setReturnValue(InteractionResult.SUCCESS);
+            cir.setReturnValue(ItemInteractionResult.SUCCESS);
             cir.cancel();
         }
     }
