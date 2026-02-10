@@ -8,7 +8,6 @@ plugins {
 val minecraft = stonecutter.current.version
 val mcVersion = stonecutter.current.project.substringBeforeLast('-')
 version = "${property("mod.version")}+${property("deps.minecraft")}"
-if (property("mod.test_build") != "0") version = "$version-tb${property("mod.test_build")}"
 
 tasks.named<ProcessResources>("processResources") {
     fun prop(name: String) = project.property(name) as String
@@ -18,7 +17,7 @@ tasks.named<ProcessResources>("processResources") {
         this["minecraft"] = prop("mod.mc_dep_forge")
     }
 
-    filesMatching(listOf("neoforge.mod.json", "META-INF/neoforge.mods.toml", "META-INF/mods.toml")) {
+    filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml", "META-INF/mods.toml")) {
         expand(props)
     }
 }
@@ -286,7 +285,7 @@ publishMods {
             optional("emi")
         }
         if (hasProperty("deps.rrv")) {
-            optional("extended-itemview-rrv")
+            optional("rrv")
         }
     }
 }

@@ -9,15 +9,6 @@ plugins {
 val minecraft = stonecutter.current.version
 val accesswidener = "alloyed.accesswidener"
 version = "${property("mod.version")}+${property("deps.minecraft")}"
-if (property("mod.test_build") != "0") version = "$version-tb${property("mod.test_build")}"
-
-val majorVersion = if (stonecutter.eval(stonecutter.current.version, ">=1.21.2")) {
-    22
-} else if (stonecutter.eval(stonecutter.current.version, ">=1.21")) {
-    21
-} else {
-    20
-}
 
 
 tasks.named<ProcessResources>("processResources") {
@@ -186,13 +177,15 @@ dependencies {
     if (stonecutter.eval(stonecutter.current.version, ">=1.21")) {
         modCompileOnly("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
     } else {
-        modImplementation("com.simibubi.create:create-fabric-1.20.1:${property("deps.create")}")
+//        modImplementation("com.simibubi.create:create-fabric-1.20.1:${property("deps.create")}")
+        modImplementation("maven.modrinth:create-fabric:${property("deps.create")}") // create fabric's bad about updating their maven ig
+
     }
 
     modImplementation("net.createmod.ponder:Ponder-Fabric-${property("deps.minecraft")}:${property("deps.ponder")}")
     modImplementation("com.tterrag.registrate_fabric:Registrate:${property("deps.registrate")}")
     modImplementation("io.github.tropheusj:milk-lib:${property("deps.milk")}")
-
+    modImplementation("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")
 
     val modules = listOf("accessors", "asm", "base", "client_events", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "tags")
     for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
