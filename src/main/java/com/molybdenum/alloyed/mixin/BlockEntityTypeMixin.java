@@ -17,8 +17,10 @@ import java.util.Objects;
 public class BlockEntityTypeMixin {
     @Inject(method = "isValid", at = @At(value = "RETURN"), cancellable = true)
     private void forceAllowAlloyed(BlockState arg, CallbackInfoReturnable<Boolean> cir) {
-        if (arg.getBlock() instanceof EncasedCogwheelBlock && (arg.is(ModBlocks.STEEL_ENCASED_COGWHEEL.get()) || arg.is(ModBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get()) || arg.is(ModBlocks.BRONZE_ENCASED_COGWHEEL.get()) || arg.is(ModBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get())) || arg.getBlock() instanceof EncasedShaftBlock && (arg.is(ModBlocks.STEEL_ENCASED_SHAFT.get()) || arg.is(ModBlocks.BRONZE_ENCASED_SHAFT.get()))) {
-            cir.setReturnValue(true);
-        }
+		if (arg.getBlock() instanceof EncasedCogwheelBlock && (arg.is(ModBlocks.STEEL_ENCASED_COGWHEEL.get()) || arg.is(ModBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get()) || arg.is(ModBlocks.BRONZE_ENCASED_COGWHEEL.get()) || arg.is(ModBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get()))) {
+			cir.setReturnValue(true);
+		} else if (arg.getBlock() instanceof EncasedShaftBlock && (arg.is(ModBlocks.STEEL_ENCASED_SHAFT.get()) || arg.is(ModBlocks.BRONZE_ENCASED_SHAFT.get()))) {
+			cir.setReturnValue(true);
+		}
     }
 }
