@@ -30,7 +30,8 @@ public class ModSoundEvents {
 
 	private static Supplier<SoundEvent> register(String id, Supplier<SoundEvent> soundEventSupplier) {
 		//? fabric
-        return ()->Registry.register(BuiltInRegistries.SOUND_EVENT, id, soundEventSupplier.get());
+		SoundEvent register = Registry.register(BuiltInRegistries.SOUND_EVENT, id, soundEventSupplier.get());
+		return ()->register;
 		//? forge
 		/*return SOUND_EVENTS.register(id, soundEventSupplier);*/
 	}

@@ -23,6 +23,13 @@ public class Platform {
 		//? forge
 		/*CopperRegistries.addWaxable((Supplier<Block>) block, (Supplier<Block>) waxedBlock);*/
 		//? fabric
+		OxidizableBlocksRegistry.registerWaxableBlockPair(block.get(), waxedBlock.get());
+	}
+
+	public static void addWeathering(Supplier<? extends Block> block, Supplier<? extends Block> waxedBlock) {
+		//? forge
+		/*CopperRegistries.addWeathering((Supplier<Block>) block, (Supplier<Block>) waxedBlock);*/
+		//? fabric
 		OxidizableBlocksRegistry.registerOxidizableBlockPair(block.get(), waxedBlock.get());
 	}
 }
