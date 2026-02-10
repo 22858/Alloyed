@@ -2,61 +2,44 @@ package com.molybdenum.alloyed.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.molybdenum.alloyed.client.registry.ModPartialModels;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
 import com.molybdenum.alloyed.common.content.extensions.BeltModelExtension;
-import com.molybdenum.alloyed.common.registry.ModSpriteShifts;
-import com.simibubi.create.AllPartialModels;
-import com.simibubi.create.AllSpriteShifts;
-import com.simibubi.create.content.kinetics.belt.BeltBlock;
-import com.simibubi.create.content.kinetics.belt.BeltBlockEntity;
-import com.simibubi.create.content.kinetics.belt.BeltModel;
-import com.simibubi.create.foundation.model.BakedQuadHelper;
-import net.createmod.catnip.render.SpriteShiftEntry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.BakedQuad;
+import com.zurrtum.create.client.AllPartialModels;
+import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
+import com.zurrtum.create.client.infrastructure.model.BeltModel;
+import com.zurrtum.create.client.infrastructure.model.WrapperBlockStateModel;
+import com.zurrtum.create.content.kinetics.belt.BeltBlock;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 //? neoforge {
 /*import net.neoforged.neoforge.client.model.data.ModelData;
 *///?} else {
-import com.simibubi.create.infrastructure.fabric.client.BakedModelWrapper;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
-import net.fabricmc.fabric.api.renderer.v1.model.ForwardingBakedModel;
-import net.fabricmc.fabric.api.renderer.v1.model.SpriteFinder;
 //?}
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.Shadow;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 @Mixin(BeltModel.class)
-public class BeltModelMixin
+public abstract class BeltModelMixin
 		//? fabric
-		extends BakedModelWrapper<BakedModel>
+		extends WrapperBlockStateModel
 		implements BeltModelExtension {
 
+	@Shadow
+	protected abstract BlockModelPart replaceQuads(TextureAtlasSprite replace, BlockModelPart part);
 
-	//? fabric {
-	public BeltModelMixin(BakedModel originalModel) {
-		super(originalModel);
-	}
-	//?}
+	@Shadow
+	@Final
+	private static SpriteShiftEntry SPRITE_SHIFT;
 
 	//? neoforge {
     /*@Inject(
@@ -127,65 +110,33 @@ public class BeltModelMixin
     }
     *///?} else {
 	@WrapMethod(
-			method = "emitBlockQuads",
+			method = "addPartsWithInfo",
 			remap = false
 	)
-	private void handleAlloyedCasingRendering(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context, Operation<Void> original) {
-		if (blockView.getBlockEntity(pos) instanceof BeltBlockEntityExtension data && !data.getAlloyedCasingType().equals(BeltBlockEntityExtension.AlloyedCasingType.NONE)) {
-//			if (!(blockView.getBlockEntityRenderData(pos) instanceof BeltBlockEntity.RenderData data)) {
-//				super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-//				return;
-//			}
-
-			boolean cover = data.create_alloyed$isCovered();
-			BeltBlockEntityExtension.AlloyedCasingType type = data.getAlloyedCasingType();
-			boolean steelCasing = type == BeltBlockEntityExtension.AlloyedCasingType.STEEL;
-			SpriteShiftEntry SPRITE_SHIFT;
-			if (steelCasing) {
-				SPRITE_SHIFT = ModSpriteShifts.STEEL_BELT_CASING;
-			} else {
-				SPRITE_SHIFT = ModSpriteShifts.BRONZE_BELT_CASING;
-			}
-
-//			if (type == BeltBlockEntityExtension.AlloyedCasingType.NONE || steelCasing && !cover) {
-//				super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-//				return;
-//			}
-
-			SpriteFinder spriteFinder = SpriteFinder.get(Minecraft.getInstance().getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS));
-			context.pushTransform(quad -> {
-				TextureAtlasSprite sprite = spriteFinder.find(quad, 0);
-				if (sprite == SPRITE_SHIFT.getOriginal()) {
-					for (int vertex = 0; vertex < 4; vertex++) {
-						float u = quad.spriteU(vertex, 0);
-						float v = quad.spriteV(vertex, 0);
-						quad.sprite(vertex, 0,
-								SPRITE_SHIFT.getTargetU(u),
-								SPRITE_SHIFT.getTargetV(v)
-						);
-					}
+	private void handleAlloyedCasingRendering(BlockAndTintGetter world, BlockPos pos, BlockState state, RandomSource random, List<BlockModelPart> parts, Operation<Void> operation) {
+		BlockEntity blockentity = world.getBlockEntity(pos);
+		if (blockentity instanceof BeltBlockEntityExtension beltBlockEntityExtension && beltBlockEntityExtension.getAlloyedCasingType() != BeltBlockEntityExtension.AlloyedCasingType.NONE) {
+			if (beltBlockEntityExtension.getAlloyedCasingType() == BeltBlockEntityExtension.AlloyedCasingType.BRONZE) {
+				this.model.collectParts(random, parts);
+				if (beltBlockEntityExtension.create_alloyed$isCovered()) {
+					boolean alongX = state.getValue(BeltBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.X;
+					parts.add(alongX ? ModPartialModels.BRONZE_BELT_COVER_X.get() : ModPartialModels.BRONZE_BELT_COVER_Z.get());
 				}
-				return true;
-			});
 
-			super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
+			} else {
+				TextureAtlasSprite original = SPRITE_SHIFT.getOriginal();
+				if (beltBlockEntityExtension.create_alloyed$isCovered()) {
+					boolean alongX = state.getValue(BeltBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.X;
+					parts.add(this.replaceQuads(original, alongX ? ModPartialModels.STEEL_BELT_COVER_X.get() : ModPartialModels.STEEL_BELT_COVER_Z.get()));
+				}
 
-			if (cover) {
-				boolean alongX = state.getValue(BeltBlock.HORIZONTAL_FACING)
-						.getAxis() == Direction.Axis.X;
-				BakedModel coverModel;
-				if (steelCasing)
-					coverModel = (alongX ? ModPartialModels.STEEL_BELT_COVER_X : ModPartialModels.STEEL_BELT_COVER_Z).get();
-				else
-					coverModel = (alongX ? ModPartialModels.BRONZE_BELT_COVER_X : ModPartialModels.BRONZE_BELT_COVER_Z).get();
-				coverModel.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-			}
+				for(BlockModelPart part : this.model.collectParts(random)) {
+					parts.add(this.replaceQuads(original, part));
+				}
 
-			if (!steelCasing) {
-				context.popTransform();
 			}
 		} else {
-			original.call(blockView, state, pos, randomSupplier, context);
+			operation.call(world, pos, state, random, parts);
 		}
 	}
     //?}

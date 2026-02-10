@@ -20,7 +20,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "alloyed:steel_ingot"
+      "id": "alloyed:steel_ingot"
     },
     "show_toast": true,
     "title": {

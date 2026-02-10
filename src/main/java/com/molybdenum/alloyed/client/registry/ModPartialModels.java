@@ -1,7 +1,8 @@
 package com.molybdenum.alloyed.client.registry;
 
 import com.molybdenum.alloyed.Alloyed;
-import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import com.zurrtum.create.client.flywheel.lib.model.baked.PartialModel;
+
 
 public class ModPartialModels {
 

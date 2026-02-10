@@ -1,7 +1,7 @@
 package com.molybdenum.alloyed.common.content.blocks;
 
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
-import com.simibubi.create.AllItems;
+import com.zurrtum.create.AllItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -9,7 +9,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -21,8 +20,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 
 @SuppressWarnings("deprecation")
@@ -42,8 +42,9 @@ public class BronzeBellBlock extends Block {
         pBuilder.add(POWERED, NOTE);
     }
 
+
     @Override
-    public void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block pBlock, BlockPos pFromPos, boolean pIsMoving) {
+    protected void neighborChanged(BlockState pState, Level pLevel, BlockPos pPos, Block block, @Nullable Orientation orientation, boolean movedByPiston) {
         boolean isPowered = pLevel.hasNeighborSignal(pPos);
         if (isPowered != pState.getValue(POWERED)) {
             if (isPowered) {
@@ -65,21 +66,21 @@ public class BronzeBellBlock extends Block {
     protected InteractionResult useWithoutItem(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, BlockHitResult pHit) {
         playNote(pState, pLevel, pPos, pHit);
         return onHit(pLevel, pHit, pPlayer, true) ?
-                InteractionResult.sidedSuccess(pLevel.isClientSide) :
+                InteractionResult.SUCCESS_SERVER :
                 InteractionResult.PASS;
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack arg, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
+    protected InteractionResult useItemOn(ItemStack arg, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (isProperHit(pHit.getDirection())) {
-            if (AllItems.WRENCH.isIn(arg)) {
+            if (arg.is(AllItems.WRENCH)) {
                 pState = pState.cycle(NOTE);
                 pLevel.setBlock(pPos, pState, 3);
                 playNote(pState, pLevel, pPos, pHit);
             }
         }
-        if (onHit(pLevel, pHit, pPlayer, true)) return ItemInteractionResult.sidedSuccess(pLevel.isClientSide);
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (onHit(pLevel, pHit, pPlayer, true)) return InteractionResult.SUCCESS_SERVER;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     public boolean onHit(Level pLevel, BlockHitResult pResult, Player pPlayer, boolean pCanRingBell) {

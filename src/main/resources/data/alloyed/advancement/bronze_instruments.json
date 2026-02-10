@@ -20,7 +20,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "alloyed:bronze_bell"
+      "id": "alloyed:bronze_bell"
     },
     "show_toast": true,
     "title": {

@@ -1,75 +1,42 @@
 package com.molybdenum.alloyed.common.registry;
 
 import com.molybdenum.alloyed.Alloyed;
-import com.molybdenum.alloyed.common.compat.createdeco.connected.SteelSheetMetalCTBehaviour;
-import com.molybdenum.alloyed.common.compat.createdeco.connected.SteelSheetSlabCTBehaviour;
 import com.molybdenum.alloyed.common.content.blocks.BronzeBellBlock;
 import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
 import com.molybdenum.alloyed.common.content.blocks.AlloyedShaftBlock;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
-import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.util.Platform;
-import com.simibubi.create.AllTags;
-import com.simibubi.create.content.contraptions.behaviour.DoorMovingInteraction;
-import com.simibubi.create.content.decoration.MetalLadderBlock;
-import com.simibubi.create.content.decoration.MetalScaffoldingBlock;
-import com.simibubi.create.content.decoration.encasing.CasingBlock;
-import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
-import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
-import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
-import com.simibubi.create.foundation.block.CopperBlockSet;
-import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.block.connected.RotatedPillarCTBehaviour;
-import com.simibubi.create.foundation.data.BuilderTransformers;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.builders.BlockBuilder;
-import com.tterrag.registrate.providers.RegistrateRecipeProvider;
-import com.tterrag.registrate.util.DataIngredient;
-import com.tterrag.registrate.util.entry.BlockEntry;
-import net.createmod.catnip.data.Couple;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import com.zurrtum.create.client.foundation.block.connected.CTSpriteShiftEntry;
+import com.zurrtum.create.content.decoration.MetalLadderBlock;
+import com.zurrtum.create.content.decoration.MetalScaffoldingBlock;
+import com.zurrtum.create.content.decoration.encasing.CasingBlock;
+import com.zurrtum.create.content.decoration.palettes.ConnectedPillarBlock;
+import com.zurrtum.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
+import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Items;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Supplier;
 
-import static com.simibubi.create.api.behaviour.interaction.MovingInteractionBehaviour.interactionBehaviour;
-import static com.simibubi.create.foundation.data.BlockStateGen.axisBlock;
-import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+import java.util.List;
+import java.util.function.Function;
+
+import static com.molybdenum.alloyed.Alloyed.MOD_ID;
 
 @SuppressWarnings({"unused", "removal"})
 public class ModBlocks {
-
-    private static final CreateRegistrate REGISTRATE = Alloyed.REGISTRATE.setCreativeTab(ModCreativeModeTab.MAIN_TAB).defaultCreativeTab((ResourceKey<CreativeModeTab>) null);
-
-	// BRONZE
-
+    // BRONZE
     public static final List<BlockEntry<? extends Block>> BRONZE_BLOCK = registerBronzeSet("bronze_block", WeatheringCopper.WeatherState.UNAFFECTED);
     public static final List<BlockEntry<? extends Block>> EXPOSED_BRONZE_BLOCK = registerBronzeSet("exposed_bronze_block", WeatheringCopper.WeatherState.EXPOSED);
     public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_BLOCK = registerBronzeSet("weathered_bronze_block", WeatheringCopper.WeatherState.WEATHERED);
     public static final List<BlockEntry<? extends Block>> OXIDIZED_BRONZE_BLOCK = registerBronzeSet("oxidized_bronze_block", WeatheringCopper.WeatherState.OXIDIZED);
+
 
     public static final List<BlockEntry<? extends Block>> CUT_BRONZE = registerCutBronzeSet("cut_bronze", WeatheringCopper.WeatherState.UNAFFECTED);
     public static final List<BlockEntry<? extends Block>> CUT_EXPOSED_BRONZE = registerCutBronzeSet("cut_exposed_bronze", WeatheringCopper.WeatherState.EXPOSED);
@@ -81,263 +48,57 @@ public class ModBlocks {
     public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_PILLAR = registerBronzePillarSet("weathered_bronze_pillar", WeatheringCopper.WeatherState.WEATHERED, ModSpriteShifts.WEATHERED_BRONZE_PILLAR, ModSpriteShifts.WEATHERED_BRONZE_CAP);
     public static final List<BlockEntry<? extends Block>> OXIDIZED_BRONZE_PILLAR = registerBronzePillarSet("oxidized_bronze_pillar", WeatheringCopper.WeatherState.OXIDIZED, ModSpriteShifts.OXIDIZED_BRONZE_PILLAR, ModSpriteShifts.OXIDIZED_BRONZE_CAP);
 
-    public static final BlockEntry<CasingBlock> BRONZE_CASING = REGISTRATE.block("bronze_casing", CasingBlock::new)
-            .transform(BuilderTransformers.casing(() -> ModSpriteShifts.BRONZE_CASING))
-            .properties(ModBlocks::bronzeProperties).item().build()
-            .register();
+    public static final BlockEntry<CasingBlock> BRONZE_CASING = registerBlock("bronze_casing", CasingBlock::new, ModBlocks.bronzeProperties());
 
-    public static final BlockEntry<AlloyedShaftBlock> BRONZE_ENCASED_SHAFT = REGISTRATE
-            .block("bronze_encased_shaft", p -> new AlloyedShaftBlock(p, ModBlocks.BRONZE_CASING::get))
-            .properties(ModBlocks::bronzeProperties)
-            .transform(ModTransformers.encasedShaft("bronze", () -> ModSpriteShifts.BRONZE_CASING))
-            .transform(axeOrPickaxe())
-            .register();
+    public static final BlockEntry<AlloyedShaftBlock> BRONZE_ENCASED_SHAFT = registerBlock("bronze_encased_shaft", p -> new AlloyedShaftBlock(p, ModBlocks.BRONZE_CASING::get), ModBlocks.bronzeProperties(), false);
 
-    public static final BlockEntry<EncasedCogwheelBlock> BRONZE_ENCASED_COGWHEEL = REGISTRATE
-            .block("bronze_encased_cogwheel", p -> new EncasedCogwheelBlock(p, false, ModBlocks.BRONZE_CASING::get))
-            .properties(ModBlocks::bronzeProperties)
-            .transform(ModTransformers.encasedCogwheel("bronze", () -> ModSpriteShifts.BRONZE_CASING))
-            .blockstate((c, p) -> axisBlock(c, p, blockState -> {
-                String suffix = (blockState.getValue(EncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "")
-                        + (blockState.getValue(EncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
-                return p.models().getExistingFile(p.modLoc("block/bronze_encased_cogwheel/block" + suffix));
-            }, false))
-            .item()
-            .model((c, p) -> {
-                p.getExistingFile(p.modLoc(c.getName()));
-            })
-            .build()
-            .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(ModSpriteShifts.BRONZE_CASING,
-                    Couple.create(ModSpriteShifts.BRONZE_ENCASED_COGWHEEL_SIDE,
-                            ModSpriteShifts.BRONZE_ENCASED_COGWHEEL_OTHERSIDE))))
-            .transform(axeOrPickaxe())
-            .register();
+    public static final BlockEntry<EncasedCogwheelBlock> BRONZE_ENCASED_COGWHEEL = registerBlock("bronze_encased_cogwheel", p -> new EncasedCogwheelBlock(p, false, ModBlocks.BRONZE_CASING.get()), ModBlocks.bronzeProperties(), false);
 
+    public static final BlockEntry<EncasedCogwheelBlock> BRONZE_ENCASED_LARGE_COGWHEEL = registerBlock("bronze_encased_large_cogwheel", p -> new EncasedCogwheelBlock(p, true, ModBlocks.BRONZE_CASING.get()), ModBlocks.bronzeProperties(), false);
 
-    public static final BlockEntry<EncasedCogwheelBlock> BRONZE_ENCASED_LARGE_COGWHEEL = REGISTRATE
-            .block("bronze_encased_large_cogwheel", p -> new EncasedCogwheelBlock(p, true, ModBlocks.BRONZE_CASING::get))
-            .properties(ModBlocks::bronzeProperties)
-            .transform(ModTransformers.encasedLargeCogwheel("bronze", () -> ModSpriteShifts.BRONZE_CASING))
-            .blockstate((c, p) -> axisBlock(c, p, blockState -> {
-                String suffix = (blockState.getValue(EncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "")
-                        + (blockState.getValue(EncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
-                return p.models().getExistingFile(p.modLoc("block/bronze_encased_large_cogwheel/block" + suffix));
-            }, false))
-            .item()
-            .model((c, p) -> {
-                p.getExistingFile(p.modLoc(c.getName()));
-            })
-            .build()
-            .transform(axeOrPickaxe())
-            .register();
-
-    public static final BlockEntry<BronzeBellBlock> BRONZE_BELL = REGISTRATE
-            .block("bronze_bell", BronzeBellBlock::new)
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(properties -> properties
-                    .noOcclusion()
-                    .sound(SoundType.ANVIL))
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .recipe((ctx, prov) -> {
-                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ctx.get(), 1)
-                        .pattern("#")
-                        .pattern("-")
-                        .define('#', ModTags.Items.BRONZE_BLOCK)
-                        .define('-', ModTags.Items.BRONZE_SHEET)
-                        .unlockedBy("has_bronze_ingot", RegistrateRecipeProvider.has(ModTags.Items.BRONZE_INGOT))
-                        .save(prov, Alloyed.asResource("crafting/" + ctx.getName()));
-            }).item().build()
-            .register();
+    public static final BlockEntry<BronzeBellBlock> BRONZE_BELL = registerBlock("bronze_bell", BronzeBellBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
+            .sound(SoundType.ANVIL));
 
 
 
     // STEEL
 
-    public static final BlockEntry<Block> STEEL_BLOCK = REGISTRATE
-            .block("steel_block", Block::new)
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(ModBlocks::steelProperties)
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .lang("Block of Steel")
-            .item().build()
-            .register();
+    public static final BlockEntry<Block> STEEL_BLOCK = registerBlock("steel_block", Block::new, ModBlocks.steelProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
 
-    public static final BlockEntry<CasingBlock> STEEL_CASING = REGISTRATE.block("steel_casing", CasingBlock::new)
-            .transform(BuilderTransformers.casing(() -> ModSpriteShifts.STEEL_CASING))
-            .properties(ModBlocks::steelProperties)
-            .register();
+    public static final BlockEntry<CasingBlock> STEEL_CASING = registerBlock("steel_casing", CasingBlock::new, ModBlocks.steelProperties(BlockBehaviour.Properties.of()));
 
-    public static final BlockEntry<AlloyedShaftBlock> STEEL_ENCASED_SHAFT = REGISTRATE
-            .block("steel_encased_shaft", p -> new AlloyedShaftBlock(p, ModBlocks.STEEL_CASING::get))
-            .properties(ModBlocks::steelProperties)
-            .transform(ModTransformers.encasedShaft("steel", () -> ModSpriteShifts.STEEL_CASING))
-            .transform(axeOrPickaxe())
-            .register();
+    public static final BlockEntry<AlloyedShaftBlock> STEEL_ENCASED_SHAFT = registerBlock("steel_encased_shaft", p -> new AlloyedShaftBlock(p, ModBlocks.STEEL_CASING::get), ModBlocks.steelProperties(), false);
 
-    public static final BlockEntry<EncasedCogwheelBlock> STEEL_ENCASED_COGWHEEL = REGISTRATE
-            .block("steel_encased_cogwheel", p -> new EncasedCogwheelBlock(p, false, ModBlocks.STEEL_CASING::get))
-            .properties(ModBlocks::steelProperties)
-            .transform(ModTransformers.encasedCogwheel("steel", () -> ModSpriteShifts.STEEL_CASING))
-            .blockstate((c, p) -> axisBlock(c, p, blockState -> {
-                String suffix = (blockState.getValue(EncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "")
-                        + (blockState.getValue(EncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
-                return p.models().getExistingFile(p.modLoc("block/steel_encased_cogwheel/block" + suffix));
-            }, false))
-            .onRegister(CreateRegistrate.connectedTextures(() -> new EncasedCogCTBehaviour(ModSpriteShifts.STEEL_CASING,
-                    Couple.create(ModSpriteShifts.STEEL_ENCASED_COGWHEEL_SIDE,
-                            ModSpriteShifts.STEEL_ENCASED_COGWHEEL_OTHERSIDE))))
-            .transform(axeOrPickaxe())
-            .register();
+    public static final BlockEntry<EncasedCogwheelBlock> STEEL_ENCASED_COGWHEEL = registerBlock("steel_encased_cogwheel", p -> new EncasedCogwheelBlock(p, false, ModBlocks.STEEL_CASING.get()), ModBlocks.steelProperties(), false);
 
 
-    public static final BlockEntry<EncasedCogwheelBlock> STEEL_ENCASED_LARGE_COGWHEEL = REGISTRATE
-            .block("steel_encased_large_cogwheel", p -> new EncasedCogwheelBlock(p, true, ModBlocks.STEEL_CASING::get))
-            .properties(ModBlocks::steelProperties)
-            .transform(ModTransformers.encasedLargeCogwheel("steel", () -> ModSpriteShifts.STEEL_CASING))
-            .blockstate((c, p) -> axisBlock(c, p, blockState -> {
-                String suffix = (blockState.getValue(EncasedCogwheelBlock.TOP_SHAFT) ? "_top" : "")
-                        + (blockState.getValue(EncasedCogwheelBlock.BOTTOM_SHAFT) ? "_bottom" : "");
-                return p.models().getExistingFile(p.modLoc("block/steel_encased_large_cogwheel/block" + suffix));
-            }, false))
-            .transform(axeOrPickaxe())
-            .register();
+    public static final BlockEntry<EncasedCogwheelBlock> STEEL_ENCASED_LARGE_COGWHEEL = registerBlock("steel_encased_large_cogwheel", p -> new EncasedCogwheelBlock(p, true, ModBlocks.STEEL_CASING.get()), ModBlocks.steelProperties(), false);
 
 
     public static final BlockEntry<MetalScaffoldingBlock> STEEL_SCAFFOLD =
-            REGISTRATE.block("steel_scaffolding", MetalScaffoldingBlock::new)
-                    .transform(ModTransformers.scaffold("steel",
-                            () -> DataIngredient.tag(ModTags.Items.createCommonTag("ingots/steel")), MapColor.COLOR_GRAY,
-                            ModSpriteShifts.STEEL_SCAFFOLD, ModSpriteShifts.STEEL_SCAFFOLD_INSIDE, ModSpriteShifts.STEEL_CASING))
-                    .properties(ModBlocks::steelProperties)
-                    .register();
+            registerBlock("steel_scaffolding", MetalScaffoldingBlock::new);
 
 
     public static final BlockEntry<SteelDoorBlock> STEEL_DOOR =
-            steelDoorBlock(false, null)
-                    .onRegister(interactionBehaviour(new DoorMovingInteraction()))
-                    .register();
+            steelDoorBlock(false, null);
 
     public static final BlockEntry<SteelDoorBlock> LOCKED_STEEL_DOOR =
-            steelDoorBlock(true, STEEL_DOOR).register();
+            steelDoorBlock(true, STEEL_DOOR);
 
-    public static final BlockEntry<Block> STEEL_SHEET_METAL = REGISTRATE
-            .block("steel_sheet_metal",Block::new)
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(ModBlocks::steelProperties)
-            .simpleItem()
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-            .register();
+    public static final BlockEntry<Block> STEEL_SHEET_METAL = registerBlock("steel_sheet_metal",Block::new, Blocks.IRON_BLOCK);
 
-    public static final BlockEntry<StairBlock> STEEL_SHEET_STAIRS = REGISTRATE
-            .block("steel_sheet_stairs", properties ->
-                    new StairBlock(Blocks.BRICK_STAIRS.defaultBlockState(), properties))
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(ModBlocks::steelProperties)
-            .item().tag(ItemTags.STAIRS).build()
-            .tag(BlockTags.STAIRS)
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .blockstate((ctx, prov) -> prov.stairsBlock(ctx.get(),
-                    prov.modLoc("block/steel_sheet_metal")))
-            .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-            .register();
+    public static final BlockEntry<StairBlock> STEEL_SHEET_STAIRS = registerBlock("steel_sheet_stairs", properties ->
+            new StairBlock(Blocks.BRICK_STAIRS.defaultBlockState(), properties));
 
-    public static final BlockEntry<SlabBlock> STEEL_SHEET_SLAB = REGISTRATE
-            .block("steel_sheet_slab", SlabBlock::new)
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(ModBlocks::steelProperties)
-            .item().tag(ItemTags.SLABS).build()
-            .tag(BlockTags.SLABS)
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .blockstate((ctx, prov) -> prov.slabBlock(ctx.get(),
-                    prov.modLoc("block/steel_sheet_metal"),
-                    prov.modLoc("block/steel_sheet_metal")))
-            .loot((table, block) -> {
-                LootTable.Builder builder = LootTable.lootTable();
-                LootPool.Builder lootPool = LootPool.lootPool();
+    public static final BlockEntry<SlabBlock> STEEL_SHEET_SLAB = registerBlock("steel_sheet_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK));
 
-                lootPool.setRolls(ConstantValue.exactly(1))
-                        .add(LootItem.lootTableItem(block)
-                                .apply(SetItemCountFunction
-                                        .setCount(ConstantValue.exactly(2))
-                                        .when(LootItemBlockStatePropertyCondition
-                                                .hasBlockStateProperties(block)
-                                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                        .hasProperty(BlockStateProperties.SLAB_TYPE, SlabType.DOUBLE)))));
+    public static final BlockEntry<IronBarsBlock> STEEL_BARS = registerBlock("steel_bars", IronBarsBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS));
 
-                table.add(block, builder.withPool(lootPool));
-            })
-            .onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
-            .register();
+    public static final BlockEntry<TrapDoorBlock> STEEL_TRAPDOOR = registerBlock("steel_trapdoor", properties -> new TrapDoorBlock(ModBlockSetTypes.STEEL, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_TRAPDOOR));
 
-    public static final BlockEntry<IronBarsBlock> STEEL_BARS = REGISTRATE
-            .block("steel_bars", IronBarsBlock::new)
-            .initialProperties(() -> Blocks.IRON_BARS)
-            .properties(ModBlocks::steelProperties)
-            .tag(BlockTags.WALLS)
-            .item()
-            .tag(ItemTags.WALLS).build()
-            .addLayer(() -> RenderType::cutoutMipped)
-            .tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .recipe((ctx, prov) -> ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ctx.get(), 16)
-                    .pattern("###")
-                    .pattern("###")
-                    .define('#', ModTags.Items.STEEL_INGOT)
-                    .unlockedBy("has_ingredient", RegistrateRecipeProvider.has(ModTags.Items.STEEL_INGOT))
-                    .save(prov, Alloyed.asResource("crafting/" + ctx.getName())))
-            .register();
+    public static final BlockEntry<MetalLadderBlock> STEEL_LADDER = registerBlock("steel_ladder", MetalLadderBlock::new, BlockBehaviour.Properties.of());
 
-    public static final BlockEntry<TrapDoorBlock> STEEL_TRAPDOOR = REGISTRATE
-            .block("steel_trapdoor", properties -> new TrapDoorBlock(ModBlockSetTypes.STEEL, properties))
-            .initialProperties(() -> Blocks.IRON_TRAPDOOR)
-            .properties(ModBlocks::steelProperties)
-            .blockstate((ctx, prov) ->
-                    prov.trapdoorBlock(ctx.get(), prov.modLoc("block/steel_trapdoor"), true))
-            .tag(BlockTags.TRAPDOORS)
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .tag(BlockTags.NEEDS_STONE_TOOL)
-            .item()
-            .model((ctx,prov) ->
-                    prov.withExistingParent(ctx.getName(), prov.modLoc("block/steel_trapdoor_bottom"))
-            )
-            .tag(ItemTags.TRAPDOORS)
-            .build()
-            .addLayer(() -> RenderType::cutoutMipped)
-            .tag(AllTags.AllBlockTags.FAN_TRANSPARENT.tag)
-            .recipe((ctx, prov) -> ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ctx.get())
-                    .pattern("##")
-                    .pattern("##")
-                    .define('#', ModTags.Items.STEEL_INGOT)
-                    .unlockedBy("has_ingredient", RegistrateRecipeProvider.has(ModTags.Items.STEEL_INGOT))
-                    .save(prov, Alloyed.asResource("crafting/" + ctx.getName())))
-            .register();
-
-    public static final BlockEntry<MetalLadderBlock> STEEL_LADDER = REGISTRATE
-            .block("steel_ladder", MetalLadderBlock::new)
-            .transform(BuilderTransformers.ladder("steel",
-                    () -> DataIngredient.tag(ModTags.Items.STEEL_SHEET), MapColor.COLOR_GRAY))
-            .blockstate((ctx, prov) -> prov.horizontalBlock(ctx.get(), prov.models()
-                    .getExistingFile(prov.modLoc("block/steel_ladder"))))
-            .lang("Steel Ladder")
-            .register();
-
-    public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = REGISTRATE
-            .block("steel_mesh_fence", FenceBlock::new)
-            .initialProperties(() -> Blocks.IRON_BLOCK)
-            .properties(properties -> properties.sound(SoundType.CHAIN))
-            .tag(BlockTags.FENCES)
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-            .item()
-            .build()
-            .addLayer(() -> RenderType::cutoutMipped)
-            .register();
+    public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = registerBlock("steel_mesh_fence", FenceBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN));
 
 
     public static void register() {
@@ -348,194 +109,119 @@ public class ModBlocks {
         return properties.sound(SoundType.NETHERITE_BLOCK).strength(5, 14).mapColor(MapColor.COLOR_GRAY);
     }
 
+    public static BlockBehaviour.@NotNull Properties steelProperties() {
+        return steelProperties(BlockBehaviour.Properties.of());
+    }
+
     public static BlockBehaviour.@NotNull Properties bronzeProperties(BlockBehaviour.Properties properties) {
         return properties.sound(SoundType.COPPER).strength(3, 6).mapColor(MapColor.COLOR_ORANGE);
+    }
+
+    public static BlockBehaviour.@NotNull Properties bronzeProperties() {
+        return bronzeProperties(BlockBehaviour.Properties.of());
     }
 
     public static void fixBronzeBlocks() {
     }
 
     private static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state, CTSpriteShiftEntry pillar, CTSpriteShiftEntry cap) {
-        BlockEntry<? extends Block> block = REGISTRATE.block(id, (properties)-> new WeatheringBronzePillarBlock(state, properties))
-                .properties(ModBlocks::bronzeProperties).item().build()
-                .onRegister(CreateRegistrate.connectedTextures(() -> new RotatedPillarCTBehaviour(pillar, cap)))
-                .register();
-        BlockEntry<? extends Block> waxedBlock = REGISTRATE.block("waxed_"+id, ConnectedPillarBlock::new)
-                .properties(ModBlocks::bronzeProperties).item().build()
-                .onRegister(CreateRegistrate.connectedTextures(() -> new RotatedPillarCTBehaviour(pillar, cap)))
-                .register();
-        Platform.addWaxable(block, waxedBlock);
+        var block = registerBlock(id, (properties)-> new WeatheringBronzePillarBlock(state, properties), ModBlocks.bronzeProperties());
+        var waxedBlock = registerBlock("waxed_"+id, ConnectedPillarBlock::new, ModBlocks.bronzeProperties());
+        Platform.addWaxable(block.get(), waxedBlock.get());
         return List.of(block, waxedBlock);
     }
 
     private static List<BlockEntry<? extends Block>> registerBronzeSet(String id, WeatheringCopper.WeatherState state) {
-        BlockEntry<? extends Block> block = registerCutBronze(id, state);
-        BlockEntry<? extends Block> waxedBlock = REGISTRATE
-                .block("waxed_"+id,(Block::new))
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .simpleItem()
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-                .register();
-        Platform.addWaxable(block, waxedBlock);
+        var block = registerCutBronze(id, state);
+        var waxedBlock = registerBlock("waxed_"+id,(Block::new), Blocks.CUT_COPPER);
+        Platform.addWeathering(block.get(), waxedBlock.get());
+        if (state.equals(WeatheringCopper.WeatherState.WEATHERED)) {
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("weathered_", "exposed_"))), block.get());
+        }
+        if (state.equals(WeatheringCopper.WeatherState.EXPOSED)) {
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("exposed_", ""))), block.get());
+        }
+        if (state.equals(WeatheringCopper.WeatherState.OXIDIZED)) {
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("oxidized_", "weathered_"))), block.get());
+        }
         return List.of(block, waxedBlock);
     }
 
-
     private static List<BlockEntry<? extends Block>> registerCutBronzeSet(String id, WeatheringCopper.WeatherState state) {
-        BlockEntry<? extends Block> block = registerCutBronze(id, state);
-        BlockEntry<? extends Block> stairs = registerCutBronzeStairs(id, state);
-        BlockEntry<? extends Block> slab = registerCutBronzeSlab(id, state);
-        BlockEntry<? extends Block> waxedBlock = REGISTRATE
-                .block("waxed_"+id,(Block::new))
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .simpleItem()
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-                .register();
-        BlockEntry<? extends Block> waxedStairs = REGISTRATE
-                .block("waxed_"+id+"_stairs", properties ->
-                        new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties))
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .item().tag(ItemTags.STAIRS).build()
-                .tag(BlockTags.STAIRS)
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .blockstate((ctx, prov) -> prov.stairsBlock(ctx.get(),
-                        prov.modLoc("block/cut_bronze")))
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-                .register();
-        BlockEntry<? extends Block> waxedSlab = REGISTRATE
-                .block("waxed_"+id+"_slab", SlabBlock::new)
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .item().tag(ItemTags.SLABS).build()
-                .tag(BlockTags.SLABS)
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .blockstate((ctx, prov) -> prov.slabBlock(ctx.get(),
-                        prov.modLoc("block/cut_bronze"),
-                        prov.modLoc("block/cut_bronze")))
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
-                .register();
-        Platform.addWaxable(block, waxedBlock);
-        Platform.addWaxable(slab, waxedSlab);
-        Platform.addWaxable(stairs, waxedStairs);
+        var block = registerCutBronze(id, state);
+        var stairs = registerCutBronzeStairs(id, state);
+        var slab = registerCutBronzeSlab(id, state);
+        var waxedBlock = registerBlock("waxed_"+id,(Block::new), Blocks.CUT_COPPER);
+        var waxedStairs = registerBlock("waxed_"+id+"_stairs", properties ->
+                new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties), Blocks.CUT_COPPER);
+        var waxedSlab = registerBlock("waxed_"+id+"_slab", SlabBlock::new, Blocks.CUT_COPPER);
+        Platform.addWaxable(block.get(), waxedBlock.get());
+        Platform.addWaxable(stairs.get(), waxedStairs.get());
+        Platform.addWaxable(slab.get(), waxedSlab.get());
+        if (state.equals(WeatheringCopper.WeatherState.WEATHERED)) {
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("weathered_", "exposed_"))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(stairs.getId().getPath().replace("weathered_", "exposed_"))), stairs.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(slab.getId().getPath().replace("weathered_", "exposed_"))), slab.get());
+        }
+        if (state.equals(WeatheringCopper.WeatherState.EXPOSED)) {
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("exposed_", ""))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(stairs.getId().getPath().replace("exposed_", ""))), stairs.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(slab.getId().getPath().replace("exposed_", ""))), slab.get());
+        }
+        if (state.equals(WeatheringCopper.WeatherState.OXIDIZED)) {
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("oxidized_", "weathered_"))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(stairs.getId().getPath().replace("oxidized_", "weathered_"))), stairs.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(slab.getId().getPath().replace("oxidized_", "weathered_"))), slab.get());
+        }
         return List.of(block, stairs, slab, waxedBlock, waxedStairs, waxedSlab);
     }
 
     private static BlockEntry<? extends Block> registerCutBronze(String id, WeatheringCopper.WeatherState state) {
-        return REGISTRATE
-                .block(id,(properties -> new WeatheringCopperFullBlock(state, properties)))
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .simpleItem()
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-                .register();
+        return registerBlock(id,(properties -> new WeatheringCopperFullBlock(state, properties)), Blocks.CUT_COPPER);
     }
 
     private static BlockEntry<? extends SlabBlock> registerCutBronzeSlab(String id, WeatheringCopper.WeatherState state) {
-        return REGISTRATE
-                .block(id+"_slab", (p)-> new WeatheringCopperSlabBlock(state, p))
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .item().tag(ItemTags.SLABS).build()
-                .tag(BlockTags.SLABS)
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .blockstate((ctx, prov) -> prov.slabBlock(ctx.get(),
-                        prov.modLoc("block/cut_bronze"),
-                        prov.modLoc("block/cut_bronze")))
-                .loot((table, block) -> {
-                    LootTable.Builder builder = LootTable.lootTable();
-                    LootPool.Builder lootPool = LootPool.lootPool();
-
-                    lootPool.setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(block)
-                                    .apply(SetItemCountFunction
-                                            .setCount(ConstantValue.exactly(2))
-                                            .when(LootItemBlockStatePropertyCondition
-                                                    .hasBlockStateProperties(block)
-                                                    .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                            .hasProperty(BlockStateProperties.SLAB_TYPE, SlabType.DOUBLE)))));
-
-                    table.add(block, builder.withPool(lootPool));
-                })
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
-                .register();
+        return registerBlock(id+"_slab", (p)-> new WeatheringCopperSlabBlock(state, p), Blocks.CUT_COPPER);
     }
 
     private static BlockEntry<WeatheringCopperStairBlock> registerCutBronzeStairs(String id, WeatheringCopper.WeatherState state) {
-        return REGISTRATE
-                .block(id+"_stairs", properties ->
-                        new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties))
-                .initialProperties(() -> Blocks.CUT_COPPER)
-                .properties(ModBlocks::steelProperties)
-                .item().tag(ItemTags.STAIRS).build()
-                .tag(BlockTags.STAIRS)
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .tag(BlockTags.NEEDS_STONE_TOOL)
-                .blockstate((ctx, prov) -> prov.stairsBlock(ctx.get(),
-                        prov.modLoc("block/cut_bronze")))
-                .onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-                .register();
+        return registerBlock(id+"_stairs", properties ->
+                new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties), Blocks.CUT_COPPER);
     }
 
-    private static BlockBuilder<SteelDoorBlock, CreateRegistrate> steelDoorBlock(boolean locked, BlockEntry<SteelDoorBlock> normalDoor) {
+    private static BlockEntry<SteelDoorBlock> steelDoorBlock(boolean locked, BlockEntry<SteelDoorBlock> normalDoor) {
         String path = "block/" + (locked ? "locked_" : "") + "steel_door/";
         String name = (locked ? "locked_" : "") + "steel_door";
 
-        return REGISTRATE
-                .block(name, properties -> new SteelDoorBlock(properties, locked)).item().build()
-                .properties(properties -> properties
-                        .noOcclusion()
-                        .sound(SoundType.METAL)
-                        .strength(5)
-                        .requiresCorrectToolForDrops())
-                .blockstate((ctx, prov) -> prov.doorBlock(ctx.get(), path + ctx.getName(),
-                        prov.modLoc("block/" + name + "/bottom"),
-                        prov.modLoc("block/" + name + "/top"))
-                )
-                .tag(BlockTags.NEEDS_STONE_TOOL, BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.DOORS)
-                .recipe((ctx, prov) -> {
-                    if (!locked) {
-                        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ctx.get())
-                                .pattern("##")
-                                .pattern("##")
-                                .pattern("##")
-                                .define('#', ModTags.Items.STEEL_INGOT)
-                                .unlockedBy("has_ingredient", RegistrateRecipeProvider.has(ModTags.Items.STEEL_INGOT))
-                                .save(prov, Alloyed.asResource("crafting/" + name));
-                    } else {
-                        DoorBlock door = Objects.requireNonNull(normalDoor).get();
-                        // Using same locked door recipe as Create: Deco
-                        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ctx.get())
-                                .requires(Items.REDSTONE_TORCH)
-                                .requires(door)
-                                .unlockedBy("has_ingredient", RegistrateRecipeProvider.has(door))
-                                .save(prov, Alloyed.asResource("crafting/" + name));
-                    }
-                })
-                .loot((lootTable, door) -> {
-                    LootTable.Builder tableBuilder = LootTable.lootTable();
-                    LootPool.Builder poolBuilder = LootPool.lootPool();
+        return registerBlock(name, properties -> new SteelDoorBlock(properties, locked), BlockBehaviour.Properties.of().noOcclusion()
+                .sound(SoundType.METAL)
+                .strength(5)
+                .requiresCorrectToolForDrops());
+    }
 
-                    poolBuilder
-                            .setRolls(ConstantValue.exactly(1))
-                            .add(LootItem.lootTableItem(door))
-                            .when(LootItemBlockStatePropertyCondition
-                                    .hasBlockStateProperties(door)
-                                    .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(
-                                            BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.LOWER
-                                    )));
-                    lootTable.add(door, tableBuilder.withPool(poolBuilder));
-                });
+
+
+
+    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings) {
+        return registerBlock(id, factory, settings, true);
+    }
+
+    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings, boolean b) {
+        ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(MOD_ID, id));
+        T block = factory.apply(settings.setId(key));
+        var entry = Registry.register(BuiltInRegistries.BLOCK, key, block);
+        BlockEntry<T> tBlockEntry = new BlockEntry<>(key.identifier(), entry);
+        if (b)
+            ModItems.registerBlockItem(tBlockEntry);
+        return tBlockEntry;
+    }
+
+
+    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory) {
+        return registerBlock(id, factory, BlockBehaviour.Properties.of());
+    }
+
+    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, Block block) {
+        return registerBlock(id, factory, BlockBehaviour.Properties.ofFullCopy(block));
     }
 }

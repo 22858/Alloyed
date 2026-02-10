@@ -4,7 +4,7 @@ package com.molybdenum.alloyed.neoforge;
 import com.molybdenum.alloyed.AlloyedClient;
 import com.molybdenum.alloyed.common.CommonEventsHandler;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
-import com.simibubi.create.AllBlockEntityTypes;
+import com.zurrtum.create.AllBlockEntityTypes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;

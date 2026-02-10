@@ -1,79 +1,31 @@
 package com.molybdenum.alloyed.common.item;
 
-import java.util.EnumMap;
-import java.util.List;
-import java.util.function.Supplier;
+import java.util.Map;
 
+import com.google.common.collect.Maps;
 import com.molybdenum.alloyed.Alloyed;
-import com.molybdenum.alloyed.common.registry.ModItems;
-//? fabric
-import io.github.fabricators_of_create.porting_lib.registry.DeferredRegister;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvent;
+
+import com.molybdenum.alloyed.common.registry.ModTags;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.crafting.Ingredient;
-//? neoforge {
-/*import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredRegister;
-*///?}
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+
+import static net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID;
 
 public class ModArmourMaterials {
-    private static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(Registries.ARMOR_MATERIAL, Alloyed.MOD_ID);
 
-    public static final Holder<ArmorMaterial> STEEL = register(
-            "steel",
-            new int[] { 3, 5, 7, 3, 7},
-            10,
-            SoundEvents.ARMOR_EQUIP_CHAIN,
-            1.0F,
-            0.1F,
-            () -> Ingredient.of(ModItems.STEEL_INGOT)
+    public static ArmorMaterial STEEL = new ArmorMaterial(
+            15, Maps.newEnumMap(Map.of(
+            ArmorType.BOOTS, 3,
+            ArmorType.LEGGINGS, 5,
+            ArmorType.CHESTPLATE, 7,
+            ArmorType.HELMET, 3,
+            ArmorType.BODY, 7)),
+            12, SoundEvents.ARMOR_EQUIP_GENERIC, 0.0F, 0.0F, ModTags.Items.STEEL_INGOT, ResourceKey.create(ROOT_ID, Alloyed.asResource("steel"))
     );
 
-    private static Holder<ArmorMaterial> register(
-            String name,
-            int[] defense,
-            int enchantmentValue,
-            Holder<SoundEvent> equipSound,
-            float toughness,
-            float knockbackResistance,
-            Supplier<Ingredient> repairIngredient
-    ) {
-        List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(Alloyed.asResource(name)));
-        return register(name, defense, enchantmentValue, equipSound, toughness, knockbackResistance, repairIngredient, list);
-    }
+    public static void register() {
 
-    private static Holder<ArmorMaterial> register(
-            String name,
-            int[] defense,
-            int enchantmentValue,
-            Holder<SoundEvent> equipSound,
-            float toughness,
-            float knockbackResistance,
-            Supplier<Ingredient> repairIngridient,
-            List<ArmorMaterial.Layer> layers
-    ) {
-        EnumMap<ArmorItem.Type, Integer> enummap = new EnumMap<>(ArmorItem.Type.class);
-
-        for (ArmorItem.Type armoritem$type : ArmorItem.Type.values()) {
-            enummap.put(armoritem$type, defense[armoritem$type.ordinal()]);
-        }
-
-        return ARMOR_MATERIALS.register(name,
-                () -> new ArmorMaterial(enummap, enchantmentValue, equipSound, repairIngridient, layers, toughness, knockbackResistance)
-        );
-    }
-
-    public static void register(
-            //? neoforge
-            /*IEventBus eventBus*/
-    ) {
-        ARMOR_MATERIALS.register(
-                //? neoforge
-                /*eventBus*/
-        );
     }
 }

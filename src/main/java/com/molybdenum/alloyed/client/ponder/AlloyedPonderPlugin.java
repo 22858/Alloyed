@@ -2,12 +2,11 @@ package com.molybdenum.alloyed.client.ponder;
 
 import com.molybdenum.alloyed.client.registry.ModPonders;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
-import com.simibubi.create.infrastructure.ponder.AllCreatePonderScenes;
-import com.simibubi.create.infrastructure.ponder.AllCreatePonderTags;
-import net.createmod.ponder.api.registration.PonderPlugin;
-import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
-import net.createmod.ponder.api.registration.PonderTagRegistrationHelper;
-import net.minecraft.resources.ResourceLocation;
+import com.zurrtum.create.client.infrastructure.ponder.AllCreatePonderTags;
+import com.zurrtum.create.client.ponder.api.registration.PonderPlugin;
+import com.zurrtum.create.client.ponder.api.registration.PonderSceneRegistrationHelper;
+import com.zurrtum.create.client.ponder.api.registration.PonderTagRegistrationHelper;
+import net.minecraft.resources.Identifier;
 
 public class AlloyedPonderPlugin implements PonderPlugin {
     @Override
@@ -16,12 +15,12 @@ public class AlloyedPonderPlugin implements PonderPlugin {
     }
 
     @Override
-    public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
+    public void registerScenes(PonderSceneRegistrationHelper<Identifier> helper) {
         ModPonders.register(helper);
     }
 
     @Override
-    public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
+    public void registerTags(PonderTagRegistrationHelper<Identifier> helper) {
         helper.addToTag(AllCreatePonderTags.DECORATION, ModBlocks.BRONZE_BELL.getId());
     }
 }

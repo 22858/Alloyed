@@ -2,7 +2,7 @@ package com.molybdenum.alloyed.common.content.blocks;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
+import com.zurrtum.create.content.decoration.palettes.ConnectedPillarBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;

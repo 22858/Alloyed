@@ -1,123 +1,24 @@
 package com.molybdenum.alloyed.common.item;
 
 import com.molybdenum.alloyed.Alloyed;
-import com.molybdenum.alloyed.common.registry.ModCompat;
 import com.molybdenum.alloyed.common.registry.ModItems;
-import com.simibubi.create.AllCreativeModeTabs;
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.entry.ItemProviderEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
-//? fabric {
-import io.github.fabricators_of_create.porting_lib.registry.DeferredHolder;
-import io.github.fabricators_of_create.porting_lib.registry.DeferredRegister;
-//?}
-import it.unimi.dsi.fastutil.objects.ReferenceArrayList;
-import it.unimi.dsi.fastutil.objects.ReferenceLinkedOpenHashSet;
-import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.*;
-import net.minecraft.world.level.block.Block;
-//? neoforge {
-/*import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
-*///?} else {
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.fabricmc.fabric.impl.itemgroup.FabricItemGroupBuilderImpl;
-//?}
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class ModCreativeModeTab {
-    private static final DeferredRegister<CreativeModeTab> REGISTER =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Alloyed.MOD_ID);
-
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = REGISTER.register("main_tab",
-            //? neoforge
-            /*() -> CreativeModeTab.builder()*/
-            //? fabric
-            ()-> FabricItemGroup.builder()
-                    .title(Component.translatable("itemGroup.alloyed.main_group"))
-                    .icon(ModItems.STEEL_INGOT::asStack)
-                    .displayItems(new DisplayItemsGenerator())
-                    .build());
-
-    public static void register(
-            //? neoforge
-            /*IEventBus modEventBus*/
-    ) {
-        //? neoforge
-        /*REGISTER.register(modEventBus);*/
-        //? fabric
-        REGISTER.register();
-    }
-
-    public static void registerLang() {
-        Alloyed.REGISTRATE.addRawLang("itemGroup.alloyed.main_tab", "Create: Alloyed");
-    }
-
-    // Credit to Create's AllCreativeModeTabs#RegistrateDisplayItemsGenerator for the code structure
-    private static class DisplayItemsGenerator implements CreativeModeTab.DisplayItemsGenerator {
-
-        private static Predicate<Item> hideCompatItemPredicate() {
-            Set<Item> hiddenItems = new ReferenceOpenHashSet<>();
-
-            for (ModCompat mod : ModCompat.values()) {
-                List<ItemProviderEntry<?, ?>> entries = mod.getEntries();
-
-                for (ItemProviderEntry<?, ?> entry : entries) {
-                    if (mod.shouldHide()) hiddenItems.add(entry.asItem());
-                }
-            }
-
-            return hiddenItems::contains;
+    public static final ResourceKey<CreativeModeTab> MAIN_TAB_KEY = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Alloyed.asResource("main_group"));
+    public static final CreativeModeTab MAIN_TAB = FabricCreativeModeTab.builder().icon(()-> ModItems.STEEL_INGOT.get().getDefaultInstance()).title(Component.translatable("itemGroup.alloyed.main_group")).displayItems(((itemDisplayParameters, output) -> {
+        for (Item item : ModItems.ITEMS) {
+            output.accept(item);
         }
-        @Override
-        public void accept (CreativeModeTab.ItemDisplayParameters pParameters, CreativeModeTab.Output pOutput) {
-            Predicate<Item> shouldHide = hideCompatItemPredicate();
+    })).build();
 
-            List<Item> items = new LinkedList<>();
-            items.addAll(getBlocksUnless(shouldHide));
-            items.addAll(getItemsUnless(shouldHide));
-
-            for (Item item : items) {
-                pOutput.accept(new ItemStack(item));
-            }
-        }
-
-        private List<Item> getBlocksUnless(Predicate<Item> shouldHidePredicate) {
-            List<Item> items = new ReferenceArrayList<>();
-            for (RegistryEntry<Block, Block> entry : Alloyed.REGISTRATE.getAll(Registries.BLOCK)) {
-                Item item = entry.get()
-                        .asItem();
-                if (item == Items.AIR)
-                    continue;
-                if (!shouldHidePredicate.test(item))
-                    items.add(item);
-            }
-            items = new ReferenceArrayList<>(new ReferenceLinkedOpenHashSet<>(items));
-            return items;
-        }
-
-        private List<Item> getItemsUnless(Predicate<Item> shouldHidePredicate) {
-            List<Item> items = new ReferenceArrayList<>();
-            for (RegistryEntry<Item, Item> entry : Alloyed.REGISTRATE.getAll(Registries.ITEM)) {
-                Item item = entry.get();
-                if (item instanceof BlockItem)
-                    continue;
-                if (!shouldHidePredicate.test(item))
-                    items.add(item);
-            }
-            return items;
-        }
+    public static void register() {
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, MAIN_TAB_KEY, MAIN_TAB);
     }
 }

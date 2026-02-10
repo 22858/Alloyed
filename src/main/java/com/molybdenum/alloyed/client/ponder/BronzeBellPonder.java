@@ -1,17 +1,11 @@
 package com.molybdenum.alloyed.client.ponder;
 
-import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
-import net.createmod.catnip.math.Pointing;
-import net.createmod.ponder.api.ParticleEmitter;
-import net.createmod.ponder.api.level.PonderLevel;
-import net.createmod.ponder.api.scene.SceneBuilder;
-import net.createmod.ponder.api.scene.SceneBuildingUtil;
-import net.createmod.ponder.api.scene.Selection;
-import net.createmod.ponder.foundation.element.InputWindowElement;
-import net.createmod.ponder.foundation.instruction.EmitParticlesInstruction;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
+import com.zurrtum.create.AllItems;
+import com.zurrtum.create.catnip.math.Pointing;
+import com.zurrtum.create.client.foundation.ponder.CreateSceneBuilder;
+import com.zurrtum.create.client.ponder.api.scene.SceneBuilder;
+import com.zurrtum.create.client.ponder.api.scene.SceneBuildingUtil;
+import com.zurrtum.create.client.ponder.api.scene.Selection;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -136,7 +130,7 @@ public class BronzeBellPonder {
                 .pointAt(util.vector().centerOf(bell));
         scene.idle(30);
 
-        scene.overlay().showControls(util.vector().centerOf(bell), Pointing.UP, 30).rightClick().withItem(AllItems.WRENCH.asStack());
+        scene.overlay().showControls(util.vector().centerOf(bell), Pointing.UP, 30).rightClick().withItem(AllItems.WRENCH.getDefaultInstance());
         scene.idle(10);
         scene.effects().emitParticles(util.vector().blockSurface(bell, Direction.UP),
                 (world, x, y, z) -> world.addParticle(ParticleTypes.NOTE, x, y, z, 0.5d, Vec3.ZERO.y(), Vec3.ZERO.z()), 1, 1);

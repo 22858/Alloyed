@@ -1,11 +1,10 @@
 package com.molybdenum.alloyed.mixin;
 
 import com.molybdenum.alloyed.common.util.EncasingHelper;
-import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
+import com.zurrtum.create.content.kinetics.simpleRelays.ShaftBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -22,12 +21,12 @@ public abstract class ShaftBlockMixin {
 
     @Inject(
             method = "useItemOn",
-            at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/placement/IPlacementHelper;matchesItem(Lnet/minecraft/world/item/ItemStack;)Z"),
+            at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/catnip/placement/IPlacementHelper;matchesItem(Lnet/minecraft/world/item/ItemStack;)Z"),
             cancellable = true
     )
-    private void tryEncaseWithAlloyedCasings(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray, CallbackInfoReturnable<ItemInteractionResult> cir) {
+    private void tryEncaseWithAlloyedCasings(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack heldItem = player.getItemInHand(hand);
-        ItemInteractionResult result = EncasingHelper
+        InteractionResult result = EncasingHelper
                 .tryEncase(EncasingHelper.EncaseType.SHAFT, state, world, pos, heldItem, player, hand, ray);
 
         if (result.consumesAction()) {

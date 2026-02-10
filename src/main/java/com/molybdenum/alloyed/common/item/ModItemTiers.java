@@ -1,65 +1,9 @@
 package com.molybdenum.alloyed.common.item;
 
-import com.google.common.base.Suppliers;
-import com.molybdenum.alloyed.common.registry.ModItems;
+import com.molybdenum.alloyed.common.registry.ModTags;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.item.ToolMaterial;
 
-import java.util.function.Supplier;
-
-public enum ModItemTiers implements Tier {
-    STEEL(2, 1000, 7.0F, 3.0F, 11,
-            () -> Ingredient.of(ModItems.STEEL_INGOT.get()));
-
-    // Base code for item tier
-
-    private final int level;
-    private final int uses;
-    private final float speed;
-    private final float damage;
-    private final int enchantmentValue;
-    private final Supplier<Ingredient> repairIngredient;
-
-    ModItemTiers(int level, int uses, float speed, float damage, int enchantmentValue, Supplier<Ingredient> repairIngredient) {
-        this.level = level;
-        this.uses = uses;
-        this.speed = speed;
-        this.damage = damage;
-        this.enchantmentValue = enchantmentValue;
-        this.repairIngredient = Suppliers.memoize(repairIngredient::get);
-    }
-
-    @Override
-    public int getUses() {
-        return uses;
-    }
-
-    @Override
-    public float getSpeed() {
-        return speed;
-    }
-
-    @Override
-    public float getAttackDamageBonus() {
-        return damage;
-    }
-
-    @Override
-    public TagKey<Block> getIncorrectBlocksForDrops() {
-        return BlockTags.INCORRECT_FOR_IRON_TOOL;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return enchantmentValue;
-    }
-
-    @Override
-    public @NotNull Ingredient getRepairIngredient() {
-        return repairIngredient.get();
-    }
+public class ModItemTiers {
+    public static final ToolMaterial STEEL = new ToolMaterial(BlockTags.INCORRECT_FOR_IRON_TOOL, 1000, 7.0F, 3.0F, 11, ModTags.Items.STEEL_INGOT);
 }

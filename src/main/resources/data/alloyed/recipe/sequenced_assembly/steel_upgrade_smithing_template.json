@@ -1,14 +1,13 @@
 {
   "type": "create:sequenced_assembly",
-  "ingredient": {
-    "item": "minecraft:cobbled_deepslate"
-  },
+  "ingredient":  "minecraft:cobbled_deepslate",
   "loops": 1,
-  "results": [
+  "result":
     {
       "chance": 120.0,
       "id": "alloyed:steel_upgrade_smithing_template"
     },
+  "junks": [
     {
       "chance": 16.0,
       "id": "create:bronze_sheet"
@@ -25,48 +24,21 @@
   "sequence": [
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "alloyed:incomplete_steel_upgrade_smithing_template"
-        },
-        {
-          "item": "minecraft:chain"
-        }
-      ],
-      "results": [
-        {
-          "id": "alloyed:incomplete_steel_upgrade_smithing_template"
-        }
-      ]
+      "target": "$ingredient",
+      "ingredient": "minecraft:iron_chain",
+      "results": ["$result"]
     },
     {
       "type": "create:deploying",
-      "ingredients": [
-        {
-          "item": "alloyed:incomplete_steel_upgrade_smithing_template"
-        },
-        {
-          "tag": "c:plates/bronze"
-        }
-      ],
-      "results": [
-        {
-          "id": "alloyed:incomplete_steel_upgrade_smithing_template"
-        }
-      ]
+      "target": "$ingredient",
+      "ingredient": "#c:plates/bronze",
+      "results": ["$result"]
     },
     {
       "type": "create:pressing",
-      "ingredients": [
-        {
-          "item": "alloyed:incomplete_steel_upgrade_smithing_template"
-        }
-      ],
-      "results": [
-        {
-          "id": "alloyed:incomplete_steel_upgrade_smithing_template"
-        }
-      ]
+      "target": "$ingredient",
+      "ingredient": "alloyed:incomplete_steel_upgrade_smithing_template",
+      "results": ["$result"]
     }
   ],
   "transitional_item": {

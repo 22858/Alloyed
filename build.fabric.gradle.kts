@@ -1,7 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("fabric-loom")
+    id("net.fabricmc.fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
 }
@@ -137,58 +137,35 @@ repositories {
             includeGroupAndSubgroups("cc.cassian")
         }
     }
+    flatDir {
+        dirs("libs")
+    }
 
 }
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
-    mappings(loom.layered {
-        officialMojangMappings()
-        if (hasProperty("deps.parchment"))
-            parchment("org.parchmentmc.data:parchment-${property("deps.parchment")}@zip")
-    })
-    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+
+    implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
+    implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
 
     // Mod Menu
-    modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
+    implementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
 
-   modImplementation("com.github.Chocohead:Fabric-ASM:${property("deps.fabric_asm")}") {
+    implementation("com.github.Chocohead:Fabric-ASM:${property("deps.fabric_asm")}") {
         exclude(group = "net.fabricmc")
         exclude(group = "me.shedaniel")
     }
 
-
-    //EMI
-    if (hasProperty("deps.emi")) {
-        modCompileOnly("dev.emi:emi-fabric:${property("deps.emi")}+${property("deps.minecraft")}:api")
-        modLocalRuntime("dev.emi:emi-fabric:${property("deps.emi")}+${property("deps.minecraft")}")
-    }
-
-    modImplementation("maven.modrinth:farmers-delight-refabricated:${property("deps.fd")}") {
+    compileOnly("maven.local:FarmersDelight:${property("deps.fd")}+refabricated") {
         exclude(group = "net.fabricmc")
         exclude(group = "me.shedaniel")
     }
 
-    modCompileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
+    compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
 
 
-    // Create
-    if (stonecutter.eval(stonecutter.current.version, ">=1.21")) {
-        modImplementation("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
-    } else {
-//        modImplementation("com.simibubi.create:create-fabric-1.20.1:${property("deps.create")}")
-        modImplementation("maven.modrinth:create-fabric:${property("deps.create")}") // create fabric's bad about updating their maven ig
-
-    }
-
-    modImplementation("net.createmod.ponder:Ponder-Fabric-${property("deps.minecraft")}:${property("deps.ponder")}")
-    modImplementation("com.tterrag.registrate_fabric:Registrate-Fabric:${property("deps.registrate")}")
-    modImplementation("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")
-
-    val modules = listOf("base", "client_events", "mixin_extensions", "milk", "model_data", "model_loader", "models", "obj_loader", "recipe_book_categories", "tags")
-    for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
-
+    implementation("maven.modrinth:create-fly:${property("deps.create")}")
 }
 
 
@@ -218,7 +195,7 @@ tasks {
 
     register<Copy>("buildAndCollect") {
         group = "build"
-        from(remapJar.map { it.archiveFile })
+        from(jar.map { it.archiveFile })
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
     }
@@ -226,13 +203,25 @@ tasks {
 
 java {
     withSourcesJar()
-    val javaCompat = if (stonecutter.eval(stonecutter.current.version, ">=1.21")) {
-        JavaVersion.VERSION_21
+    val javaCompat = if (stonecutter.eval(stonecutter.current.version, ">26")) {
+        JavaVersion.VERSION_25
     } else {
-        JavaVersion.VERSION_17
+        JavaVersion.VERSION_21
     }
     sourceCompatibility = javaCompat
     targetCompatibility = javaCompat
+}
+
+
+stonecutter {
+    replacements.string {
+        direction = eval(current.version, ">1.21.11")
+        replace("ResourceLocation", "Identifier")
+    }
+    replacements.string {
+        direction = eval(current.version, ">1.21.11")
+        replace("simibubi", "zurrtum")
+    }
 }
 
 val additionalVersionsStr = findProperty("publish.additionalVersions") as String?
@@ -243,8 +232,8 @@ val additionalVersions: List<String> = additionalVersionsStr
     ?: emptyList()
 
 publishMods {
-    file = tasks.remapJar.map { it.archiveFile.get() }
-    additionalFiles.from(tasks.remapSourcesJar.map { it.archiveFile.get() })
+    file = tasks.jar.map { it.archiveFile.get() }
+    additionalFiles.from(tasks.named<org.gradle.jvm.tasks.Jar>("sourcesJar").map { it.archiveFile.get() })
 
     type = if (stonecutter.eval(stonecutter.current.version, ">=1.21.2")) {
         ALPHA
