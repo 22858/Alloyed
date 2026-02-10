@@ -256,14 +256,7 @@ publishMods {
         accessToken = env.MODRINTH_API_KEY.orNull()
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
-        requires("architectury-api")
-        requires("cloth-config")
-        if (hasProperty("deps.emi")) {
-            optional("emi")
-        }
-        if (hasProperty("deps.rrv")) {
-            optional("rrv")
-        }
+        requires("create")
 
     }
 
@@ -272,13 +265,6 @@ publishMods {
         accessToken = env.CURSEFORGE_API_KEY.orNull()
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
-        requires("architectury-api")
-        requires("cloth-config")
-        if (hasProperty("deps.emi")) {
-            optional("emi")
-        }
-        if (hasProperty("deps.rrv")) {
-            optional("rrv")
-        }
+        requires("create")
     }
 }
