@@ -1,5 +1,2 @@
-### Added
-- Support for Fabric 1.20.1.
-
 ### Fixed
-- Horse armour texture not applying correctly.
+- On Fabric, hardcoded issues with Shears and Fishing Rods.

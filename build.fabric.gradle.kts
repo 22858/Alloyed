@@ -187,7 +187,7 @@ dependencies {
     modImplementation("io.github.tropheusj:milk-lib:${property("deps.milk")}")
     modImplementation("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")
 
-    val modules = listOf("accessors", "asm", "base", "client_events", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "tags")
+    val modules = listOf("accessors", "asm", "base", "brewing", "client_events", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "tags")
     for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
 
 }

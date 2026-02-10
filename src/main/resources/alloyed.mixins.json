@@ -4,16 +4,23 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "alloyed.refmap.json",
   "mixins": [
-	"BeltBlockEntityMixin",
-	"BeltBlockMixin",
-	"BeltModelMixin",
-	"BlockEntityTypeMixin",
-	"CogwheelBlockMixin",
-	"ShaftBlockMixin"
+    "BeltBlockEntityMixin",
+    "BeltBlockMixin",
+    "BeltModelMixin",
+    "BlockEntityTypeMixin",
+    "CogwheelBlockMixin",
+    "ShaftBlockMixin",
+    "fishing.FishingHookMixin",
+    "shears.DiggingEnchantmentMixin",
+    "shears.ShearableBlocksMixin",
+    "shears.ShearableMobsMixin",
+    "shears.TripwireBlockMixin"
   ],
   "minVersion": "0.8",
   "injectors": {
-	"defaultRequire": 1
+    "defaultRequire": 1
   },
-  "client": []
+  "client": [
+    "fishing.FishingHookRendererMixin"
+  ]
 }
