@@ -66,13 +66,6 @@ repositories {
         }
     }
     maven {
-        name = "Jitpack (DimLib)"
-        url = uri("https://jitpack.io")
-        content {
-            includeGroupAndSubgroups("com.github.iPortalTeam")
-        }
-    }
-    maven {
         name = "CC: Tweaked"
         url = uri("https://maven.squiddev.cc")
         content {
@@ -121,18 +114,18 @@ repositories {
         }
     }
     maven {
-        name = "Sinytra (FFAPI)"
-        url = uri("https://maven.su5ed.dev/releases")
-        content {
-            includeGroupAndSubgroups("dev.su5ed")
-        }
-    }
-    maven {
         name = "Sinytra"
         url = uri("https://maven.su5ed.dev/releases")
         content {
             includeGroupAndSubgroups("org.sinytra")
             includeGroupAndSubgroups("dev.su5ed")
+        }
+    }
+    maven {
+        name = "JEI - Jared's maven"
+        url = uri("https://maven.blamejared.com/")
+        content {
+            includeGroup("mezz.jei")
         }
     }
 }
@@ -170,7 +163,7 @@ legacyForge {
 dependencies {
     modCompileOnly("dev.emi:emi-forge:${property("deps.emi")}+${property("deps.minecraft")}:api")
     modRuntimeOnly("dev.emi:emi-forge:${property("deps.emi")}+${property("deps.minecraft")}")
-
+    modRuntimeOnly("maven.modrinth:jei:${property("deps.jei")}-forge")
 
     modImplementation("maven.modrinth:farmers-delight:${property("deps.fd")}")
 

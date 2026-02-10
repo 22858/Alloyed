@@ -6,12 +6,15 @@
   "description": "A Create addon adding Bronze and Steel, both items used for compatibility and decoration!",
   "authors": [
     "cassiancc",
+    "asof",
     "MythrilBagels",
     "SpottyTheTurtle",
     "Fortress Nebula"
   ],
   "contact": {
-    "sources": "https://github.com/cassiancc/Create-Alloyed"
+    "sources": "https://github.com/cassiancc/Create-Alloyed",
+    "issues": "https://github.com/cassiancc/Create-Alloyed/issues",
+    "homepage": "https://modrinth.com/mod/create-alloyed"
   },
   "license": "MIT",
   "icon": "alloyed.png",
@@ -24,12 +27,13 @@
       "com.molybdenum.alloyed.fabric.client.FabricClientEntrypoint"
     ],
     "fabric-datagen": [
-      "com.molybdenum.alloyed.fabric.AlloyedDataFabric"
+      "com.molybdenum.alloyed.fabric.FabricDataEntrypoint"
     ]
   },
   "mixins": [
     "alloyed.mixins.json"
   ],
+  "accessWidener": "alloyed.accesswidener",
   "depends": {
     "minecraft": "${minecraft}",
     "fabricloader": "*",

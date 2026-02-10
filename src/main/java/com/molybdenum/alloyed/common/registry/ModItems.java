@@ -139,9 +139,9 @@ public class ModItems {
     public static final ItemEntry<HorseArmorItem> STEEL_HORSE_ARMOR = REGISTRATE
             .item("steel_horse_armor", properties -> new HorseArmorItem(7,
                     //? forge
-                    /*Alloyed.asResource("steel")*/
+                    /*Alloyed.asResource("textures/entity/horse/armor/horse_armor_steel.png")*/
                     //? fabric
-                    "alloyed:steel"
+                    "alloyed_steel"
                     , properties.stacksTo(1)))
             .register();
 

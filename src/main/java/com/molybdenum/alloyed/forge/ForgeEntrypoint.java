@@ -27,6 +27,7 @@ public class ForgeEntrypoint {
 			AlloyedClient.onClientInit();
 			eventBus.addListener(ForgeEntrypoint::clientSetup);
 		}
+		eventBus.addListener(ForgeEntrypoint::commonSetup);
 	}
 
 	public static void clientSetup(FMLClientSetupEvent event) {

@@ -29,10 +29,10 @@ public class ModSoundEvents {
             () -> SoundEvent.createVariableRangeEvent(Alloyed.asResource("bronze_bell")));
 
 	private static Supplier<SoundEvent> register(String id, Supplier<SoundEvent> soundEventSupplier) {
-		//? fabric
+		//? fabric {
 		SoundEvent register = Registry.register(BuiltInRegistries.SOUND_EVENT, id, soundEventSupplier.get());
 		return ()->register;
-		//? forge
+		//?} else if forge
 		/*return SOUND_EVENTS.register(id, soundEventSupplier);*/
 	}
 
