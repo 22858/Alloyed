@@ -1,14 +1,10 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    {
-      "item": "alloyed:exposed_bronze_block"
-    },
-    {
-      "item": "minecraft:honeycomb"
-    }
-  ],
-  "result": {
-    "id": "alloyed:waxed_exposed_bronze_block"
-  }
+ "type": "minecraft:crafting_shapeless",
+ "ingredients": [
+  "alloyed:exposed_bronze_block",
+  "minecraft:honeycomb"
+ ],
+ "result": {
+  "id": "alloyed:waxed_exposed_bronze_block"
+ }
 }

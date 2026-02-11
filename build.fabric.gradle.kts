@@ -149,6 +149,8 @@ dependencies {
     implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
     implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
 
+    implementation("cc.cassian.rrv:reliable-recipe-viewer-fabric:${property("deps.rrv")}")
+
     // Mod Menu
     implementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
 

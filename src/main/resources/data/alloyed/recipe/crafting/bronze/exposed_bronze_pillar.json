@@ -1,16 +1,14 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "#": {
-      "item": "alloyed:cut_exposed_bronze"
-    }
-  },
-  "pattern": [
-    "#",
-    "#"
-  ],
-  "result": {
-    "id": "alloyed:exposed_bronze_pillar",
-    "count": 2
-  }
+ "type": "minecraft:crafting_shaped",
+ "key": {
+  "#": "alloyed:cut_exposed_bronze"
+ },
+ "pattern": [
+  "#",
+  "#"
+ ],
+ "result": {
+  "id": "alloyed:exposed_bronze_pillar",
+  "count": 2
+ }
 }

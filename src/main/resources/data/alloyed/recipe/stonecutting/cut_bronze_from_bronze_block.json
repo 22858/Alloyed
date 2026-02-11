@@ -1,1 +1,7 @@
-{"type":"minecraft:stonecutting","ingredient":{"tag":"c:storage_blocks/bronze"},"result":{"id":"alloyed:cut_bronze","count":4}}
+{
+ "type": "minecraft:stonecutting",
+ "result": {
+  "id": "alloyed:cut_bronze",
+  "count": 4
+ }
+}

@@ -1,16 +1,14 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "#": {
-      "tag": "c:ingots/bronze"
-    }
-  },
-  "pattern": [
-    "###",
-    "###",
-    "###"
-  ],
-  "result": {
-    "id": "alloyed:bronze_block"
-  }
+ "type": "minecraft:crafting_shaped",
+ "key": {
+  "#": "#c:ingots/bronze"
+ },
+ "pattern": [
+  "###",
+  "###",
+  "###"
+ ],
+ "result": {
+  "id": "alloyed:bronze_block"
+ }
 }
