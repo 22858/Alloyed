@@ -15,9 +15,9 @@ import org.spongepowered.asm.mixin.injection.At;
 public class TripwireBlockMixin {
 
 	//? fabric {
-	@WrapOperation(method = "playerWillDestroy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 0))
-	private boolean shear(ItemStack instance, Item item, Operation<Boolean> original) {
-		return instance.is(ModItems.STEEL_SHEARS.get()) || original.call(instance, item);
+	@WrapOperation(method = "playerWillDestroy", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z", ordinal = 0))
+	private boolean shear(ItemStack instance, Object o, Operation<Boolean> original) {
+		return instance.is(ModItems.STEEL_SHEARS.get()) || original.call(instance, o);
 	}
 	//?}
 }
