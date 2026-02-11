@@ -1,4 +1,4 @@
-package com.molybdenum.alloyed.mixin;
+package com.molybdenum.alloyed.mixin.create;
 
 import com.molybdenum.alloyed.common.util.EncasingHelper;
 import com.zurrtum.create.content.kinetics.simpleRelays.CogWheelBlock;

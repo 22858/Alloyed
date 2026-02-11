@@ -1,11 +1,10 @@
-package com.molybdenum.alloyed.mixin;
+package com.molybdenum.alloyed.mixin.create;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.molybdenum.alloyed.client.registry.ModPartialModels;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
 import com.molybdenum.alloyed.common.content.extensions.BeltModelExtension;
-import com.zurrtum.create.client.AllPartialModels;
 import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
 import com.zurrtum.create.client.infrastructure.model.BeltModel;
 import com.zurrtum.create.client.infrastructure.model.WrapperBlockStateModel;

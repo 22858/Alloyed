@@ -1,16 +1,11 @@
-package com.molybdenum.alloyed.mixin;
+package com.molybdenum.alloyed.mixin.create;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
-import com.molybdenum.alloyed.common.registry.ModBlocks;
-import com.zurrtum.create.catnip.nbt.NBTHelper;
 import com.zurrtum.create.content.kinetics.base.KineticBlockEntity;
 import com.zurrtum.create.content.kinetics.belt.BeltBlock;
 import com.zurrtum.create.content.kinetics.belt.BeltBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
