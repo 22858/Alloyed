@@ -1,6 +1,7 @@
 package com.molybdenum.alloyed;
 
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
+import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.*;
 import com.molybdenum.alloyed.common.util.Platform;
@@ -27,6 +28,10 @@ public class Alloyed {
 
         //? neoforge
         /*NeoForgeMod.enableMilkFluid();*/
+
+        if (Platform.isLoaded("create")) {
+            CreateAlloyedBlocks.register();
+        }
 
         ModBlockSetTypes.register();
         ModBlocks.register();

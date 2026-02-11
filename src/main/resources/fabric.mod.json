@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "id": "alloyed",
   "version": "${version}",
-  "name": "Create: Alloyed",
-  "description": "A Create addon adding Bronze and Steel, both items used for compatibility and decoration!",
+  "name": "Alloyed",
+  "description": "A former Create addon adding Bronze and Steel, both items used for compatibility and decoration!",
   "authors": [
     "cassiancc",
     "asof",
@@ -37,7 +37,6 @@
   "depends": {
     "minecraft": "${minecraft}",
     "fabricloader": "*",
-    "fabric-api": "*",
-    "create": ">6.0.0"
+    "fabric-api": "*"
   }
 }

@@ -1,6 +1,7 @@
 package com.molybdenum.alloyed.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.zurrtum.create.catnip.nbt.NBTHelper;
@@ -111,10 +112,10 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
 
         if (create_alloyed$alloyedCasing == AlloyedCasingType.STEEL)
             level.levelEvent(2001, worldPosition,
-                    Block.getId(ModBlocks.STEEL_CASING.getDefaultState()));
+                    Block.getId(CreateAlloyedBlocks.STEEL_CASING.getDefaultState()));
         else if (create_alloyed$alloyedCasing == AlloyedCasingType.BRONZE)
             level.levelEvent(2001, worldPosition,
-                    Block.getId(ModBlocks.BRONZE_CASING.getDefaultState()));
+                    Block.getId(CreateAlloyedBlocks.BRONZE_CASING.getDefaultState()));
         if (blockState.getValue(BeltBlock.CASING) != shouldBlockHaveCasing)
             KineticBlockEntity.switchToBlockState(level, worldPosition,
                     blockState.setValue(BeltBlock.CASING, shouldBlockHaveCasing));

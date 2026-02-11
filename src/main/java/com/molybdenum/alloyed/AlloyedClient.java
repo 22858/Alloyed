@@ -1,16 +1,18 @@
 package com.molybdenum.alloyed;
 
-import com.molybdenum.alloyed.client.ponder.AlloyedPonderPlugin;
 import com.molybdenum.alloyed.client.registry.ModPartialModels;
-import com.zurrtum.create.client.ponder.foundation.PonderIndex;
+import com.molybdenum.alloyed.common.compat.create.CreateCompat;
+import com.molybdenum.alloyed.common.util.Platform;
 
 public class AlloyedClient {
     public static void onClientInit() {
-        ModPartialModels.register();
+        if (Platform.isLoaded("create"))
+            ModPartialModels.register();
     }
 
     public static void clientSetup() {
         // Register ponders
-        PonderIndex.addPlugin(new AlloyedPonderPlugin());
+        if (Platform.isLoaded("create"))
+            CreateCompat.registerPonders();
     }
 }

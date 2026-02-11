@@ -1,6 +1,7 @@
 package com.molybdenum.alloyed.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.registry.ModTags;
@@ -40,11 +41,11 @@ public abstract class BeltBlockMixin implements IBE<BeltBlockEntity> {
         ItemStack heldItem = player.getItemInHand(handIn);
 
         if (heldItem.is(ModTags.Items.CASING)) {
-            if (heldItem.is(ModBlocks.STEEL_CASING.get().asItem())) {
+            if (heldItem.is(CreateAlloyedBlocks.STEEL_CASING.get().asItem())) {
                 withBlockEntityDo(world, pos, be ->
                         ((BeltBlockEntityExtension) be).create_alloyed$setAlloyedCasingType(BeltBlockEntityExtension.AlloyedCasingType.STEEL));
             }
-            if (heldItem.is(ModBlocks.BRONZE_CASING.get().asItem())) {
+            if (heldItem.is(CreateAlloyedBlocks.BRONZE_CASING.get().asItem())) {
                 withBlockEntityDo(world, pos, be ->
                         ((BeltBlockEntityExtension) be).create_alloyed$setAlloyedCasingType(BeltBlockEntityExtension.AlloyedCasingType.BRONZE));
             }

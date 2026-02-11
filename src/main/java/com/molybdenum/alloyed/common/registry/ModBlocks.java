@@ -3,16 +3,7 @@ package com.molybdenum.alloyed.common.registry;
 import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.common.content.blocks.BronzeBellBlock;
 import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
-import com.molybdenum.alloyed.common.content.blocks.AlloyedShaftBlock;
-import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
 import com.molybdenum.alloyed.common.util.Platform;
-import com.zurrtum.create.client.foundation.block.connected.CTSpriteShiftEntry;
-import com.zurrtum.create.content.decoration.MetalLadderBlock;
-import com.zurrtum.create.content.decoration.MetalScaffoldingBlock;
-import com.zurrtum.create.content.decoration.encasing.CasingBlock;
-import com.zurrtum.create.content.decoration.palettes.ConnectedPillarBlock;
-import com.zurrtum.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
-import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -29,7 +20,7 @@ import java.util.function.Function;
 
 import static com.molybdenum.alloyed.Alloyed.MOD_ID;
 
-@SuppressWarnings({"unused", "removal"})
+@SuppressWarnings({"unused"})
 public class ModBlocks {
     // BRONZE
     public static final List<BlockEntry<? extends Block>> BRONZE_BLOCK = registerBronzeSet("bronze_block", WeatheringCopper.WeatherState.UNAFFECTED);
@@ -43,18 +34,6 @@ public class ModBlocks {
     public static final List<BlockEntry<? extends Block>> CUT_WEATHERED_BRONZE = registerCutBronzeSet("cut_weathered_bronze", WeatheringCopper.WeatherState.WEATHERED);
     public static final List<BlockEntry<? extends Block>> CUT_OXIDIZED_BRONZE = registerCutBronzeSet("cut_oxidized_bronze", WeatheringCopper.WeatherState.OXIDIZED);
 
-    public static final List<BlockEntry<? extends Block>> BRONZE_PILLAR = registerBronzePillarSet("bronze_pillar", WeatheringCopper.WeatherState.UNAFFECTED, ModSpriteShifts.BRONZE_PILLAR, ModSpriteShifts.BRONZE_CAP);
-    public static final List<BlockEntry<? extends Block>> EXPOSED_BRONZE_PILLAR = registerBronzePillarSet("exposed_bronze_pillar", WeatheringCopper.WeatherState.EXPOSED, ModSpriteShifts.EXPOSED_BRONZE_PILLAR, ModSpriteShifts.EXPOSED_BRONZE_CAP);
-    public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_PILLAR = registerBronzePillarSet("weathered_bronze_pillar", WeatheringCopper.WeatherState.WEATHERED, ModSpriteShifts.WEATHERED_BRONZE_PILLAR, ModSpriteShifts.WEATHERED_BRONZE_CAP);
-    public static final List<BlockEntry<? extends Block>> OXIDIZED_BRONZE_PILLAR = registerBronzePillarSet("oxidized_bronze_pillar", WeatheringCopper.WeatherState.OXIDIZED, ModSpriteShifts.OXIDIZED_BRONZE_PILLAR, ModSpriteShifts.OXIDIZED_BRONZE_CAP);
-
-    public static final BlockEntry<CasingBlock> BRONZE_CASING = registerBlock("bronze_casing", CasingBlock::new, ModBlocks.bronzeProperties());
-
-    public static final BlockEntry<AlloyedShaftBlock> BRONZE_ENCASED_SHAFT = registerBlock("bronze_encased_shaft", p -> new AlloyedShaftBlock(p, ModBlocks.BRONZE_CASING::get), ModBlocks.bronzeProperties(), false);
-
-    public static final BlockEntry<EncasedCogwheelBlock> BRONZE_ENCASED_COGWHEEL = registerBlock("bronze_encased_cogwheel", p -> new EncasedCogwheelBlock(p, false, ModBlocks.BRONZE_CASING.get()), ModBlocks.bronzeProperties(), false);
-
-    public static final BlockEntry<EncasedCogwheelBlock> BRONZE_ENCASED_LARGE_COGWHEEL = registerBlock("bronze_encased_large_cogwheel", p -> new EncasedCogwheelBlock(p, true, ModBlocks.BRONZE_CASING.get()), ModBlocks.bronzeProperties(), false);
 
     public static final BlockEntry<BronzeBellBlock> BRONZE_BELL = registerBlock("bronze_bell", BronzeBellBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
             .sound(SoundType.ANVIL));
@@ -64,19 +43,6 @@ public class ModBlocks {
     // STEEL
 
     public static final BlockEntry<Block> STEEL_BLOCK = registerBlock("steel_block", Block::new, ModBlocks.steelProperties(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)));
-
-    public static final BlockEntry<CasingBlock> STEEL_CASING = registerBlock("steel_casing", CasingBlock::new, ModBlocks.steelProperties(BlockBehaviour.Properties.of()));
-
-    public static final BlockEntry<AlloyedShaftBlock> STEEL_ENCASED_SHAFT = registerBlock("steel_encased_shaft", p -> new AlloyedShaftBlock(p, ModBlocks.STEEL_CASING::get), ModBlocks.steelProperties(), false);
-
-    public static final BlockEntry<EncasedCogwheelBlock> STEEL_ENCASED_COGWHEEL = registerBlock("steel_encased_cogwheel", p -> new EncasedCogwheelBlock(p, false, ModBlocks.STEEL_CASING.get()), ModBlocks.steelProperties(), false);
-
-
-    public static final BlockEntry<EncasedCogwheelBlock> STEEL_ENCASED_LARGE_COGWHEEL = registerBlock("steel_encased_large_cogwheel", p -> new EncasedCogwheelBlock(p, true, ModBlocks.STEEL_CASING.get()), ModBlocks.steelProperties(), false);
-
-
-    public static final BlockEntry<MetalScaffoldingBlock> STEEL_SCAFFOLD =
-            registerBlock("steel_scaffolding", MetalScaffoldingBlock::new);
 
 
     public static final BlockEntry<SteelDoorBlock> STEEL_DOOR =
@@ -95,8 +61,6 @@ public class ModBlocks {
     public static final BlockEntry<IronBarsBlock> STEEL_BARS = registerBlock("steel_bars", IronBarsBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS));
 
     public static final BlockEntry<TrapDoorBlock> STEEL_TRAPDOOR = registerBlock("steel_trapdoor", properties -> new TrapDoorBlock(ModBlockSetTypes.STEEL, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_TRAPDOOR));
-
-    public static final BlockEntry<MetalLadderBlock> STEEL_LADDER = registerBlock("steel_ladder", MetalLadderBlock::new, BlockBehaviour.Properties.of());
 
     public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = registerBlock("steel_mesh_fence", FenceBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN));
 
@@ -122,13 +86,6 @@ public class ModBlocks {
     }
 
     public static void fixBronzeBlocks() {
-    }
-
-    private static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state, CTSpriteShiftEntry pillar, CTSpriteShiftEntry cap) {
-        var block = registerBlock(id, (properties)-> new WeatheringBronzePillarBlock(state, properties), ModBlocks.bronzeProperties());
-        var waxedBlock = registerBlock("waxed_"+id, ConnectedPillarBlock::new, ModBlocks.bronzeProperties());
-        Platform.addWaxable(block.get(), waxedBlock.get());
-        return List.of(block, waxedBlock);
     }
 
     private static List<BlockEntry<? extends Block>> registerBronzeSet(String id, WeatheringCopper.WeatherState state) {
@@ -199,14 +156,11 @@ public class ModBlocks {
                 .requiresCorrectToolForDrops());
     }
 
-
-
-
-    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings) {
         return registerBlock(id, factory, settings, true);
     }
 
-    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings, boolean b) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings, boolean b) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(MOD_ID, id));
         T block = factory.apply(settings.setId(key));
         var entry = Registry.register(BuiltInRegistries.BLOCK, key, block);
@@ -217,11 +171,11 @@ public class ModBlocks {
     }
 
 
-    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory) {
         return registerBlock(id, factory, BlockBehaviour.Properties.of());
     }
 
-    private static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, Block block) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, Block block) {
         return registerBlock(id, factory, BlockBehaviour.Properties.ofFullCopy(block));
     }
 }
