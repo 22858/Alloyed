@@ -1,0 +1,24 @@
+{
+  "layers": {
+    "horse_body": [
+      {
+        "texture": "alloyed:steel"
+      }
+    ],
+    "humanoid": [
+      {
+        "texture": "alloyed:steel"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "alloyed:steel"
+      }
+    ],
+    "nautilus_body": [
+      {
+        "texture": "alloyed:steel"
+      }
+    ]
+  }
+}

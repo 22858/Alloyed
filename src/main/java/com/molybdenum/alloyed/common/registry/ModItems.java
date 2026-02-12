@@ -53,6 +53,11 @@ public class ModItems {
             properties -> new Item(properties.sword(ModItemTiers.STEEL, 3, -2.4F))
     );
 
+    public static final ItemEntry<Item> STEEL_SPEAR = handheldItem(
+            "steel_spear",
+            properties -> new Item(properties.spear(ModItemTiers.STEEL, 0.95F, 1.1F, 0.5F, 2.5F, 8.0F, 6.75F, 5.1F, 11.25F, 4.6F))
+    );
+
 
     public static final ItemEntry<Item> STEEL_PICKAXE = handheldItem(
             "steel_pickaxe",
@@ -92,6 +97,8 @@ public class ModItems {
     public static final ItemEntry<Item> STEEL_BOOTS = registerItem("steel_boots", properties -> new Item(properties.durability(390).humanoidArmor(ModArmourMaterials.STEEL, ArmorType.BOOTS)));
 
     public static final ItemEntry<Item> STEEL_HORSE_ARMOR = registerItem("steel_horse_armor", properties -> new Item(properties.stacksTo(1).horseArmor(ModArmourMaterials.STEEL)));
+
+    public static final ItemEntry<Item> STEEL_NAUTILUS_ARMOR = registerItem("steel_nautilus_armor", properties -> new Item(properties.stacksTo(1).nautilusArmor(ModArmourMaterials.STEEL)));
 
     // End Item Entries
 

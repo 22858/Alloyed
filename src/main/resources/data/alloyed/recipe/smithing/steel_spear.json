@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "base": "minecraft:iron_spear",
+  "addition": "#c:ingots/steel",
+  "result": {
+    "count": 1,
+    "id": "alloyed:steel_spear"
+  }
+}
