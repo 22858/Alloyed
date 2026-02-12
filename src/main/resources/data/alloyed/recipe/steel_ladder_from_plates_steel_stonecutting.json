@@ -4,19 +4,5 @@
  "result": {
   "id": "alloyed:steel_ladder",
   "count": 2
- },
- "fabric:load_conditions": [
-  {
-   "condition": "fabric:all_mods_loaded",
-   "values": [
-    "create"
-   ]
-  }
- ],
- "neoforge:conditions": [
-  {
-   "type": "neoforge:mod_loaded",
-   "modid": "create"
-  }
- ]
+ }
 }
