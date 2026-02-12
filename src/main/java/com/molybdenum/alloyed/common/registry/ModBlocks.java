@@ -1,8 +1,10 @@
 package com.molybdenum.alloyed.common.registry;
 
 import com.molybdenum.alloyed.Alloyed;
+import com.molybdenum.alloyed.common.compat.create.CreateCompat;
 import com.molybdenum.alloyed.common.content.blocks.BronzeBellBlock;
 import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
+import com.molybdenum.alloyed.common.content.blocks.WeatheringRotatedPillarBlock;
 import com.molybdenum.alloyed.common.util.Platform;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,6 +35,11 @@ public class ModBlocks {
     public static final List<BlockEntry<? extends Block>> CUT_EXPOSED_BRONZE = registerCutBronzeSet("cut_exposed_bronze", WeatheringCopper.WeatherState.EXPOSED);
     public static final List<BlockEntry<? extends Block>> CUT_WEATHERED_BRONZE = registerCutBronzeSet("cut_weathered_bronze", WeatheringCopper.WeatherState.WEATHERED);
     public static final List<BlockEntry<? extends Block>> CUT_OXIDIZED_BRONZE = registerCutBronzeSet("cut_oxidized_bronze", WeatheringCopper.WeatherState.OXIDIZED);
+
+    public static final List<BlockEntry<? extends Block>> BRONZE_PILLAR = registerBronzePillarSet("bronze_pillar", WeatheringCopper.WeatherState.UNAFFECTED);
+    public static final List<BlockEntry<? extends Block>> EXPOSED_BRONZE_PILLAR = registerBronzePillarSet("exposed_bronze_pillar", WeatheringCopper.WeatherState.EXPOSED);
+    public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_PILLAR = registerBronzePillarSet("weathered_bronze_pillar", WeatheringCopper.WeatherState.WEATHERED);
+    public static final List<BlockEntry<? extends Block>> OXIDIZED_BRONZE_PILLAR = registerBronzePillarSet("oxidized_bronze_pillar", WeatheringCopper.WeatherState.OXIDIZED);
 
 
     public static final BlockEntry<BronzeBellBlock> BRONZE_BELL = registerBlock("bronze_bell", BronzeBellBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
@@ -86,6 +93,17 @@ public class ModBlocks {
     }
 
     public static void fixBronzeBlocks() {
+    }
+
+    private static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state) {
+        if (Platform.isLoaded("create")) {
+            return CreateCompat.registerBronzePillarSet(id, state);
+        } else {
+            var block = registerBlock(id, (properties)-> new WeatheringRotatedPillarBlock(state, properties), ModBlocks.bronzeProperties());
+            var waxedBlock = registerBlock("waxed_"+id, RotatedPillarBlock::new, ModBlocks.bronzeProperties());
+            Platform.addWaxable(block.get(), waxedBlock.get());
+            return List.of(block, waxedBlock);
+        }
     }
 
     private static List<BlockEntry<? extends Block>> registerBronzeSet(String id, WeatheringCopper.WeatherState state) {

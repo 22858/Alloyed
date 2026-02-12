@@ -1,7 +1,7 @@
 package com.molybdenum.alloyed.common.content.blocks;
 
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
-import com.zurrtum.create.AllItems;
+import com.molybdenum.alloyed.common.util.AlloyedUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,8 +24,6 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-
-@SuppressWarnings("deprecation")
 public class BronzeBellBlock extends Block {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final IntegerProperty NOTE = BlockStateProperties.NOTE;
@@ -73,7 +71,7 @@ public class BronzeBellBlock extends Block {
     @Override
     protected InteractionResult useItemOn(ItemStack arg, BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
         if (isProperHit(pHit.getDirection())) {
-            if (arg.is(AllItems.WRENCH)) {
+            if (AlloyedUtil.isWrench(arg)) {
                 pState = pState.cycle(NOTE);
                 pLevel.setBlock(pPos, pState, 3);
                 playNote(pState, pLevel, pPos, pHit);

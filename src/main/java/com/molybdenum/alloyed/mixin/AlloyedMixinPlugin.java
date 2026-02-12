@@ -27,7 +27,7 @@ public class AlloyedMixinPlugin implements IMixinConfigPlugin {
 		}
 		return true;
 	}
-	
+
 
 	@Override
 	public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
