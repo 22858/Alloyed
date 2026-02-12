@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.molybdenum.alloyed.client.registry.ModPartialModels;
 import com.molybdenum.alloyed.common.content.extensions.BeltBlockEntityExtension;
 import com.molybdenum.alloyed.common.content.extensions.BeltModelExtension;
+import com.molybdenum.alloyed.common.registry.ModSpriteShifts;
 import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
 import com.zurrtum.create.client.infrastructure.model.BeltModel;
 import com.zurrtum.create.client.infrastructure.model.WrapperBlockStateModel;
@@ -35,11 +36,6 @@ public abstract class BeltModelMixin
 
 	@Shadow
 	protected abstract BlockModelPart replaceQuads(TextureAtlasSprite replace, BlockModelPart part);
-
-	@Shadow
-	@Final
-	private static SpriteShiftEntry SPRITE_SHIFT;
-
 	//? neoforge {
     /*@Inject(
             method = "getQuads",
@@ -123,6 +119,7 @@ public abstract class BeltModelMixin
 				}
 
 			} else {
+				var SPRITE_SHIFT = ModSpriteShifts.STEEL_BELT_CASING;
 				TextureAtlasSprite original = SPRITE_SHIFT.getOriginal();
 				if (beltBlockEntityExtension.create_alloyed$isCovered()) {
 					boolean alongX = state.getValue(BeltBlock.HORIZONTAL_FACING).getAxis() == Direction.Axis.X;
