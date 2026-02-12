@@ -1,10 +1,6 @@
 {
   "type": "create:pressing",
-  "ingredients": [
-    {
-      "tag": "c:ingots/bronze"
-    }
-  ],
+  "ingredient":  "#c:ingots/bronze",
   "results": [
     {
       "id": "alloyed:bronze_sheet"

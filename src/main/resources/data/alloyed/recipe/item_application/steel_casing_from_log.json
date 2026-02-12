@@ -1,13 +1,7 @@
 {
   "type": "create:item_application",
-  "ingredients": [
-    {
-      "tag": "c:stripped_logs"
-    },
-    {
-      "tag": "c:ingots/steel"
-    }
-  ],
+  "target": "#c:stripped_logs",
+  "ingredient": "#c:ingots/steel",
   "results": [
     {
       "id": "alloyed:steel_casing"

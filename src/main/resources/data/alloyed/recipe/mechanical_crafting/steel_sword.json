@@ -2,12 +2,8 @@
   "type": "create:mechanical_crafting",
   "accept_mirrored": true,
   "key": {
-    "#": {
-      "tag": "c:ingots/steel"
-    },
-    "/": {
-      "tag": "c:rods/wooden"
-    }
+    "#": "#c:ingots/steel",
+    "/": "#c:rods/wooden"
   },
   "pattern": [
     " # ",

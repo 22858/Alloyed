@@ -2,12 +2,8 @@
   "type": "create:mechanical_crafting",
   "accept_mirrored": true,
   "key": {
-    "#": {
-      "tag": "c:ingots/steel"
-    },
-    "I": {
-      "item": "minecraft:string"
-    }
+    "#": "#c:ingots/steel",
+    "I": "minecraft:string"
   },
   "pattern": [
     "  #",

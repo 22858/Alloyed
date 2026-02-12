@@ -1,13 +1,7 @@
 {
   "type": "create:item_application",
-  "ingredients": [
-    {
-      "tag": "c:stripped_logs"
-    },
-    {
-      "tag": "c:ingots/bronze"
-    }
-  ],
+  "target": "#c:stripped_logs",
+  "ingredient": "#c:ingots/bronze",
   "results": [
     {
       "id": "alloyed:bronze_casing"
