@@ -98,11 +98,14 @@
   "item.alloyed.steel_sheet": "Steel Sheet",
   "item.alloyed.steel_shovel": "Steel Shovel",
   "item.alloyed.steel_sword": "Steel Sword",
-  "upgrade.alloyed.netherite_upgrade": "Steel Upgrade",
-  "item.alloyed.incomplete_steel_upgrade_smithing_template": "Incomplete Steel Upgrade",
-  "item.alloyed.netherite_upgrade": "Steel Upgrade",
-  "item.alloyed.steel_upgrade_smithing_template": "Smithing Template",
-  "item.alloyed.smithing_template.steel_upgrade.applies_to": "Chainmail Armor",
-  "item.alloyed.smithing_template.steel_upgrade.ingredients": "Steel Ingot",
-  "itemGroup.alloyed.main_group": "Alloyed"
+  "itemGroup.alloyed.main_group": "Alloyed",
+  "tag.item.c.ingots.bronze": "Bronze Ingots",
+  "tag.item.c.ingots.steel": "Steel Ingots",
+  "tag.item.c.nuggets.bronze": "Bronze Nuggets",
+  "tag.item.c.nuggets.steel": "Steel Nuggets",
+  "tag.item.c.plates.bronze": "Bronze Plates",
+  "tag.item.c.plates.steel": "Steel Plates",
+  "tag.item.c.storage_blocks.bronze": "Bronze Blocks",
+  "tag.item.c.storage_blocks.steel": "Steel Blocks",
+  "tag.item.alloyed.bronze_instruments": "Bronze Instruments"
 }
