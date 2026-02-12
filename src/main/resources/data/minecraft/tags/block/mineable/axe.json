@@ -1,13 +1,13 @@
 {
   "replace": false,
   "values": [
-    "alloyed:steel_casing",
-    "alloyed:steel_encased_shaft",
-    "alloyed:steel_encased_cogwheel",
-    "alloyed:steel_encased_large_cogwheel",
-    "alloyed:bronze_casing",
-    "alloyed:bronze_encased_shaft",
-    "alloyed:bronze_encased_cogwheel",
-    "alloyed:bronze_encased_large_cogwheel"
+    { "id": "alloyed:steel_casing", "required": false },
+    { "id": "alloyed:steel_encased_shaft", "required": false },
+    { "id": "alloyed:steel_encased_cogwheel", "required": false },
+    { "id": "alloyed:steel_encased_large_cogwheel", "required": false },
+    { "id": "alloyed:bronze_casing", "required": false },
+    { "id": "alloyed:bronze_encased_shaft", "required": false },
+    { "id": "alloyed:bronze_encased_cogwheel", "required": false },
+    { "id": "alloyed:bronze_encased_large_cogwheel", "required": false }
   ]
 }

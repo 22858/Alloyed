@@ -1,7 +1,6 @@
 package com.molybdenum.alloyed.common.registry;
 
 import com.molybdenum.alloyed.Alloyed;
-import com.molybdenum.alloyed.common.content.items.SteelUpgradeSmithingTemplateItem;
 import com.molybdenum.alloyed.common.item.ModArmourMaterials;
 import com.molybdenum.alloyed.common.item.ModItemTiers;
 import net.minecraft.core.Registry;
@@ -46,10 +45,6 @@ public class ModItems {
     public static final ItemEntry<Item> BRONZE_SHEET = taggedIngredient("bronze_sheet", ModTags.Items.BRONZE_SHEET);
 
     public static final ItemEntry<Item> STEEL_SHEET = taggedIngredient("steel_sheet", ModTags.Items.STEEL_SHEET);
-
-    public static final ItemEntry<SteelUpgradeSmithingTemplateItem> STEEL_SMITHING_UPGRADE_TEMPLATE = registerItem("steel_upgrade_smithing_template", SteelUpgradeSmithingTemplateItem::new);
-
-    public static final ItemEntry<Item> INCOMPLETE_STEEL_SMITHING_UPGRADE_TEMPLATE = registerItem("incomplete_steel_upgrade_smithing_template", Item::new, new Item.Properties(), true);
 
     // Steel toolset.
 

@@ -1,14 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "tag": "c:ingots/steel"
-  },
-  "base": {
-    "item": "minecraft:chainmail_helmet"
-  },
-  "template": {
-    "item": "alloyed:steel_upgrade_smithing_template"
-  },
+  "addition": "#c:ingots/steel",
+  "base":"minecraft:chainmail_helmet",
   "result": {
     "count": 1,
     "id":  "alloyed:steel_helmet"

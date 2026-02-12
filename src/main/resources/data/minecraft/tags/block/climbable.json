@@ -1,6 +1,6 @@
 {
   "values": [
-    "alloyed:steel_scaffolding",
-    "alloyed:steel_ladder"
+    { "id": "alloyed:steel_scaffolding", "required": false },
+    { "id": "alloyed:steel_ladder", "required": false }
   ]
 }

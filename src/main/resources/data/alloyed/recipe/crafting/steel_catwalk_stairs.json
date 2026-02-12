@@ -10,13 +10,20 @@
  },
  "result": {
   "id": "alloyed:steel_catwalk_stairs",
-  "item": "alloyed:steel_catwalk_stairs",
   "count": 1
  },
  "neoforge:conditions": [
   {
    "type": "neoforge:mod_loaded",
    "modid": "createdeco"
+  }
+ ],
+ "fabric:load_conditions": [
+  {
+   "condition": "fabric:all_mods_loaded",
+   "values": [
+    "createdeco"
+   ]
   }
  ]
 }
