@@ -10,8 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 //? neoforge {
-/*import net.neoforged.neoforge.client.model.data.ModelData;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+/*import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 *///?}
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -33,22 +32,6 @@ public class BeltBlockEntityMixin extends KineticBlockEntity implements BeltBloc
     public BeltBlockEntityMixin(BlockEntityType<?> typeIn, BlockPos pos, BlockState state) {
         super(typeIn, pos, state);
     }
-
-    //? neoforge {
-    /*@Inject(
-            method = "getModelData",
-            at = @At("TAIL"),
-            remap = false,
-            cancellable = true
-    )
-    private void setModelDetails(CallbackInfoReturnable<ModelData> cir) {
-        cir.setReturnValue(ModelData.builder()
-                .with(BeltModel.CASING_PROPERTY, casing)
-                .with(BeltModelExtension.ALLOYED_CASING_PROPERTY, create_alloyed$alloyedCasing)
-                .with(BeltModel.COVER_PROPERTY, covered)
-                .build());
-    }
-    *///?}
 
     @Inject(method = "write", at = @At(value = "RETURN"), remap = false)
     private void writeAlloyedCasingNBT(ValueOutput view, boolean clientPacket, CallbackInfo ci) {

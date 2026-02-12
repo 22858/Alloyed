@@ -4,8 +4,7 @@ package com.molybdenum.alloyed.common.util;
 import net.fabricmc.fabric.api.registry.OxidizableBlocksRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 //?} else {
-/*import com.zurrtum.create.foundation.block.CopperRegistries;
-import net.neoforged.fml.ModList;
+/*import net.neoforged.fml.ModList;
 *///?}
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.Block;
@@ -21,15 +20,11 @@ public class Platform {
 	}
 
 	public static void addWaxable(Block block, Block waxedBlock) {
-		//? neoforge
-		/*CopperRegistries.addWaxable((Holder<Block>) block, (Holder<Block>) waxedBlock);*/
 		//? fabric
 		OxidizableBlocksRegistry.registerWaxable(block, waxedBlock);
 	}
 
 	public static void addWeathering(Block block, Block waxedBlock) {
-		//? neoforge
-		/*CopperRegistries.addWeathering((Holder<Block>) block, (Holder<Block>) waxedBlock);*/
 		//? fabric
 		OxidizableBlocksRegistry.registerNextStage(block, waxedBlock);
 	}

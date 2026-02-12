@@ -83,6 +83,20 @@ repositories {
             includeGroupAndSubgroups("com.tterrag")
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Cassian's Maven"
+                url = uri("https://maven.cassian.cc")
+            }
+        }
+        filter {
+            includeGroupAndSubgroups("cc.cassian")
+        }
+    }
+    flatDir {
+        dirs("libs")
+    }
 }
 
 neoForge {
@@ -118,23 +132,17 @@ neoForge {
 
 dependencies {
 
-    if (hasProperty("deps.emi")) {
-        compileOnly("dev.emi:emi-neoforge:${property("deps.emi")}+${property("deps.minecraft")}:api")
-        implementation("dev.emi:emi-neoforge:${property("deps.emi")}+${property("deps.minecraft")}")
+    implementation("cc.cassian.rrv:reliable-recipe-viewer-neoforge:${property("deps.rrv")}")
+
+    compileOnly("maven.local:FarmersDelight:${property("deps.fd")}+refabricated") {
+        exclude(group = "net.fabricmc")
+        exclude(group = "me.shedaniel")
     }
 
-
-    implementation("maven.modrinth:farmers-delight:${property("deps.fd")}")
-
-    implementation("maven.modrinth:create-deco:${property("deps.create_deco")}")
+    compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
 
     // Create
-    implementation("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }
-    implementation("net.createmod.ponder:ponder-neoforge:${property("deps.ponder")}+mc${property("deps.minecraft")}")
-    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${property("deps.minecraft")}:${property("deps.flywheel")}")
-    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${property("deps.minecraft")}:${property("deps.flywheel")}")
-    implementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
-
+    compileOnly("maven.modrinth:create-fly:${property("deps.create")}")
 }
 
 

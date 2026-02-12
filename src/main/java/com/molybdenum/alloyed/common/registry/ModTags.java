@@ -37,9 +37,10 @@ public class ModTags {
         // All bronze instruments
         public static final TagKey<Item> BRONZE_INSTRUMENTS = createTag("bronze_instruments");
         public static final TagKey<Item> CASING = createTag("casing");
+        public static final TagKey<Item> WRENCH_TOOLS = createCommonTag("tools/wrench");
 
 
-        protected static TagKey<Item> createTag(String name) {
+		protected static TagKey<Item> createTag(String name) {
             return TagKey.create(Registries.ITEM,Alloyed.asResource(name));
         }
 

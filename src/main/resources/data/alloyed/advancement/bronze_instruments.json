@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "alloyed:bronze_instruments"
+            "items": "#alloyed:bronze_instruments"
           }
         ]
       },

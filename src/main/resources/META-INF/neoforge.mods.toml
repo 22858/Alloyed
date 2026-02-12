@@ -23,7 +23,7 @@ ordering="NONE"
 side="BOTH"
 [[dependencies.alloyed]]
 modId="create"
-type = "required"
+type = "optional"
 versionRange="[6.0.0,)"
 ordering="AFTER"
 side="BOTH"
@@ -36,7 +36,7 @@ side="BOTH"
 [[dependencies.alloyed]]
 modId="minecraft"
 type = "required"
-versionRange="[1.21.1]"
+versionRange="[26, ]"
 ordering="NONE"
 side="BOTH"
 [[dependencies.alloyed]]
