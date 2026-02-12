@@ -7,17 +7,17 @@ import net.minecraft.world.entity.animal.cow.MushroomCow;
 import net.minecraft.world.entity.animal.golem.CopperGolem;
 import net.minecraft.world.entity.animal.golem.SnowGolem;
 import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
 import net.minecraft.world.entity.monster.skeleton.Bogged;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin({Sheep.class, SnowGolem.class, MushroomCow.class, Bogged.class, CopperGolem.class})
-public class ShearableMobsMixin {
+@Mixin({LeashFenceKnotEntity.class})
+public class LeashFenceKnotEntityMixin {
 
 	//? fabric {
-	@WrapOperation(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z", ordinal = 0))
+	@WrapOperation(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Ljava/lang/Object;)Z", ordinal = 0))
 	private boolean shearsWork(ItemStack instance, Object o, Operation<Boolean> original) {
 		return instance.is(ModItems.STEEL_SHEARS.get()) || original.call(instance, o);
 	}

@@ -4,6 +4,7 @@ import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.common.item.ModArmourMaterials;
 import com.molybdenum.alloyed.common.item.ModItemTiers;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -82,7 +83,7 @@ public class ModItems {
     );
 
 
-    public static final ItemEntry<ShearsItem> STEEL_SHEARS = registerItem("steel_shears", properties -> new ShearsItem(properties.durability(750)));
+    public static final ItemEntry<ShearsItem> STEEL_SHEARS = registerItem("steel_shears", properties -> new ShearsItem(properties.component(DataComponents.TOOL, ShearsItem.createToolProperties()).durability(750)));
 
 
     public static final ItemEntry<FishingRodItem> STEEL_FISHING_ROD = registerItem("steel_fishing_rod", properties -> new FishingRodItem(properties.durability(512)));
