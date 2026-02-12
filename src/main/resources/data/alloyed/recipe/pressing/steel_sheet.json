@@ -1,6 +1,6 @@
 {
   "type": "create:pressing",
-  "ingredients": "#c:ingots/steel",
+  "ingredient": "#c:ingots/steel",
   "results": [
     {
       "id": "alloyed:steel_sheet"
