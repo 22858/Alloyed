@@ -74,8 +74,8 @@ public class BronzeBellBlock extends Block {
             if (AlloyedUtil.isWrench(arg)) {
                 pState = pState.cycle(NOTE);
                 pLevel.setBlock(pPos, pState, 3);
-                playNote(pState, pLevel, pPos, pHit);
             }
+            playNote(pState, pLevel, pPos, pHit);
         }
         if (onHit(pLevel, pHit, pPlayer, true)) return InteractionResult.SUCCESS_SERVER;
         return InteractionResult.TRY_WITH_EMPTY_HAND;
