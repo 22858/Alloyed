@@ -32,9 +32,8 @@ public class Alloyed {
 
         ModBlockSetTypes.register();
         registerBlocks();
-        ModItems.register();
         ModCreativeModeTab.register();
-        ModCompatItems.register();
+        registerItems();
         ModSoundEvents.register();
     }
 
@@ -47,6 +46,11 @@ public class Alloyed {
         }
     }
 
+    public static void registerItems() {
+        ModItems.register();
+        if (Platform.isLoaded("farmersdelight"))
+            FDCompatItems.register();
+    }
 
     public static Identifier asResource(String path) {
         return Alloyed.asResource(MOD_ID, path);

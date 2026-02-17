@@ -6,14 +6,14 @@ import net.minecraft.world.item.Item;
 
 import java.util.List;
 
-public class ModCompatItems {
+public class FDCompatItems {
     public static final ItemEntry<Item> STEEL_KNIFE = ModItems.registerItem(
             "steel_knife",
             properties -> Alloyed.isFarmersDelightLoaded ?
                     FarmersDelightCompat.newSteelKnife(properties) :
                     new Item(properties.stacksTo(1)),
             new Item.Properties(),
-            Alloyed.isFarmersDelightLoaded
+            !Alloyed.isFarmersDelightLoaded
     );
 
     public static void register() {
