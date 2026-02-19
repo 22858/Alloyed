@@ -9,6 +9,8 @@ import com.molybdenum.alloyed.common.content.recipes.ShapedForgingRecipe;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.screen.ForgeMenu;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
 import net.fabricmc.fabric.impl.recipe.ingredient.ShapelessMatch;
 import net.minecraft.core.BlockPos;
@@ -59,6 +61,11 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 			if (slot < 9) {
 				resetProgress();
 			}
+		}
+
+		@Override
+		public IntList getInputSlotIndexes() {
+			return IntList.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
 		}
 	};
 
@@ -165,13 +172,6 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 
 		RecipeWrapper inventory = new RecipeWrapper(entity.itemHandler);
 
-		ArrayList<ItemStack> inputs = new ArrayList<>();
-		for (int i = 0; i < 9; i++) {
-			var stack = entity.itemHandler.getStackInSlot(i);
-			if (!stack.isEmpty())
-				inputs.add(stack);
-		}
-
 		if (!inventory.getItem(10).isEmpty() && !inventory.getItem(10).isStackable()) {
 			return false;
 		}
@@ -182,25 +182,16 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 
 		// Check for ForgeRecipe
 		if (level instanceof ServerLevel serverLevel) {
-			for (RecipeHolder<?> recipe : serverLevel.recipeAccess().getRecipes()) {
-				if (recipe.value() instanceof ShapelessForgingRecipe shapelessForgingRecipe) {
-					if (ShapelessMatch.isMatch(inputs, shapelessForgingRecipe.getIngredients())) {
-						entity.currentRecipe = shapelessForgingRecipe;
-						return startCraftIfFueled(entity, pos, level, shapelessForgingRecipe.getCookTime());
-					}
-				}
+			Optional<RecipeHolder<ShapedForgingRecipe>> shapedRecipeRecipeHolder = entity.quickShapedCheck.getRecipeFor(inventory, serverLevel);
+			if (shapedRecipeRecipeHolder.isPresent()) {
+				entity.currentRecipe = shapedRecipeRecipeHolder.get().value();
+				return startCraftIfFueled(entity, pos, level, shapedRecipeRecipeHolder.get().value().getCookTime());
 			}
-//			Optional<RecipeHolder<ShapedForgingRecipe>> shapedRecipeRecipeHolder = entity.quickShapedCheck.getRecipeFor(inventory, serverLevel);
-//			if (shapedRecipeRecipeHolder.isPresent()) {
-//				entity.currentRecipe = shapedRecipeRecipeHolder.get().value();
-//				return startCraftIfFueled(entity, pos, level, shapedRecipeRecipeHolder.get().value().getCookTime());
-//			}
-//			Optional<RecipeHolder<ShapelessForgingRecipe>> recipeMatch = entity.quickCheck.getRecipeFor(inventory, serverLevel);
-//			if (recipeMatch.isPresent()) {
-//				entity.currentRecipe = recipeMatch.get().value();
-//				return startCraftIfFueled(entity, pos, level, recipeMatch.get().value().getCookTime());
-//			}
-//			System.out.println("NO RECIPE");
+			Optional<RecipeHolder<ShapelessForgingRecipe>> recipeMatch = entity.quickCheck.getRecipeFor(inventory, serverLevel);
+			if (recipeMatch.isPresent()) {
+				entity.currentRecipe = recipeMatch.get().value();
+				return startCraftIfFueled(entity, pos, level, recipeMatch.get().value().getCookTime());
+			}
 		}
 		entity.currentRecipe = null;
 		return false;
