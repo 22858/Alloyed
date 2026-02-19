@@ -1,5 +1,9 @@
 package com.molybdenum.alloyed.common.content.blocks.entities;
 
+//? fabric {
+
+import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
+//?}
 import com.molybdenum.alloyed.common.handler.ItemStackHandler;
 import com.molybdenum.alloyed.common.handler.RecipeWrapper;
 import com.molybdenum.alloyed.common.content.blocks.ForgeBlock;
@@ -9,10 +13,8 @@ import com.molybdenum.alloyed.common.content.recipes.ShapedForgingRecipe;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.screen.ForgeMenu;
-import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
-import net.fabricmc.fabric.impl.recipe.ingredient.ShapelessMatch;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -36,13 +38,16 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import vectorwing.farmersdelight.common.registry.ModRecipeTypes;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 
-public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvider<BlockPos>, WorldlyContainer, StackedContentsCompatible {
+public class ForgeBlockEntity extends BlockEntity implements
+		//? fabric
+		ExtendedMenuProvider<BlockPos>
+		//? neoforge
+		/*MenuProvider*/
+		, WorldlyContainer, StackedContentsCompatible {
 
 	protected final ContainerData data;
 	private int progress = 0;
@@ -63,10 +68,12 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 			}
 		}
 
+		//? fabric {
 		@Override
 		public IntList getInputSlotIndexes() {
 			return IntList.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
 		}
+		//?}
 	};
 
 
@@ -219,7 +226,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 	}
 
 	private boolean burnFuel() {
-		if (!this.level.isClientSide()) {
+		if (this.level instanceof ServerLevel) {
 			var fuel = this.itemHandler.getStackInSlot(9).copy();
 			if (isFuel(level, fuel) && this.litTime == 0) {
 				this.fuelAmount = getBurnTime(level, fuel);
@@ -237,7 +244,11 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 	}
 
 	public static int getBurnTime(Level level, ItemStack fuel) {
+		if (level == null) return 0;
+		//? fabric
 		return level.fuelValues().burnDuration(fuel);
+		//? neoforge
+		/*return fuel.getBurnTime(null, level.fuelValues());*/
 	}
 
 	public static boolean isFuel(Level level, ItemStack fuel) {
@@ -359,7 +370,7 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 
 	@Override
 	public boolean stillValid(Player player) {
-		if (this.level.getBlockEntity(this.worldPosition) != this) {
+		if (this.level != null && this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		} else {
 			return player.distanceToSqr((double)this.worldPosition.getX() + 0.5D, (double)this.worldPosition.getY() + 0.5D, (double)this.worldPosition.getZ() + 0.5D) <= 64.0D;
@@ -385,8 +396,10 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 		return itemHandler;
 	}
 
+	//? fabric {
 	@Override
 	public BlockPos getScreenOpeningData(ServerPlayer player) {
 		return worldPosition;
 	}
+	//?}
 }

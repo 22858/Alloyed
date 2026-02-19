@@ -2,6 +2,7 @@ package com.molybdenum.alloyed.common.registry;
 
 import com.molybdenum.alloyed.common.CommonRegistry;
 import com.molybdenum.alloyed.common.content.blocks.entities.ForgeBlockEntity;
+//? fabric
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 

@@ -34,6 +34,9 @@ Some files may include others' licenses. Please read the top of the file
 for information on other licenses.
 =============================================================================
 */
+
+//? fabric {
+
 package com.molybdenum.alloyed.common.handler;
 
 import net.fabricmc.fabric.api.transfer.v1.item.ItemVariant;
@@ -61,3 +64,4 @@ public class ItemHandlerStackWrapper extends SingleStackStorage {
 		return itemVariant.isBlank() ? this.handler.getSlotLimit(this.slot) : Math.min(this.handler.getSlotLimit(this.slot), itemVariant.toStack().getMaxStackSize());
 	}
 }
+//?}

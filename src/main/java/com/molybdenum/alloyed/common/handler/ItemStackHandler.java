@@ -42,7 +42,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public class ItemStackHandler extends FabricWrappedInventory {
+public class ItemStackHandler
+		//? fabric
+		extends FabricWrappedInventory
+		//? neoforge
+		/*extends NeoWrappedInventory*/
+{
 	private final NonNullList<ItemStack> stacks;
 
 	public ItemStackHandler() {

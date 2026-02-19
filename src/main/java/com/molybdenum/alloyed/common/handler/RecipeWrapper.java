@@ -42,9 +42,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 
 public class RecipeWrapper implements RecipeInput {
-	private final ItemHandler handler;
 	private final StackedItemContents stackedContents;
 	private final int ingredientAmount;
+	//? fabric {
+	private final ItemHandler handler;
 
 	public RecipeWrapper(ItemHandler handler) {
 		this.handler = handler;
@@ -61,6 +62,24 @@ public class RecipeWrapper implements RecipeInput {
 
 		this.ingredientAmount = ingredientAmount;
 	}
+	//?} else {
+	/*private final ItemStackHandler handler;
+	public RecipeWrapper(ItemStackHandler handler) {
+		this.handler = handler;
+		this.stackedContents = new StackedItemContents();
+		int ingredientAmount = 0;
+
+		for (int i = 0; i < 9; i++) {
+			ItemStack itemstack = handler.getStackInSlot(i);
+			if (!itemstack.isEmpty()) {
+				++ingredientAmount;
+				this.stackedContents.accountStack(itemstack, 1);
+			}
+		}
+
+		this.ingredientAmount = ingredientAmount;
+	}
+	*///?}
 
 	public StackedItemContents stackedContents() {
 		return this.stackedContents;

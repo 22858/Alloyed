@@ -21,6 +21,5 @@ public class AlloyedClient {
         if (Platform.isLoaded("create")) {
 			CreateCompat.registerPonders();
 		}
-		MenuScreens.register(ModMenuTypes.FORGE_MENU.get(), ForgeScreen::new);
     }
 }

@@ -8,6 +8,7 @@ import com.molybdenum.alloyed.common.screen.slot.ModFuelSlot;
 import com.molybdenum.alloyed.common.screen.slot.ModInputSlot;
 import com.molybdenum.alloyed.common.screen.slot.ModResultSlot;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -24,6 +25,10 @@ public class ForgeMenu extends AbstractContainerMenu {
 
 	public ForgeMenu(int pContainerId, Inventory inv, BlockPos extraData) {
 		this(pContainerId, inv, inv.player.level().getBlockEntity(extraData), new SimpleContainerData(4));
+	}
+
+	public ForgeMenu(int pContainerId, Inventory inv, RegistryFriendlyByteBuf extraData) {
+		this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(4));
 	}
 
 	public ForgeMenu(int pContainerId, Inventory pPlayerInventory, BlockEntity entity, ContainerData data) {

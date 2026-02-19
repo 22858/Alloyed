@@ -104,7 +104,10 @@ public class ForgeBlock extends BaseEntityBlock {
 		if (!level.isClientSide()) {
 			BlockEntity entity = level.getBlockEntity(pos);
 			if(entity instanceof ForgeBlockEntity forgeBlockEntity) {
+				//? fabric
 				player.openMenu(forgeBlockEntity);
+				//? neoforge
+				/*player.openMenu(forgeBlockEntity, pos);*/
 			} else {
 				throw new IllegalStateException("Our Container provider is missing!");
 			}

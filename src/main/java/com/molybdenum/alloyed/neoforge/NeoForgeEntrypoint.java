@@ -3,18 +3,24 @@ package com.molybdenum.alloyed.neoforge;
 /*import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.AlloyedClient;
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
+import com.molybdenum.alloyed.client.screen.ForgeScreen;
 import com.molybdenum.alloyed.common.CommonEventsHandler;
+import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
+import com.molybdenum.alloyed.common.integration.rrv.AlloyedRRVPlugin;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
+import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.registry.ModBlockSetTypes;
-import com.molybdenum.alloyed.common.registry.ModCompatItems;
-import com.molybdenum.alloyed.common.registry.ModItems;
+import com.molybdenum.alloyed.common.screen.ModMenuTypes;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
@@ -29,6 +35,7 @@ public class NeoForgeEntrypoint {
 		}
 		eventBus.addListener(NeoForgeEntrypoint::commonSetup);
 		eventBus.addListener(NeoForgeEntrypoint::onRegister);
+		eventBus.addListener(NeoForgeEntrypoint::menuSetup);
 	}
 
 	public static void onRegister(RegisterEvent event) {
@@ -36,13 +43,16 @@ public class NeoForgeEntrypoint {
 			ModBlockSetTypes.register();
 			Alloyed.registerBlocks();
 		} else if (event.getRegistryKey().equals(Registries.ITEM)) {
-			ModItems.register();
+			Alloyed.registerItems();
 			ModCreativeModeTab.register();
-			ModCompatItems.register();
 		} else if (event.getRegistryKey().equals(Registries.SOUND_EVENT)) {
 			ModSoundEvents.register();
+		} else if (event.getRegistryKey().equals(Registries.BLOCK_ENTITY_TYPE)) {
+			ModBlockEntities.register();
+		} else if (event.getRegistryKey().equals(Registries.RECIPE_TYPE)) {
 			ModRecipes.register();
-        	ModBlockEntities.register();
+		} else if (event.getRegistryKey().equals(Registries.MENU)) {
+			ModMenuTypes.register();
 		}
 	}
 
@@ -50,8 +60,15 @@ public class NeoForgeEntrypoint {
 		AlloyedClient.clientSetup();
 	}
 
+	public static void menuSetup(RegisterMenuScreensEvent event) {
+		event.register(ModMenuTypes.FORGE_MENU.get(), ForgeScreen::new);
+	}
+
 	public static void commonSetup(FMLCommonSetupEvent event) {
 		CommonEventsHandler.setupCommon();
+		if (ModList.get().isLoaded("rrv")) {
+			AlloyedRRVPlugin.init();
+		}
 	}
 
 //	public static void addBlocks(final BlockEntityTypeAddBlocksEvent event) {

@@ -35,6 +35,7 @@ for information on other licenses.
 =============================================================================
 */
 
+//? fabric {
 package com.molybdenum.alloyed.common.handler;
 
 import java.util.ArrayList;
@@ -111,3 +112,4 @@ public abstract class FabricWrappedInventory implements ItemHandler {
 				.iterator();
 	}
 }
+//?}
