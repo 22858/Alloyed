@@ -51,6 +51,7 @@
     "alloyed:steel_sheet_slab",
     "alloyed:steel_bars",
     "alloyed:steel_trapdoor",
+    "alloyed:forge",
     { "id": "alloyed:steel_ladder", "required": false },
     {
       "id": "alloyed:steel_catwalk",

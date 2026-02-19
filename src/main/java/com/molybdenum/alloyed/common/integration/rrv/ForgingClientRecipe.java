@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -25,28 +26,67 @@ import static cc.cassian.rrv.common.builtin.BuiltInReliableRecipeViewerIntegrati
 
 public class ForgingClientRecipe implements ReliableClientRecipe {
     private final ItemStack result;
-    private final List<Ingredient> ingredients;
+    private final HashMap<Integer, SlotContent> ingredients = new HashMap<>();
     private final int cookTime;
     private final boolean shapeless;
+    private final int width, height;
 
     @Override
-    public AbstractForgingClientRecipeType getViewType() {
-        return AbstractForgingClientRecipeType.INSTANCE;
+    public ForgingClientRecipeType getViewType() {
+        return ForgingClientRecipeType.INSTANCE;
     }
 
-    public ForgingClientRecipe(ShapelessForgingServerRecipe modRecipe) {
-        this.ingredients = modRecipe.getIngredients();
-        this.cookTime = modRecipe.getCookTime();
-        this.result = modRecipe.getResult();
+    public ForgingClientRecipe(ShapelessForgingServerRecipe recipe) {
         this.shapeless = true;
+        var size = recipe.getIngredients().size();
+        switch (size) {
+            case 1:
+                this.width = 1;
+                this.height = 1;
+                break;
+            case 2:
+                this.width = 2;
+                this.height = 1;
+                break;
+            case 3:
+                this.width = 3;
+                this.height = 1;
+                break;
+            case 4:
+                this.width = 2;
+                this.height = 2;
+                break;
+            case 5, 6:
+                this.width = 3;
+                this.height = 2;
+                break;
+            default:
+                this.width = 3;
+                this.height = 3;
+                break;
+        }
+
+
+        AtomicInteger i = new AtomicInteger();
+        recipe.getIngredients().forEach((ingredient) -> {
+            this.ingredients.put(i.getAndIncrement(), SlotContent.of(ingredient));
+        });
+        this.cookTime = recipe.getCookTime();
+        this.result = recipe.getResult();
+    }
+
+    public ForgingClientRecipe(ShapedForgingServerRecipe recipe) {
+        recipe.getIngredients().forEach((slotId, ingredient) -> this.ingredients.put(slotId, SlotContent.of(ingredient)));
+        this.cookTime = recipe.getCookTime();
+        this.result = recipe.getResult();
+        this.shapeless = false;
+        this.width = recipe.getWidth();
+        this.height = recipe.getHeight();
     }
 
     @Override
     public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
-        AtomicInteger slotID = new AtomicInteger();
-        getIngredients().forEach((ingredient -> {
-            slotFillContext.bindOptionalSlot(slotID.getAndIncrement(), ingredient, OptionalSlotRenderer.NONE);
-        }));
+        this.ingredients.forEach(slotFillContext::bindSlot);
 
         slotFillContext.bindOptionalSlot(9, SlotContent.of(Items.COAL), RecipeViewMenu.OptionalSlotRenderer.DEFAULT);
         slotFillContext.addAdditionalStackModifier(9, (stack, components) -> {
@@ -101,7 +141,7 @@ public class ForgingClientRecipe implements ReliableClientRecipe {
 
     @Override
     public List<SlotContent> getIngredients() {
-        return ingredients.stream().map(SlotContent::of).collect(Collectors.toCollection(ArrayList::new));
+        return this.ingredients.values().stream().toList();
     }
 
     @Override

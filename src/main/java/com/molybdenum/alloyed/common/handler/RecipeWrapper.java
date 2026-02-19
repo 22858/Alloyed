@@ -41,11 +41,15 @@ import net.minecraft.world.entity.player.StackedItemContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RecipeWrapper implements RecipeInput {
 	private final StackedItemContents stackedContents;
 	private final int ingredientAmount;
 	//? fabric {
 	private final ItemHandler handler;
+	private final ArrayList<ItemStack> stacks = new ArrayList<>();
 
 	public RecipeWrapper(ItemHandler handler) {
 		this.handler = handler;
@@ -58,6 +62,7 @@ public class RecipeWrapper implements RecipeInput {
 				++ingredientAmount;
 				this.stackedContents.accountStack(itemstack, 1);
 			}
+			this.stacks.add(itemstack);
 		}
 
 		this.ingredientAmount = ingredientAmount;
@@ -95,5 +100,9 @@ public class RecipeWrapper implements RecipeInput {
 
 	public int size() {
 		return this.handler.getSlotCount();
+	}
+
+	public List<ItemStack> stacks() {
+		return stacks;
 	}
 }

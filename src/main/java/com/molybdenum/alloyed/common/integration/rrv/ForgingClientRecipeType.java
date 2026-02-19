@@ -11,9 +11,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AbstractForgingClientRecipeType implements ReliableClientRecipeType {
+public class ForgingClientRecipeType implements ReliableClientRecipeType {
 
-    public static final AbstractForgingClientRecipeType INSTANCE = new AbstractForgingClientRecipeType();
+    public static final ForgingClientRecipeType INSTANCE = new ForgingClientRecipeType();
 
     @Override
     public Component getDisplayName() {
@@ -55,7 +55,7 @@ public class AbstractForgingClientRecipeType implements ReliableClientRecipeType
         // fuel
         builder.addItemSlot(9, 66, 40);
         //output
-        builder.addItemSlot(10, 93, 22);
+        builder.addItemSlot(10, 94, 22);
     }
 
     @Override

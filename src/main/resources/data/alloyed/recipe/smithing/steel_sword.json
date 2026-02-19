@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smithing_transform",
-  "addition": "#c:ingots/steel",
-  "base":"minecraft:iron_sword",
-  "result": {
-    "count": 1,
-    "id": "alloyed:steel_sword"
-  }
-}

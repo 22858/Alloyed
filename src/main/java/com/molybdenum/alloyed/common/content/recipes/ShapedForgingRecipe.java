@@ -41,7 +41,6 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 		return output.create().copy();
 	}
 
-	//    @Override
 	public List<Optional<Ingredient>> getIngredients() {
 		return pattern.ingredients();
 	}
@@ -53,75 +52,7 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 
 	@Override
 	public boolean matches(RecipeWrapper inv, Level level) {
-		ItemStack outputSlot = inv.getItem(9);
-		if (!outputSlot.isEmpty() && !ItemStack.isSameItem(this.output.create(), outputSlot)) {
-			return false;
-		}
-
-		if (!outputSlot.isEmpty() && outputSlot.getCount() >= outputSlot.getMaxStackSize()) {
-			return false;
-		}
-
-		boolean[][] slotUsed = new boolean[3][3]; // Track which slots are used
-
-		// Iterate over the crafting grid
-		for (int offsetX = 0; offsetX <= 3 - this.getWidth(); ++offsetX) {
-			for (int offsetY = 0; offsetY <= 3 - this.getHeight(); ++offsetY) {
-				if (checkIngredients(inv, offsetX, offsetY, slotUsed)) {
-					if (areOtherSlotsEmpty(inv, offsetX, offsetY)) {
-						return true; // Match found, return true
-					}
-				}
-			}
-		}
-
-		return false; // No match found
-	}
-
-	private boolean areOtherSlotsEmpty(RecipeWrapper pContainer, int offsetX, int offsetY) {
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 3; ++j) {
-				if (i < offsetX || i >= offsetX + this.getWidth() || j < offsetY || j >= offsetY + this.getHeight()) {
-					ItemStack itemStack = pContainer.getItem(i + j * 3); // Use a fixed grid size of 3x3
-					if (!itemStack.isEmpty()) {
-						return false; // Slot is not empty
-					}
-				}
-			}
-		}
-		return true; // All other slots are empty
-	}
-	private boolean checkIngredients(RecipeWrapper pContainer, int offsetX, int offsetY, boolean[][] slotUsed) {
-		// Iterate over the recipe's dimensions
-		for (int i = 0; i < this.getWidth(); ++i) {
-			for (int j = 0; j < this.getHeight(); ++j) {
-				int gridX = i + offsetX;
-				int gridY = j + offsetY;
-
-				// Check if the current position is within the crafting grid
-				if (gridX >= 3 || gridY >= 3) {
-					continue;
-				}
-
-				// Check if the slot is already used by another recipe
-				if (slotUsed[gridX][gridY]) {
-					return false;
-				}
-
-				Ingredient recipeIngredient = this.pattern.ingredients().get(i + j * this.getWidth()).get();
-				ItemStack gridStack = pContainer.getItem(gridX + gridY * 3); // Use a fixed grid size of 3x3
-
-				// Check if the ingredient matches the item in the crafting grid
-				if (!recipeIngredient.test(gridStack)) {
-					return false;
-				}
-
-				// Mark the slot as used
-				slotUsed[gridX][gridY] = true;
-			}
-		}
-
-		return true; // All ingredients matched
+		return this.pattern.matches(CraftingInput.of(3, 3, inv.stacks()));
 	}
 
 	public int getWidth() {

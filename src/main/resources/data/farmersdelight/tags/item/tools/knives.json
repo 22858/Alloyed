@@ -1,5 +1,5 @@
 {
   "values": [
-    "alloyed:steel_knife"
+    { "id": "alloyed:steel_knife", "required": false }
   ]
 }

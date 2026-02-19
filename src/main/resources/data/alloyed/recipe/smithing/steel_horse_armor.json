@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smithing_transform",
-  "base": "minecraft:iron_horse_armor",
-  "addition": "#c:ingots/steel",
-  "result": {
-    "count": 1,
-    "id": "alloyed:steel_horse_armor"
-  }
-}

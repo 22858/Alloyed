@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smithing_transform",
-  "base": "minecraft:iron_nautilus_armor",
-  "addition": "#c:ingots/steel",
-  "result": {
-    "count": 1,
-    "id": "alloyed:steel_nautilus_armor"
-  }
-}

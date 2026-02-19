@@ -1,0 +1,15 @@
+{
+  "type": "alloyed:forging_shaped",
+  "key": {
+    "#": "#c:ingots/steel",
+    "X": "minecraft:string"
+  },
+  "pattern": [
+    "  #",
+    " #X",
+    "# X"
+  ],
+  "result": {
+    "id": "alloyed:steel_fishing_rod"
+  }
+}
