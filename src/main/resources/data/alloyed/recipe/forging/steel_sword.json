@@ -1,8 +1,8 @@
 {
   "type": "alloyed:forging_shaped",
   "key": {
-    "#": "#c:rods/wooden",
-    "X": "#c:ingots/steel"
+    "#": {"tag": "c:rods/wooden"},
+    "X": {"tag": "c:ingots/steel"}
   },
   "pattern": [
     "X",

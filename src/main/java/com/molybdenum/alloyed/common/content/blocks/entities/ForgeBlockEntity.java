@@ -247,7 +247,7 @@ public class ForgeBlockEntity extends BlockEntity implements
 	public static int getBurnTime(Level level, ItemStack fuel) {
 		if (level == null) return 0;
 		//? fabric
-		return AbstractFurnaceBlockEntity.getFuel().get(fuel);
+		return AbstractFurnaceBlockEntity.getFuel().get(fuel.getItem());
 		//? neoforge
 		/*return fuel.getBurnTime(null);*/
 	}

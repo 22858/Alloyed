@@ -1,11 +1,11 @@
 {
   "type": "alloyed:forging",
   "ingredients": [
-    "minecraft:iron_ingot",
-    "minecraft:iron_ingot",
-    "minecraft:iron_ingot",
-    "#minecraft:coals",
-    "minecraft:fire_charge"
+    {"item": "minecraft:iron_ingot"},
+    {"item": "minecraft:iron_ingot"},
+    {"item": "minecraft:iron_ingot"},
+    {"tag": "minecraft:coals"},
+    {"item": "minecraft:fire_charge"}
   ],
   "result":
     {

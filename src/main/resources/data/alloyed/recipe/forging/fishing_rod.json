@@ -1,8 +1,8 @@
 {
   "type": "alloyed:forging_shaped",
   "key": {
-    "#": "#c:ingots/steel",
-    "X": "minecraft:string"
+    "#": {"tag": "c:ingots/steel"},
+    "X": {"item": "minecraft:string"}
   },
   "pattern": [
     "  #",

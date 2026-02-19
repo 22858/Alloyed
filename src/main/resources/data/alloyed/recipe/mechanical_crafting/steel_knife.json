@@ -8,8 +8,12 @@
     }
   ],
   "key": {
-    "#": "#c:ingots/steel",
-    "/": "#c:rods/wooden"
+    "#": {
+      "tag": "c:ingots/steel"
+    },
+    "/": {
+      "tag": "c:rods/wooden"
+    }
   },
   "pattern": [
     " #",
@@ -17,13 +21,5 @@
   ],
   "result": {
     "id": "alloyed:steel_knife"
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "farmersdelight"
-      ]
-    }
-  ]
+  }
 }

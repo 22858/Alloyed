@@ -1,23 +1,13 @@
 {
   "type": "create:pressing",
-  "ingredient": "#c:ingots/steel",
+  "ingredients": [
+    {
+      "tag": "c:ingots/steel"
+    }
+  ],
   "results": [
     {
       "id": "alloyed:steel_sheet"
-    }
-  ],
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "create"
-      ]
-    }
-  ],
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create"
     }
   ]
 }

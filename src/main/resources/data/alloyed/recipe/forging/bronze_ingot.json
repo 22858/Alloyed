@@ -1,11 +1,11 @@
 {
   "type": "alloyed:forging",
   "ingredients": [
-    "minecraft:copper_ingot",
-    "minecraft:iron_nugget",
-    "minecraft:iron_nugget",
-    "minecraft:iron_nugget",
-    "minecraft:fire_charge"
+    {"item": "minecraft:copper_ingot"},
+    {"item": "minecraft:iron_nugget"},
+    {"item": "minecraft:iron_nugget"},
+    {"item": "minecraft:iron_nugget"},
+    {"item": "minecraft:fire_charge"}
   ],
   "result":
     {

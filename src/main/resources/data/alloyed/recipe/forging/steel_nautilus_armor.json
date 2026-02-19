@@ -1,8 +1,8 @@
 {
   "type": "alloyed:forging_shaped",
   "key": {
-    "X": "#c:ingots/steel",
-    "I": "minecraft:iron_nautilus_armor"
+    "X": {"tag": "c:ingots/steel"},
+    "I": {"item": "minecraft:iron_nautilus_armor"}
   },
   "pattern": [
     "X X",

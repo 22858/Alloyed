@@ -1,24 +1,16 @@
 {
   "type": "create:item_application",
-  "target": "#c:stripped_logs",
-  "ingredient": "#c:ingots/steel",
+  "ingredients": [
+    {
+      "tag": "c:stripped_woods"
+    },
+    {
+      "tag": "c:ingots/steel"
+    }
+  ],
   "results": [
     {
       "id": "alloyed:steel_casing"
-    }
-  ],
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "create"
-      ]
-    }
-  ],
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create"
     }
   ]
 }

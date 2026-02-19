@@ -2,7 +2,9 @@
   "type": "create:mechanical_crafting",
   "accept_mirrored": true,
   "key": {
-    "#": "#c:ingots/steel"
+    "#": {
+      "tag": "c:ingots/steel"
+    }
   },
   "pattern": [
     " #",
@@ -10,19 +12,5 @@
   ],
   "result": {
     "id": "alloyed:steel_shears"
-  },
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "create"
-      ]
-    }
-  ],
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create"
-    }
-  ]
+  }
 }

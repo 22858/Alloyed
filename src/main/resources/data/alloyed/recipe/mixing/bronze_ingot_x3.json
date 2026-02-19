@@ -2,32 +2,32 @@
   "type": "create:mixing",
   "heat_requirement": "heated",
   "ingredients": [
-    "minecraft:copper_ingot",
-    "minecraft:copper_ingot",
-    "minecraft:copper_ingot",
-    "#c:ingots/zinc",
-    "create:cinder_flour",
-    "create:cinder_flour",
-    "create:cinder_flour"
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "tag": "c:ingots/zinc"
+    },
+    {
+      "item": "create:cinder_flour"
+    },
+    {
+      "item": "create:cinder_flour"
+    },
+    {
+      "item": "create:cinder_flour"
+    }
   ],
   "results": [
     {
       "count": 3,
       "id": "alloyed:bronze_ingot"
-    }
-  ],
-  "fabric:load_conditions": [
-    {
-      "condition": "fabric:all_mods_loaded",
-      "values": [
-        "create"
-      ]
-    }
-  ],
-  "neoforge:conditions": [
-    {
-      "type": "neoforge:mod_loaded",
-      "modid": "create"
     }
   ]
 }
