@@ -6,7 +6,7 @@ import vectorwing.farmersdelight.common.item.KnifeItem;
 
 public class FarmersDelightCompat {
     public static Item newSteelKnife(Item.Properties properties) {
-        return new SteelKnife(properties.attributes(KnifeItem.createAttributes(ModItemTiers.STEEL, 0.5F, -2.0F)).durability(ModItemTiers.STEEL.durability()));
+        return new SteelKnife(properties.attributes(KnifeItem.createAttributes(ModItemTiers.STEEL, 0.5F, -2.0F)).durability(ModItemTiers.STEEL.getUses()));
     }
 
     public static void steelKnifeDispenseBehaviour() {

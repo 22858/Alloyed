@@ -5,8 +5,8 @@ import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
 import com.molybdenum.alloyed.common.registry.BlockEntry;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.util.Platform;
-import com.zurrtum.create.client.ponder.foundation.PonderIndex;
-import com.zurrtum.create.content.decoration.palettes.ConnectedPillarBlock;
+import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WeatheringCopper;
 

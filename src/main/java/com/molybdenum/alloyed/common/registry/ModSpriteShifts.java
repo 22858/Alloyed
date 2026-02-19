@@ -1,14 +1,14 @@
 package com.molybdenum.alloyed.common.registry;
 
 import com.molybdenum.alloyed.Alloyed;
-import com.zurrtum.create.Create;
-import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
-import com.zurrtum.create.client.catnip.render.SpriteShifter;
-import com.zurrtum.create.client.foundation.block.connected.AllCTTypes;
-import com.zurrtum.create.client.foundation.block.connected.CTSpriteShiftEntry;
-import com.zurrtum.create.client.foundation.block.connected.CTSpriteShifter;
+import com.simibubi.create.Create;
+import com.simibubi.create.foundation.block.connected.AllCTTypes;
+import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
+import com.simibubi.create.foundation.block.connected.CTSpriteShifter;
+import net.createmod.catnip.render.SpriteShiftEntry;
+import net.createmod.catnip.render.SpriteShifter;
 
-import static com.zurrtum.create.client.foundation.block.connected.AllCTTypes.*;
+import static com.simibubi.create.foundation.block.connected.AllCTTypes.*;
 
 public class ModSpriteShifts {
 
@@ -23,14 +23,14 @@ public class ModSpriteShifts {
             STEEL_SCAFFOLD_INSIDE = ct(HORIZONTAL, "scaffold/steel_scaffold_inside");
 
     public static final SpriteShiftEntry STEEL_BELT_CASING = SpriteShifter.get
-            (Alloyed.asCreateResource("block/belt/brass_belt_casing"), Alloyed.asResource("block/steel_belt_casing"));
+            (Create.asResource("block/belt/brass_belt_casing"), Alloyed.asResource("block/steel_belt_casing"));
 
     public static final CTSpriteShiftEntry BRONZE_CASING = ct(OMNIDIRECTIONAL, "bronze_casing"),
             BRONZE_ENCASED_COGWHEEL_SIDE = ct(VERTICAL, "bronze_encased_cogwheel_side"),
             BRONZE_ENCASED_COGWHEEL_OTHERSIDE = ct(HORIZONTAL, "bronze_encased_cogwheel_side");
 
     public static final SpriteShiftEntry BRONZE_BELT_CASING = SpriteShifter.get
-            (Alloyed.asCreateResource("block/belt/brass_belt_casing"), Alloyed.asResource("block/bronze_belt_casing"));
+            (Create.asResource("block/belt/brass_belt_casing"), Alloyed.asResource("block/bronze_belt_casing"));
 
     public static final CTSpriteShiftEntry BRONZE_PILLAR = ct(RECTANGLE, "bronze_pillar"),
             BRONZE_CAP = ct(OMNIDIRECTIONAL, "bronze_cap");

@@ -9,7 +9,7 @@ import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.*;
 import com.molybdenum.alloyed.common.screen.ModMenuTypes;
 import com.molybdenum.alloyed.common.util.Platform;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 //? neoforge {
 /*import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.bus.api.IEventBus;
@@ -59,20 +59,20 @@ public class Alloyed {
             FDCompatItems.register();
     }
 
-    public static Identifier asResource(String path) {
+    public static ResourceLocation asResource(String path) {
         return Alloyed.asResource(MOD_ID, path);
     }
 
-    public static Identifier asVanillaResource(String path) {
+    public static ResourceLocation asVanillaResource(String path) {
         return Alloyed.asResource("minecraft", path);
     }
 
     @SuppressWarnings("all")
-    public static Identifier asResource(String forge, String name) {
-        return Identifier.fromNamespaceAndPath(forge, name);
+    public static ResourceLocation asResource(String forge, String name) {
+        return ResourceLocation.fromNamespaceAndPath(forge, name);
     }
 
-	public static Identifier asCreateResource(String s) {
+	public static ResourceLocation asCreateResource(String s) {
 		return Alloyed.asResource("create", s);
 	}
 }

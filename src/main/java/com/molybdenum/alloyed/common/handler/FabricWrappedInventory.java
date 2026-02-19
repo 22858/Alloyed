@@ -49,6 +49,7 @@ import net.fabricmc.fabric.api.transfer.v1.transaction.TransactionContext;
 import net.minecraft.CrashReport;
 import net.minecraft.ReportedException;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.UnmodifiableView;
 
 public abstract class FabricWrappedInventory implements ItemHandler {
 	private final List<ItemHandlerStackWrapper> fabricWrappers;
@@ -110,6 +111,10 @@ public abstract class FabricWrappedInventory implements ItemHandler {
 		return getSlots().stream()
 				.map(storageViews -> (StorageView<ItemVariant>)storageViews)
 				.iterator();
+	}
+
+	public @UnmodifiableView List<SingleSlotStorage<ItemVariant>> slots() {
+		return getSlots();
 	}
 }
 //?}

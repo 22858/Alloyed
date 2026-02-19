@@ -5,12 +5,14 @@ import com.molybdenum.alloyed.AlloyedClient;
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
 import com.molybdenum.alloyed.client.screen.ForgeScreen;
 import com.molybdenum.alloyed.common.CommonEventsHandler;
+import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
-import com.molybdenum.alloyed.common.integration.rrv.AlloyedRRVPlugin;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.registry.ModBlockSetTypes;
+import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.screen.ModMenuTypes;
+import com.simibubi.create.AllBlockEntityTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -27,6 +29,7 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 @Mod(Alloyed.MOD_ID)
@@ -34,7 +37,7 @@ public class NeoForgeEntrypoint {
 	public NeoForgeEntrypoint(IEventBus eventBus, ModContainer container) {
 
 		NeoForgeMod.enableMilkFluid();
-		if (FMLEnvironment.getDist().isClient()) {
+		if (FMLEnvironment.dist.isClient()) {
 			AlloyedClient.onClientInit();
 			eventBus.addListener(NeoForgeEntrypoint::clientSetup);
 		}
@@ -72,9 +75,6 @@ public class NeoForgeEntrypoint {
 
 	public static void commonSetup(FMLCommonSetupEvent event) {
 		CommonEventsHandler.setupCommon();
-		if (ModList.get().isLoaded("rrv")) {
-			AlloyedRRVPlugin.init();
-		}
 	}
 
 	public static void packSetup(AddPackFindersEvent event) {
@@ -83,10 +83,10 @@ public class NeoForgeEntrypoint {
 
 	}
 
-//	public static void addBlocks(final BlockEntityTypeAddBlocksEvent event) {
-//		event.modify(AllBlockEntityTypes.ENCASED_COGWHEEL.getKey(), ModBlocks.STEEL_ENCASED_COGWHEEL.get(), ModBlocks.BRONZE_ENCASED_COGWHEEL.get());
-//		event.modify(AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.getKey(), ModBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get(),  ModBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
-//		event.modify(AllBlockEntityTypes.ENCASED_SHAFT.getKey(), ModBlocks.STEEL_ENCASED_SHAFT.get(), ModBlocks.BRONZE_ENCASED_SHAFT.get());
-//	}
+	public static void addBlocks(final BlockEntityTypeAddBlocksEvent event) {
+		event.modify(AllBlockEntityTypes.ENCASED_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_COGWHEEL.get(), CreateAlloyedBlocks.BRONZE_ENCASED_COGWHEEL.get());
+		event.modify(AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get(),  CreateAlloyedBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
+		event.modify(AllBlockEntityTypes.ENCASED_SHAFT.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get(), CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
+	}
 }
 *///?}

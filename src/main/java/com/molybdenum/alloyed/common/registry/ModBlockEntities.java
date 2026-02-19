@@ -11,13 +11,8 @@ import java.util.function.Supplier;
 public class ModBlockEntities {
     public static final Supplier<BlockEntityType<ForgeBlockEntity>> FORGE_BLOCK_ENTITY =
             CommonRegistry.registerBlockEntity("forge_block_entity", ()->
-                    //? if fabric {
-                    FabricBlockEntityTypeBuilder.create(ForgeBlockEntity::new,
-                            ModBlocks.FORGE.get()).build()
-                    //?} else {
-                    /*new BlockEntityType<>(ForgeBlockEntity::new,
-                            ModBlocks.FORGE.get())
-                    *///?}
+                    BlockEntityType.Builder.of(ForgeBlockEntity::new,
+                            ModBlocks.FORGE.get()).build(null)
             );
 
     public static void register() {

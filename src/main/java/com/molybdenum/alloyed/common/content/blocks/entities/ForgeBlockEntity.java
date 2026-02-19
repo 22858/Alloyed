@@ -2,7 +2,8 @@ package com.molybdenum.alloyed.common.content.blocks.entities;
 
 //? fabric {
 
-import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
+import it.unimi.dsi.fastutil.ints.IntList;
+import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 //?}
 import com.molybdenum.alloyed.common.handler.ItemStackHandler;
 import com.molybdenum.alloyed.common.handler.RecipeWrapper;
@@ -13,10 +14,11 @@ import com.molybdenum.alloyed.common.content.recipes.ShapedForgingRecipe;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.screen.ForgeMenu;
-import it.unimi.dsi.fastutil.ints.IntList;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,18 +26,17 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedItemContents;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ContainerOpenersCounter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +45,7 @@ import java.util.Optional;
 
 public class ForgeBlockEntity extends BlockEntity implements
 		//? fabric
-		ExtendedMenuProvider<BlockPos>
+		ExtendedScreenHandlerFactory<BlockPos>
 		//? neoforge
 		/*MenuProvider*/
 		, WorldlyContainer, StackedContentsCompatible {
@@ -119,23 +120,23 @@ public class ForgeBlockEntity extends BlockEntity implements
 	}
 
 	@Override
-	protected void saveAdditional(@NotNull ValueOutput tag) {
-		itemHandler.serialize(tag);
+	protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.Provider registries) {
+		itemHandler.serialize(tag, registries);
 		tag.putInt("forge.progress", progress);
 		tag.putInt("forge.lit_time", litTime);
 		tag.putInt("forge.max_progress", maxProgress);
 		tag.putInt("forge.fuel_amount", fuelAmount);
-		super.saveAdditional(tag);
+		super.saveAdditional(tag, registries);
 	}
 
 	@Override
-	protected void loadAdditional(ValueInput input) {
-		super.loadAdditional(input);
-		itemHandler.deserialize(input);
-		progress = input.getIntOr("forge.progress", 0);
-		litTime = input.getIntOr("forge.lit_time", 0);
-		maxProgress = input.getIntOr("forge.max_progress", 0);
-		fuelAmount = input.getIntOr("forge.fuel_amount", 0);
+	protected void loadAdditional(@NotNull CompoundTag input, HolderLookup.Provider registries) {
+		super.loadAdditional(input, registries);
+		itemHandler.deserialize(input, registries);
+		progress = input.getInt("forge.progress");
+		litTime = input.getInt("forge.lit_time");
+		maxProgress = input.getInt("forge.max_progress");
+		fuelAmount = input.getInt("forge.fuel_amount");
 	}
 
 	public void drops() {
@@ -235,7 +236,7 @@ public class ForgeBlockEntity extends BlockEntity implements
 					fuel.setCount(fuel.getCount()-1);
 					this.itemHandler.setStackInSlot(9, fuel);
 				} else {
-					this.itemHandler.setStackInSlot(9, fuel.getCraftingRemainder().create());
+					this.itemHandler.setStackInSlot(9, remainder(fuel));
 				}
 				return true;
 			}
@@ -246,19 +247,19 @@ public class ForgeBlockEntity extends BlockEntity implements
 	public static int getBurnTime(Level level, ItemStack fuel) {
 		if (level == null) return 0;
 		//? fabric
-		return level.fuelValues().burnDuration(fuel);
+		return AbstractFurnaceBlockEntity.getFuel().get(fuel);
 		//? neoforge
-		/*return fuel.getBurnTime(null, level.fuelValues());*/
+		/*return fuel.getBurnTime(null);*/
 	}
 
 	public static boolean isFuel(Level level, ItemStack fuel) {
-		return level.fuelValues().isFuel(fuel);
+		return AbstractFurnaceBlockEntity.isFuel(fuel);
 	}
 
 	private static void craftItem(ForgeBlockEntity entity) {
 
-		SimpleContainer inventory = new SimpleContainer(entity.itemHandler.getSlots().size());
-		for (int i = 0; i < entity.itemHandler.getSlots().size(); i++) {
+		SimpleContainer inventory = new SimpleContainer(entity.itemHandler.slots().size());
+		for (int i = 0; i < entity.itemHandler.slots().size(); i++) {
 			inventory.setItem(i, entity.itemHandler.getStackInSlot(i));
 		}
 
@@ -266,12 +267,12 @@ public class ForgeBlockEntity extends BlockEntity implements
 		if (currentRecipe != null) {
 			for(int i = 0; i < 9; ++i) {
 				ItemStack slotStack = entity.itemHandler.getStackInSlot(i);
-				if (slotStack.getCraftingRemainder() != null) {
+				if (remainder(slotStack) != null) {
 					Direction direction = entity.getBlockState().getValue(ForgeBlock.FACING).getCounterClockWise();
 					double x = (double)entity.worldPosition.getX() + 0.5 + (double)direction.getStepX() * 0.25;
 					double y = (double)entity.worldPosition.getY() + 0.7;
 					double z = (double)entity.worldPosition.getZ() + 0.5 + (double)direction.getStepZ() * 0.25;
-					spawnItemEntity(entity.level, entity.itemHandler.getStackInSlot(i).getCraftingRemainder().create(), x, y, z, (float)direction.getStepX() * 0.08F, 0.25, (float)direction.getStepZ() * 0.08F);
+					spawnItemEntity(entity.level, remainder(entity.itemHandler.getStackInSlot(i)), x, y, z, (float)direction.getStepX() * 0.08F, 0.25, (float)direction.getStepZ() * 0.08F);
 				}
 			}
 
@@ -287,6 +288,16 @@ public class ForgeBlockEntity extends BlockEntity implements
 
 		}
 	}
+
+	private static ItemStack remainder(ItemStack slotStack) {
+		//? fabric
+		ItemStack recipeRemainder = slotStack.getRecipeRemainder();
+		//? neoforge
+		/*ItemStack recipeRemainder = slotStack.getCraftingRemainingItem();*/
+		if (recipeRemainder.isEmpty()) return null;
+		return recipeRemainder;
+	}
+
 	public static void spawnItemEntity(Level level, ItemStack stack, double x, double y, double z, double xMotion, double yMotion, double zMotion) {
 		ItemEntity entity = new ItemEntity(level, x, y, z, stack);
 		entity.setDeltaMovement(xMotion, yMotion, zMotion);
@@ -334,7 +345,7 @@ public class ForgeBlockEntity extends BlockEntity implements
 
 	@Override
 	public int getContainerSize() {
-		return this.itemHandler.getSlots().size();
+		return this.itemHandler.slots().size();
 	}
 
 	@Override
@@ -385,7 +396,7 @@ public class ForgeBlockEntity extends BlockEntity implements
 	}
 
 	@Override
-	public void fillStackedContents(StackedItemContents pHelper) {
+	public void fillStackedContents(StackedContents pHelper) {
 		for (int i = 0; i < this.getContainerSize(); i++) {
 			ItemStack stack = this.getItem(i);
 			pHelper.accountStack(stack);

@@ -141,10 +141,13 @@ dependencies {
 
     implementation("folk.sisby:kaleido-config:${property("deps.kaleido")}")
     jarJar("folk.sisby:kaleido-config:${property("deps.kaleido")}")
+    "additionalRuntimeClasspath"("folk.sisby:kaleido-config:${property("deps.kaleido")}")
 
-    implementation("cc.cassian.rrv:reliable-recipe-viewer-neoforge:${property("deps.rrv")}")
+    compileOnly("dev.emi:emi-neoforge:${property("deps.emi")}+${property("deps.minecraft")}:api")
+    runtimeOnly("dev.emi:emi-neoforge:${property("deps.emi")}+${property("deps.minecraft")}")
 
-    compileOnly("maven.local:FarmersDelight:${property("deps.fd")}+refabricated") {
+
+    compileOnly("maven.modrinth:farmers-delight:${property("deps.fd")}") {
         exclude(group = "net.fabricmc")
         exclude(group = "me.shedaniel")
     }
@@ -152,7 +155,11 @@ dependencies {
     compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
 
     // Create
-    compileOnly("maven.modrinth:create-fly:${property("deps.create")}")
+    implementation("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }
+    implementation("net.createmod.ponder:ponder-neoforge:${property("deps.ponder")}+mc${property("deps.minecraft")}")
+    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${property("deps.minecraft")}:${property("deps.flywheel")}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${property("deps.minecraft")}:${property("deps.flywheel")}")
+    implementation("com.tterrag.registrate:Registrate:${property("deps.registrate")}")
 }
 
 

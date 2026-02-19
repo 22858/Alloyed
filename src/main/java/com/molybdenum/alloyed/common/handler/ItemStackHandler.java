@@ -36,11 +36,11 @@ for information on other licenses.
 */
 package com.molybdenum.alloyed.common.handler;
 
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 
 public class ItemStackHandler
 		//? fabric
@@ -148,13 +148,13 @@ public class ItemStackHandler
 		this.onContentsChanged(slot);
 	}
 
-	public void serialize(ValueOutput output) {
-		ContainerHelper.saveAllItems(output, this.stacks);
+	public void serialize(CompoundTag output, HolderLookup.Provider registries) {
+		ContainerHelper.saveAllItems(output, this.stacks, registries);
 	}
 
-	public void deserialize(ValueInput input) {
+	public void deserialize(CompoundTag input, HolderLookup.Provider registries) {
 		this.stacks.clear();
-		ContainerHelper.loadAllItems(input, this.stacks);
+		ContainerHelper.loadAllItems(input, this.stacks, registries);
 	}
 
 	protected void onContentsChanged(int slot) {

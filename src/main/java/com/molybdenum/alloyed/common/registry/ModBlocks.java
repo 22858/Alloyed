@@ -11,7 +11,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -113,13 +113,13 @@ public class ModBlocks {
         var waxedBlock = registerBlock("waxed_"+id,(Block::new), Blocks.CUT_COPPER);
         Platform.addWeathering(block.get(), waxedBlock.get());
         if (state.equals(WeatheringCopper.WeatherState.WEATHERED)) {
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("weathered_", "exposed_"))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(id.replace("weathered_", "exposed_"))), block.get());
         }
         if (state.equals(WeatheringCopper.WeatherState.EXPOSED)) {
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("exposed_", ""))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(id.replace("exposed_", ""))), block.get());
         }
         if (state.equals(WeatheringCopper.WeatherState.OXIDIZED)) {
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("oxidized_", "weathered_"))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(id.replace("oxidized_", "weathered_"))), block.get());
         }
         return List.of(block, waxedBlock);
     }
@@ -136,19 +136,19 @@ public class ModBlocks {
         Platform.addWaxable(stairs.get(), waxedStairs.get());
         Platform.addWaxable(slab.get(), waxedSlab.get());
         if (state.equals(WeatheringCopper.WeatherState.WEATHERED)) {
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("weathered_", "exposed_"))), block.get());
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(stairs.getId().getPath().replace("weathered_", "exposed_"))), stairs.get());
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(slab.getId().getPath().replace("weathered_", "exposed_"))), slab.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(id.replace("weathered_", "exposed_"))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(stairs.getId().getPath().replace("weathered_", "exposed_"))), stairs.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(slab.getId().getPath().replace("weathered_", "exposed_"))), slab.get());
         }
         if (state.equals(WeatheringCopper.WeatherState.EXPOSED)) {
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("exposed_", ""))), block.get());
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(stairs.getId().getPath().replace("exposed_", ""))), stairs.get());
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(slab.getId().getPath().replace("exposed_", ""))), slab.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(id.replace("exposed_", ""))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(stairs.getId().getPath().replace("exposed_", ""))), stairs.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(slab.getId().getPath().replace("exposed_", ""))), slab.get());
         }
         if (state.equals(WeatheringCopper.WeatherState.OXIDIZED)) {
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(id.replace("oxidized_", "weathered_"))), block.get());
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(stairs.getId().getPath().replace("oxidized_", "weathered_"))), stairs.get());
-            Platform.addWeathering(BuiltInRegistries.BLOCK.getValue(Alloyed.asResource(slab.getId().getPath().replace("oxidized_", "weathered_"))), slab.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(id.replace("oxidized_", "weathered_"))), block.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(stairs.getId().getPath().replace("oxidized_", "weathered_"))), stairs.get());
+            Platform.addWeathering(BuiltInRegistries.BLOCK.get(Alloyed.asResource(slab.getId().getPath().replace("oxidized_", "weathered_"))), slab.get());
         }
         return List.of(block, stairs, slab, waxedBlock, waxedStairs, waxedSlab);
     }
@@ -181,10 +181,10 @@ public class ModBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings, boolean b) {
-        ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(MOD_ID, id));
-        T block = factory.apply(settings.setId(key));
+        ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, id));
+        T block = factory.apply(settings);
         var entry = Registry.register(BuiltInRegistries.BLOCK, key, block);
-        BlockEntry<T> tBlockEntry = new BlockEntry<>(key.identifier(), entry);
+        BlockEntry<T> tBlockEntry = new BlockEntry<>(key.location(), entry);
         if (b)
             ModItems.registerBlockItem(tBlockEntry);
         return tBlockEntry;

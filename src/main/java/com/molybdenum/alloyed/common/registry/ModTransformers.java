@@ -3,23 +3,23 @@
 //
 //import com.molybdenum.alloyed.Alloyed;
 //import com.molybdenum.alloyed.common.util.CCStress;
-//import com.zurrtum.create.AllBlocks;
-//import com.zurrtum.create.AllBlockTags;
-//import com.zurrtum.create.AllItemTags;
-//import com.zurrtum.create.Create;
-//import com.zurrtum.create.content.decoration.MetalScaffoldingBlock;
-//import com.zurrtum.create.content.decoration.MetalScaffoldingBlockItem;
-//import com.zurrtum.create.client.content.decoration.MetalScaffoldingCTBehaviour;
-//import com.zurrtum.create.content.decoration.encasing.CasingBlock;
-//import com.zurrtum.create.client.content.decoration.encasing.EncasedCTBehaviour;
-//import com.zurrtum.create.content.kinetics.base.RotatedPillarKineticBlock;
-//import com.zurrtum.create.client.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
-//import com.zurrtum.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
-//import com.zurrtum.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
-//import com.zurrtum.create.client.foundation.block.connected.CTSpriteShiftEntry;
-//import com.zurrtum.create.client.foundation.data.AssetLookup;
-//import com.zurrtum.create.client.foundation.data.CreateRegistrate;
-//import com.zurrtum.create.client.foundation.data.SharedProperties;
+//import com.simibubi.create.AllBlocks;
+//import com.simibubi.create.AllBlockTags;
+//import com.simibubi.create.AllItemTags;
+//import com.simibubi.create.Create;
+//import com.simibubi.create.content.decoration.MetalScaffoldingBlock;
+//import com.simibubi.create.content.decoration.MetalScaffoldingBlockItem;
+//import com.simibubi.create.client.content.decoration.MetalScaffoldingCTBehaviour;
+//import com.simibubi.create.content.decoration.encasing.CasingBlock;
+//import com.simibubi.create.client.content.decoration.encasing.EncasedCTBehaviour;
+//import com.simibubi.create.content.kinetics.base.RotatedPillarKineticBlock;
+//import com.simibubi.create.client.content.kinetics.simpleRelays.encased.EncasedCogCTBehaviour;
+//import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedCogwheelBlock;
+//import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
+//import com.simibubi.create.client.foundation.block.connected.CTSpriteShiftEntry;
+//import com.simibubi.create.client.foundation.data.AssetLookup;
+//import com.simibubi.create.client.foundation.data.CreateRegistrate;
+//import com.simibubi.create.client.foundation.data.SharedProperties;
 //import com.tterrag.registrate.builders.BlockBuilder;
 //import com.tterrag.registrate.util.DataIngredient;
 //import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
@@ -28,7 +28,7 @@
 //import net.minecraft.client.renderer.RenderType;
 //import net.minecraft.core.Direction;
 //import net.minecraft.data.recipes.RecipeCategory;
-//import net.minecraft.resources.Identifier;
+//import net.minecraft.resources.ResourceLocation;
 //import net.minecraft.tags.BlockTags;
 //import net.minecraft.world.level.ItemLike;
 //import net.minecraft.world.level.block.Block;
@@ -41,11 +41,11 @@
 //
 //import java.util.function.Supplier;
 //
-//import static com.zurrtum.create.foundation.data.BlockStateGen.axisBlock;
-//import static com.zurrtum.create.foundation.data.CreateRegistrate.casingConnectivity;
-//import static com.zurrtum.create.foundation.data.CreateRegistrate.connectedTextures;
-//import static com.zurrtum.create.foundation.data.TagGen.axeOrPickaxe;
-//import static com.zurrtum.create.foundation.data.TagGen.pickaxeOnly;
+//import static com.simibubi.create.foundation.data.BlockStateGen.axisBlock;
+//import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
+//import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
+//import static com.simibubi.create.foundation.data.TagGen.axeOrPickaxe;
+//import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 //
 //public class ModTransformers {
 //    public static <B extends EncasedShaftBlock, P> NonNullUnaryOperator<BlockBuilder<B, P>> encasedShaft(String casing,

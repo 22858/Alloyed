@@ -4,32 +4,25 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.molybdenum.alloyed.common.handler.RecipeWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
-import java.util.Optional;
-
 public class ShapedForgingRecipe extends AbstractForgingRecipe {
 
-	final ItemStackTemplate output;
+	final ItemStack output;
 	private final ShapedRecipePattern pattern;
 	private final int cookTime;
 
-	public ShapedForgingRecipe(ShapedRecipePattern pattern, ItemStackTemplate output, int cookTime) {
+	public ShapedForgingRecipe(ShapedRecipePattern pattern, ItemStack output, int cookTime) {
 		super(output, cookTime);
 		this.output = output;
 		this.pattern = pattern;
 		this.cookTime = cookTime;
-	}
-
-	@Override
-	public PlacementInfo placementInfo() {
-		return PlacementInfo.createFromOptionals(pattern.ingredients());
 	}
 
 	@Override
@@ -38,10 +31,10 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 	}
 
 	public ItemStack getResultItem() {
-		return output.create().copy();
+		return output.copy();
 	}
 
-	public List<Optional<Ingredient>> getIngredients() {
+	public NonNullList<Ingredient> getIngredients() {
 		return pattern.ingredients();
 	}
 
@@ -64,8 +57,18 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(RecipeWrapper recipeInput) {
-		return output.create();
+	public ItemStack assemble(RecipeWrapper recipeInput, HolderLookup.Provider provider) {
+		return output.copy();
+	}
+
+	@Override
+	public boolean canCraftInDimensions(int width, int height) {
+		return true;
+	}
+
+	@Override
+	public ItemStack getResultItem(HolderLookup.Provider registries) {
+		return output.copy();
 	}
 
 	@Override
@@ -75,7 +78,7 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 
 	public static final MapCodec<ShapedForgingRecipe> CODEC = RecordCodecBuilder.mapCodec((recipe) -> recipe.group(
 			ShapedRecipePattern.MAP_CODEC.forGetter((p_311733_) -> p_311733_.pattern),
-			ItemStackTemplate.CODEC.fieldOf("result").forGetter((forgeShapedRecipe) -> forgeShapedRecipe.output),
+			ItemStack.CODEC.fieldOf("result").forGetter((forgeShapedRecipe) -> forgeShapedRecipe.output),
 			Codec.INT.optionalFieldOf("cookingtime", 200).forGetter(ShapedForgingRecipe::getCookTime)
 	).apply(recipe, ShapedForgingRecipe::new));
 
@@ -86,7 +89,7 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 	public static ShapedForgingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 		ShapedRecipePattern shapedrecipepattern = ShapedRecipePattern.STREAM_CODEC.decode(buffer);
 
-		ItemStackTemplate itemstack = ItemStackTemplate.STREAM_CODEC.decode(buffer);
+		ItemStack itemstack = ItemStack.STREAM_CODEC.decode(buffer);
 		int cookTimeIn = buffer.readVarInt();
 		return new ShapedForgingRecipe(shapedrecipepattern, itemstack, cookTimeIn);
 	}
@@ -95,7 +98,7 @@ public class ShapedForgingRecipe extends AbstractForgingRecipe {
 	public static void toNetwork(RegistryFriendlyByteBuf buffer, ShapedForgingRecipe recipe) {
 		ShapedRecipePattern.STREAM_CODEC.encode(buffer, recipe.pattern);
 
-		ItemStackTemplate.STREAM_CODEC.encode(buffer, recipe.output);
+		ItemStack.STREAM_CODEC.encode(buffer, recipe.output);
 		buffer.writeVarInt(recipe.cookTime);
 	}
 }

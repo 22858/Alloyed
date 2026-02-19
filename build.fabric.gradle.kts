@@ -1,7 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("net.fabricmc.fabric-loom")
+    id("fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
 }
@@ -160,35 +160,50 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
-
-    implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
-    implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
-
-    implementation("folk.sisby:kaleido-config:${property("deps.kaleido")}")
-    include("folk.sisby:kaleido-config:${property("deps.kaleido")}")
-    implementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}-fabric") {
-        exclude(group = "net.fabricmc")
-    }
-
-    implementation("cc.cassian.rrv:reliable-recipe-viewer-fabric:${property("deps.rrv")}")
+    mappings(loom.layered {
+        officialMojangMappings()
+        if (hasProperty("deps.parchment"))
+            parchment("org.parchmentmc.data:parchment-${property("deps.parchment")}@zip")
+    })
+    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
 
     // Mod Menu
-    implementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
+    implementation("folk.sisby:kaleido-config:${property("deps.kaleido")}")
+    include("folk.sisby:kaleido-config:${property("deps.kaleido")}")
 
-    implementation("com.github.Chocohead:Fabric-ASM:${property("deps.fabric_asm")}") {
+    modImplementation("com.terraformersmc:modmenu:${property("deps.modmenu")}")
+
+    modImplementation("com.github.Chocohead:Fabric-ASM:${property("deps.fabric_asm")}") {
         exclude(group = "net.fabricmc")
         exclude(group = "me.shedaniel")
     }
 
-    compileOnly("maven.local:FarmersDelight:${property("deps.fd")}+refabricated") {
+
+    //EMI
+    if (hasProperty("deps.emi")) {
+        modCompileOnly("dev.emi:emi-fabric:${property("deps.emi")}+${property("deps.minecraft")}:api")
+        modLocalRuntime("dev.emi:emi-fabric:${property("deps.emi")}+${property("deps.minecraft")}")
+    }
+
+    modImplementation("maven.modrinth:farmers-delight-refabricated:${property("deps.fd")}") {
         exclude(group = "net.fabricmc")
         exclude(group = "me.shedaniel")
     }
 
-    compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
+    modCompileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
 
 
-    compileOnly("maven.modrinth:create-fly:${property("deps.create")}")
+    // Create
+    modImplementation("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
+    modImplementation("net.createmod.ponder:Ponder-Fabric-${property("deps.minecraft")}:${property("deps.ponder")}")
+    modImplementation("com.tterrag.registrate_fabric:Registrate-Fabric:${property("deps.registrate")}")
+    modImplementation("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")
+
+
+    val modules = listOf("base", "client_events", "mixin_extensions", "milk", "model_data", "model_loader", "models", "obj_loader", "recipe_book_categories", "tags")
+    for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
+
 }
 
 

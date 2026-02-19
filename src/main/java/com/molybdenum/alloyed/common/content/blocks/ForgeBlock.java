@@ -91,12 +91,12 @@ public class ForgeBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
+	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof ForgeBlockEntity forgeBlockEntity) {
 			forgeBlockEntity.drops();
 		}
-		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston);
+		super.onRemove(state, level, pos, newState, movedByPiston);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class ForgeBlock extends BaseEntityBlock {
 			}
 		}
 
-		return InteractionResult.SUCCESS_SERVER;
+		return InteractionResult.sidedSuccess(level.isClientSide());
 	}
 
 	@Nullable

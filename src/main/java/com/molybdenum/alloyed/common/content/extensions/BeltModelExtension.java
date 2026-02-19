@@ -1,5 +1,11 @@
 package com.molybdenum.alloyed.common.content.extensions;
 
-public interface BeltModelExtension {
+//? neoforge
+/*import net.neoforged.neoforge.client.model.data.ModelProperty;*/
 
+public interface BeltModelExtension {
+	//? neoforge {
+	/*ModelProperty<BeltBlockEntityExtension.AlloyedCasingType> ALLOYED_CASING_PROPERTY
+			= new ModelProperty<>();
+	*///?}
 }

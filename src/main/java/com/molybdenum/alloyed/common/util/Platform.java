@@ -22,12 +22,12 @@ public class Platform {
 
 	public static void addWaxable(Block block, Block waxedBlock) {
 		//? fabric
-		OxidizableBlocksRegistry.registerWaxable(block, waxedBlock);
+		OxidizableBlocksRegistry.registerWaxableBlockPair(block, waxedBlock);
 	}
 
 	public static void addWeathering(Block block, Block waxedBlock) {
 		//? fabric
-		OxidizableBlocksRegistry.registerNextStage(block, waxedBlock);
+		OxidizableBlocksRegistry.registerOxidizableBlockPair(block, waxedBlock);
 	}
 
 	public static Path getConfigDir() {

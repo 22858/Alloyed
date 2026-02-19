@@ -2,7 +2,7 @@ package com.molybdenum.alloyed.common.util;
 
 import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
-import com.zurrtum.create.content.decoration.encasing.EncasedBlock;
+import com.simibubi.create.content.decoration.encasing.EncasedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -39,7 +39,7 @@ public class EncasingHelper {
         if (CreateAlloyedBlocks.BRONZE_CASING.isIn(heldItem))
             return tryEncaseWithBronze(type, state, level, pos,  heldItem, player, hand, ray);
         else {
-            return InteractionResult.TRY_WITH_EMPTY_HAND;
+            return InteractionResult.PASS;
         }
     }
 

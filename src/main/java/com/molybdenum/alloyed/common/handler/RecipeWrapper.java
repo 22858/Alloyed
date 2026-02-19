@@ -37,15 +37,16 @@ for information on other licenses.
 
 package com.molybdenum.alloyed.common.handler;
 
-import net.minecraft.world.entity.player.StackedItemContents;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeWrapper implements RecipeInput {
-	private final StackedItemContents stackedContents;
+	private final StackedContents stackedContents;
 	private final int ingredientAmount;
 	//? fabric {
 	private final ItemHandler handler;
@@ -53,7 +54,7 @@ public class RecipeWrapper implements RecipeInput {
 
 	public RecipeWrapper(ItemHandler handler) {
 		this.handler = handler;
-		this.stackedContents = new StackedItemContents();
+		this.stackedContents = new StackedContents();
 		int ingredientAmount = 0;
 
 		for (int value : handler.getInputSlotIndexes()) {
@@ -71,7 +72,7 @@ public class RecipeWrapper implements RecipeInput {
 	/*private final ItemStackHandler handler;
 	public RecipeWrapper(ItemStackHandler handler) {
 		this.handler = handler;
-		this.stackedContents = new StackedItemContents();
+		this.stackedContents = new StackedContents();
 		int ingredientAmount = 0;
 
 		for (int i = 0; i < 9; i++) {
@@ -86,7 +87,7 @@ public class RecipeWrapper implements RecipeInput {
 	}
 	*///?}
 
-	public StackedItemContents stackedContents() {
+	public StackedContents stackedContents() {
 		return this.stackedContents;
 	}
 
@@ -103,6 +104,9 @@ public class RecipeWrapper implements RecipeInput {
 	}
 
 	public List<ItemStack> stacks() {
-		return stacks;
+		//? fabric {
+		return this.stacks;
+		//?} neoforge
+		/*return handler.slots();*/
 	}
 }

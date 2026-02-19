@@ -1,8 +1,8 @@
 package com.molybdenum.alloyed.common.content.blocks;
 
-import com.zurrtum.create.AllBlockEntityTypes;
-import com.zurrtum.create.content.kinetics.base.KineticBlockEntity;
-import com.zurrtum.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
+import com.simibubi.create.AllBlockEntityTypes;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.content.kinetics.simpleRelays.encased.EncasedShaftBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -10,10 +10,10 @@ import java.util.function.Supplier;
 
 public class SteelShaftBlock extends EncasedShaftBlock {
     public SteelShaftBlock(Properties properties, Supplier<Block> casing) {
-        super(properties, casing.get());
+        super(properties, casing);
     }
 
     public BlockEntityType<? extends KineticBlockEntity> getBlockEntityType() {
-        return AllBlockEntityTypes.ENCASED_SHAFT;
+        return AllBlockEntityTypes.ENCASED_SHAFT.get();
     }
 }

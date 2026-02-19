@@ -1,7 +1,7 @@
 package com.molybdenum.alloyed.mixin.create;
 
 import com.molybdenum.alloyed.common.util.EncasingHelper;
-import com.zurrtum.create.content.kinetics.simpleRelays.CogWheelBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.CogWheelBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +23,7 @@ public abstract class CogwheelBlockMixin {
 
     @Inject(
             method = "useItemOn",
-            at = @At(value = "INVOKE", target = "Lcom/zurrtum/create/content/kinetics/simpleRelays/CogWheelBlock;tryEncase(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/InteractionResult;"),
+            at = @At(value = "INVOKE", target = "Lcom/simibubi/create/content/kinetics/simpleRelays/CogWheelBlock;tryEncase(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;)Lnet/minecraft/world/ItemInteractionResult;"),
             cancellable = true
 
     )

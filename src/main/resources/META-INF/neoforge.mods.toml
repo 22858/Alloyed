@@ -36,7 +36,7 @@ side="BOTH"
 [[dependencies.alloyed]]
 modId="minecraft"
 type = "required"
-versionRange="[26, ]"
+versionRange="[1.21, 1.21.2]"
 ordering="NONE"
 side="BOTH"
 [[dependencies.alloyed]]

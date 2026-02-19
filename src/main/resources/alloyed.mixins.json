@@ -10,8 +10,6 @@
     "create.CogwheelBlockMixin",
     "create.ShaftBlockMixin",
     "fishing.FishingHookMixin",
-    "shears.EntityMixin",
-    "shears.LeashFenceKnotEntityMixin",
     "shears.ShearableBlocksMixin",
     "shears.ShearableMobsMixin",
     "shears.TripwireBlockMixin"
@@ -21,5 +19,6 @@
     "defaultRequire": 1
   },
   "client": [
+    "fishing.FishingHookRendererMixin"
   ]
 }
