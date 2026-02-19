@@ -10,6 +10,7 @@ import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.screen.ForgeMenu;
 import net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider;
+import net.fabricmc.fabric.impl.recipe.ingredient.ShapelessMatch;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import vectorwing.farmersdelight.common.registry.ModRecipeTypes;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -163,6 +165,13 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 
 		RecipeWrapper inventory = new RecipeWrapper(entity.itemHandler);
 
+		ArrayList<ItemStack> inputs = new ArrayList<>();
+		for (int i = 0; i < 9; i++) {
+			var stack = entity.itemHandler.getStackInSlot(i);
+			if (!stack.isEmpty())
+				inputs.add(stack);
+		}
+
 		if (!inventory.getItem(10).isEmpty() && !inventory.getItem(10).isStackable()) {
 			return false;
 		}
@@ -175,8 +184,10 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 		if (level instanceof ServerLevel serverLevel) {
 			for (RecipeHolder<?> recipe : serverLevel.recipeAccess().getRecipes()) {
 				if (recipe.value() instanceof ShapelessForgingRecipe shapelessForgingRecipe) {
-					entity.currentRecipe = shapelessForgingRecipe;
-					return startCraftIfFueled(entity, pos, level, shapelessForgingRecipe.getCookTime());
+					if (ShapelessMatch.isMatch(inputs, shapelessForgingRecipe.getIngredients())) {
+						entity.currentRecipe = shapelessForgingRecipe;
+						return startCraftIfFueled(entity, pos, level, shapelessForgingRecipe.getCookTime());
+					}
 				}
 			}
 //			Optional<RecipeHolder<ShapedForgingRecipe>> shapedRecipeRecipeHolder = entity.quickShapedCheck.getRecipeFor(inventory, serverLevel);
