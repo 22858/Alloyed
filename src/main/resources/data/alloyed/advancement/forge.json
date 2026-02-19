@@ -1,11 +1,11 @@
 {
-  "parent": "alloyed:forge",
+  "parent": "minecraft:story/iron_tools",
   "criteria": {
-    "has_bronze_ingot": {
+    "has_steel_ingot": {
       "conditions": {
         "items": [
           {
-            "items": "#c:ingots/bronze"
+            "items": "alloyed:forge"
           }
         ]
       },
@@ -15,21 +15,21 @@
   "display": {
     "announce_to_chat": true,
     "description": {
-      "translate": "advancements.alloyed.bronze_ingot.description"
+      "translate": "advancements.alloyed.forge.description"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "id": "alloyed:bronze_ingot"
+      "id": "alloyed:forge"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.alloyed.bronze_ingot.title"
+      "translate": "advancements.alloyed.forge.title"
     }
   },
   "requirements": [
     [
-      "has_bronze_ingot"
+      "has_steel_ingot"
     ]
   ]
 }
