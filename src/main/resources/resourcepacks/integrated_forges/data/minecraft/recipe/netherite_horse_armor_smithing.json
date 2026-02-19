@@ -1,0 +1,15 @@
+{
+  "type": "alloyed:forging_shaped",
+  "key": {
+    "X": "#c:ingots/steel",
+    "I": "minecraft:netherite_horse_armor"
+  },
+  "pattern": [
+    "X X",
+    " I ",
+    "X X"
+  ],
+  "result": {
+    "id": "minecraft:netherite_horse_armor"
+  }
+}

@@ -88,10 +88,12 @@ public class ForgingClientRecipe implements ReliableClientRecipe {
     public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
         this.ingredients.forEach(slotFillContext::bindSlot);
 
-        slotFillContext.bindOptionalSlot(9, SlotContent.of(Items.COAL), RecipeViewMenu.OptionalSlotRenderer.DEFAULT);
+        SlotContent slotContent = SlotContent.of(Items.COAL);
+        slotContent.setType(SlotContent.Type.RESULT);
+        slotFillContext.bindOptionalSlot(9, slotContent, RecipeViewMenu.OptionalSlotRenderer.DEFAULT);
         slotFillContext.addAdditionalStackModifier(9, (stack, components) -> {
             components.set(0, Component.translatable("rrv.cooking.furnace_fuel"));
-        });
+        });;
 
         var result = SlotContent.of(this.result);
         result.setType(SlotContent.Type.RESULT);
@@ -114,12 +116,12 @@ public class ForgingClientRecipe implements ReliableClientRecipe {
             }
         }
         if (shapeless) {
-            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath("rrv", "crafting_shapeless"), 26, 14, 0, 0, 92, 0, 26, 14);
-            if ((mouseX > 92 && mouseX < 122) && (mouseY>0 && mouseY < 14)) {
+            guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, Identifier.fromNamespaceAndPath("rrv", "crafting_shapeless"), 26, 14, 0, 0, 92, 42, 26, 14);
+            if ((mouseX > 92 && mouseX < 122) && (mouseY>42 && mouseY < 56)) {
                 guiGraphics.setComponentTooltipForNextFrame(screen.getFont(), List.of(Component.translatable("view.rrv.type.crafting.shapeless")), mouseX+recipePosition.left(), mouseY+recipePosition.top());
             }
         }
-        if ((mouseX > 56 && mouseX < 84) && (mouseY>20 && mouseY < 40)) {
+        if ((mouseX > 56 && mouseX < 84) && (mouseY>10 && mouseY < 30)) {
             drawCookTime(cookTime, guiGraphics, mouseX+recipePosition.left(), mouseY+recipePosition.top());
         }
     }
@@ -151,7 +153,7 @@ public class ForgingClientRecipe implements ReliableClientRecipe {
 
     @Override
     public boolean supportsItemTransfer() {
-        return true;
+        return false; //FIXME
     }
 
     @Override

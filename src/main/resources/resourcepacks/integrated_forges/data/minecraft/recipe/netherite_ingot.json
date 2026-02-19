@@ -1,0 +1,19 @@
+{
+  "type": "alloyed:forging",
+  "ingredients": [
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:gold_ingot",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_scrap"
+  ],
+  "result":
+    {
+      "count": 1,
+      "id": "minecraft:netherite_ingot"
+    }
+
+}

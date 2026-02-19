@@ -53,9 +53,9 @@ public class ForgingClientRecipeType implements ReliableClientRecipeType {
         builder.addItemSlot(7, 20, 39);
         builder.addItemSlot(8, 38, 39);
         // fuel
-        builder.addItemSlot(9, 66, 40);
+        builder.addItemSlot(9, 66, 39);
         //output
-        builder.addItemSlot(10, 94, 22);
+        builder.addItemSlot(10, 94, 12);
     }
 
     @Override

@@ -13,6 +13,10 @@ import com.molybdenum.alloyed.common.registry.ModBlockSetTypes;
 import com.molybdenum.alloyed.common.screen.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -22,6 +26,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 @Mod(Alloyed.MOD_ID)
@@ -36,6 +41,7 @@ public class NeoForgeEntrypoint {
 		eventBus.addListener(NeoForgeEntrypoint::commonSetup);
 		eventBus.addListener(NeoForgeEntrypoint::onRegister);
 		eventBus.addListener(NeoForgeEntrypoint::menuSetup);
+		eventBus.addListener(NeoForgeEntrypoint::packSetup);
 	}
 
 	public static void onRegister(RegisterEvent event) {
@@ -69,6 +75,12 @@ public class NeoForgeEntrypoint {
 		if (ModList.get().isLoaded("rrv")) {
 			AlloyedRRVPlugin.init();
 		}
+	}
+
+	public static void packSetup(AddPackFindersEvent event) {
+		if (Alloyed.CONFIG.integratedForges)
+			event.addPackFinders(Alloyed.asResource("resourcepacks/integrated_forges"), PackType.SERVER_DATA, Component.literal("Alloyed: Integrated Forges"), PackSource.FEATURE, true, Pack.Position.TOP);
+
 	}
 
 //	public static void addBlocks(final BlockEntityTypeAddBlocksEvent event) {

@@ -75,6 +75,13 @@ repositories {
         }
     }
     maven {
+        name = "Sisby Maven"
+        url = uri("https://repo.sleeping.town/")
+        content {
+            includeGroupAndSubgroups("folk.sisby")
+        }
+    }
+    maven {
         name = "CC: Tweaked"
         url = uri("https://maven.squiddev.cc")
         content {
@@ -140,6 +147,14 @@ repositories {
     flatDir {
         dirs("libs")
     }
+    maven {
+        name = "Xander Maven"
+        url = uri("https://maven.isxander.dev/releases")
+        content {
+            includeGroupAndSubgroups("dev.isxander")
+            includeGroupAndSubgroups("org.quiltmc.parsers")
+        }
+    }
 
 }
 
@@ -148,6 +163,12 @@ dependencies {
 
     implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
     implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+
+    implementation("folk.sisby:kaleido-config:${property("deps.kaleido")}")
+    include("folk.sisby:kaleido-config:${property("deps.kaleido")}")
+    implementation("dev.isxander:yet-another-config-lib:${property("deps.yacl")}-fabric") {
+        exclude(group = "net.fabricmc")
+    }
 
     implementation("cc.cassian.rrv:reliable-recipe-viewer-fabric:${property("deps.rrv")}")
 

@@ -1,0 +1,15 @@
+{
+  "type": "alloyed:forging_shaped",
+  "key": {
+    "#": "#c:rods/wooden",
+    "X": "#c:ingots/netherite"
+  },
+  "pattern": [
+    "XX",
+    "#X",
+    "# "
+  ],
+  "result": {
+    "id": "minecraft:netherite_axe"
+  }
+}

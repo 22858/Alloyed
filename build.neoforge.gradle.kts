@@ -94,6 +94,13 @@ repositories {
             includeGroupAndSubgroups("cc.cassian")
         }
     }
+    maven {
+        name = "Sisby Maven"
+        url = uri("https://repo.sleeping.town/")
+        content {
+            includeGroup("folk.sisby")
+        }
+    }
     flatDir {
         dirs("libs")
     }
@@ -131,6 +138,9 @@ neoForge {
 }
 
 dependencies {
+
+    implementation("folk.sisby:kaleido-config:${property("deps.kaleido")}")
+    jarJar("folk.sisby:kaleido-config:${property("deps.kaleido")}")
 
     implementation("cc.cassian.rrv:reliable-recipe-viewer-neoforge:${property("deps.rrv")}")
 
