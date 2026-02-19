@@ -3,6 +3,7 @@ package com.molybdenum.alloyed.common.registry;
 import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.common.compat.create.CreateCompat;
 import com.molybdenum.alloyed.common.content.blocks.BronzeBellBlock;
+import com.molybdenum.alloyed.common.content.blocks.ForgeBlock;
 import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringRotatedPillarBlock;
 import com.molybdenum.alloyed.common.util.Platform;
@@ -70,6 +71,7 @@ public class ModBlocks {
     public static final BlockEntry<TrapDoorBlock> STEEL_TRAPDOOR = registerBlock("steel_trapdoor", properties -> new TrapDoorBlock(ModBlockSetTypes.STEEL, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_TRAPDOOR));
 
     public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = registerBlock("steel_mesh_fence", FenceBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN));
+    public static final BlockEntry<ForgeBlock> FORGE = registerBlock("forge", ForgeBlock::new);
 
 
     public static void register() {

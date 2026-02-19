@@ -109,5 +109,10 @@
   "tag.item.c.plates.steel": "Steel Plates",
   "tag.item.c.storage_blocks.bronze": "Bronze Blocks",
   "tag.item.c.storage_blocks.steel": "Steel Blocks",
-  "tag.item.alloyed.bronze_instruments": "Bronze Instruments"
+  "tag.item.alloyed.bronze_instruments": "Bronze Instruments",
+  "block.alloyed.forge": "§mForge§r Fabric",
+  "recipe.alloyed.forging": "Forging",
+  "rrv.cooking.time": "%s seconds",
+  "rrv.cooking.furnace_fuel": "Furnace Fuel"
+
 }

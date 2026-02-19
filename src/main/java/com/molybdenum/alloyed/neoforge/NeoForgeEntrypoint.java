@@ -41,6 +41,8 @@ public class NeoForgeEntrypoint {
 			ModCompatItems.register();
 		} else if (event.getRegistryKey().equals(Registries.SOUND_EVENT)) {
 			ModSoundEvents.register();
+			ModRecipes.register();
+        	ModBlockEntities.register();
 		}
 	}
 

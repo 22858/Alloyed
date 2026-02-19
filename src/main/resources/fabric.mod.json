@@ -28,6 +28,9 @@
     ],
     "fabric-datagen": [
       "com.molybdenum.alloyed.fabric.FabricDataEntrypoint"
+    ],
+    "rrv": [
+      "com.molybdenum.alloyed.common.integration.rrv.AlloyedRRVPlugin"
     ]
   },
   "mixins": [

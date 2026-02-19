@@ -3,8 +3,10 @@ package com.molybdenum.alloyed;
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
 import com.molybdenum.alloyed.common.compat.VanillaAlloyedBlocks;
 import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
+import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.*;
+import com.molybdenum.alloyed.common.screen.ModMenuTypes;
 import com.molybdenum.alloyed.common.util.Platform;
 import net.minecraft.resources.Identifier;
 //? neoforge {
@@ -35,6 +37,9 @@ public class Alloyed {
         ModCreativeModeTab.register();
         registerItems();
         ModSoundEvents.register();
+        ModRecipes.register();
+        ModBlockEntities.register();
+        ModMenuTypes.register();
     }
 
     public static void registerBlocks() {

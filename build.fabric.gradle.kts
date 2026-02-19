@@ -167,7 +167,7 @@ dependencies {
     compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
 
 
-    implementation("maven.modrinth:create-fly:${property("deps.create")}")
+    compileOnly("maven.modrinth:create-fly:${property("deps.create")}")
 }
 
 
