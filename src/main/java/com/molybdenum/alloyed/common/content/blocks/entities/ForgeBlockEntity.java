@@ -33,6 +33,7 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import vectorwing.farmersdelight.common.registry.ModRecipeTypes;
 
 import java.util.Optional;
 
@@ -172,17 +173,23 @@ public class ForgeBlockEntity extends BlockEntity implements ExtendedMenuProvide
 
 		// Check for ForgeRecipe
 		if (level instanceof ServerLevel serverLevel) {
-			Optional<RecipeHolder<ShapedForgingRecipe>> shapedRecipeRecipeHolder = entity.quickShapedCheck.getRecipeFor(inventory, serverLevel);
-			if (shapedRecipeRecipeHolder.isPresent()) {
-				entity.currentRecipe = shapedRecipeRecipeHolder.get().value();
-				return startCraftIfFueled(entity, pos, level, shapedRecipeRecipeHolder.get().value().getCookTime());
+			for (RecipeHolder<?> recipe : serverLevel.recipeAccess().getRecipes()) {
+				if (recipe.value() instanceof ShapelessForgingRecipe shapelessForgingRecipe) {
+					entity.currentRecipe = shapelessForgingRecipe;
+					return startCraftIfFueled(entity, pos, level, shapelessForgingRecipe.getCookTime());
+				}
 			}
-			Optional<RecipeHolder<ShapelessForgingRecipe>> recipeMatch = entity.quickCheck.getRecipeFor(inventory, serverLevel);
-			if (recipeMatch.isPresent()) {
-				entity.currentRecipe = recipeMatch.get().value();
-				return startCraftIfFueled(entity, pos, level, recipeMatch.get().value().getCookTime());
-			}
-			System.out.println("NO RECIPE");
+//			Optional<RecipeHolder<ShapedForgingRecipe>> shapedRecipeRecipeHolder = entity.quickShapedCheck.getRecipeFor(inventory, serverLevel);
+//			if (shapedRecipeRecipeHolder.isPresent()) {
+//				entity.currentRecipe = shapedRecipeRecipeHolder.get().value();
+//				return startCraftIfFueled(entity, pos, level, shapedRecipeRecipeHolder.get().value().getCookTime());
+//			}
+//			Optional<RecipeHolder<ShapelessForgingRecipe>> recipeMatch = entity.quickCheck.getRecipeFor(inventory, serverLevel);
+//			if (recipeMatch.isPresent()) {
+//				entity.currentRecipe = recipeMatch.get().value();
+//				return startCraftIfFueled(entity, pos, level, recipeMatch.get().value().getCookTime());
+//			}
+//			System.out.println("NO RECIPE");
 		}
 		entity.currentRecipe = null;
 		return false;
