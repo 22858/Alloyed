@@ -3,7 +3,7 @@
   "id": "alloyed",
   "version": "${version}",
   "name": "Alloyed",
-  "description": "A former Create addon adding Bronze and Steel, both items used for compatibility and decoration!",
+  "description": "A former Create addon adding Bronze and Steel, new materials from Forging used for both compatibility and decoration!",
   "authors": [
     "cassiancc",
     "asof",
@@ -12,8 +12,8 @@
     "Fortress Nebula"
   ],
   "contact": {
-    "sources": "https://github.com/cassiancc/Create-Alloyed",
-    "issues": "https://github.com/cassiancc/Create-Alloyed/issues",
+    "sources": "https://github.com/cassiancc/Alloyed",
+    "issues": "https://github.com/cassiancc/Alloyed/issues",
     "homepage": "https://modrinth.com/mod/create-alloyed"
   },
   "license": "MIT",

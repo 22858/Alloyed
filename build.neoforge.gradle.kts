@@ -153,6 +153,7 @@ dependencies {
     }
 
     implementation("maven.modrinth:create-deco:${property("deps.create_deco")}")
+    implementation("maven.modrinth:backported-spears:${property("deps.spears")}")
 
     // Create
     implementation("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }

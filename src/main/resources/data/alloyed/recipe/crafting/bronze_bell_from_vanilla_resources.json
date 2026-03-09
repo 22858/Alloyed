@@ -1,8 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
   "key": {
-    "#": "#c:storage_blocks/bronze",
-    "-": "#c:ingots/bronze"
+    "#": {
+      "tag": "c:storage_blocks/bronze"
+    },
+    "-": {
+      "tag": "c:ingots/bronze"
+    }
   },
   "pattern": [
     "#",

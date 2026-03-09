@@ -1,9 +1,15 @@
 {
  "type": "minecraft:crafting_shaped",
  "key": {
-  "I": "minecraft:iron_ingot",
-  "F": "minecraft:furnace",
-  "D": "minecraft:deepslate"
+  "I": {
+   "item": "minecraft:iron_ingot"
+  },
+  "F": {
+   "item": "minecraft:furnace"
+  },
+  "D": {
+   "item": "minecraft:deepslate"
+  }
  },
  "pattern": [
   "III",

@@ -9,7 +9,9 @@ import com.molybdenum.alloyed.common.content.blocks.AlloyedShaftBlock;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.registry.ModSpriteShifts;
+import com.molybdenum.alloyed.common.registry.ModTags;
 import com.simibubi.create.AllTags;
+import com.simibubi.create.content.decoration.MetalLadderBlock;
 import com.simibubi.create.content.decoration.MetalScaffoldingBlock;
 import com.simibubi.create.content.decoration.encasing.CasingBlock;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
@@ -146,6 +148,12 @@ public class CreateAlloyedBlocks {
 			.properties(ModBlocks::steelProperties)
 			.item().build()
 			.onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
+			.register();
+
+	public static final BlockEntry<MetalLadderBlock> STEEL_LADDER = REGISTRATE
+			.block("steel_ladder", MetalLadderBlock::new)
+			.transform(BuilderTransformers.ladder("steel",
+					() -> DataIngredient.tag(ModTags.Items.STEEL_SHEET), MapColor.COLOR_GRAY))
 			.register();
 
 	public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = REGISTRATE

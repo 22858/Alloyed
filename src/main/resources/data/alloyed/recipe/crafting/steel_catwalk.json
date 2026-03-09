@@ -6,8 +6,12 @@
   " - "
  ],
  "key": {
-  "-": "#c:plates/steel",
-  "#": "alloyed:steel_bars"
+  "-": {
+   "tag": "c:plates/steel"
+  },
+  "#": {
+   "item": "alloyed:steel_bars"
+  }
  },
  "result": {
   "id": "alloyed:steel_catwalk",

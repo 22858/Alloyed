@@ -5,8 +5,12 @@
   "-#"
  ],
  "key": {
-  "-": "alloyed:steel_catwalk",
-  "#": "alloyed:steel_bars"
+  "-": {
+   "item": "alloyed:steel_catwalk"
+  },
+  "#": {
+   "item": "alloyed:steel_bars"
+  }
  },
  "result": {
   "id": "alloyed:steel_catwalk_stairs",

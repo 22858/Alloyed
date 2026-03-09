@@ -5,8 +5,12 @@
   "-s-"
  ],
  "key": {
-  "-": "#c:plates/steel",
-  "s": "minecraft:string"
+  "-": {
+   "tag": "c:plates/steel"
+  },
+  "s": {
+   "item": "minecraft:string"
+  }
  },
  "result": {
   "id": "alloyed:steel_mesh_fence",

@@ -1,8 +1,10 @@
 package com.molybdenum.alloyed.common.registry;
 
 import com.molybdenum.alloyed.Alloyed;
+import com.molybdenum.alloyed.common.compat.SpearsCompat;
 import com.molybdenum.alloyed.common.item.ModArmourMaterials;
 import com.molybdenum.alloyed.common.item.ModItemTiers;
+import com.molybdenum.alloyed.common.util.Platform;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -53,11 +55,15 @@ public class ModItems {
             properties -> new SwordItem(ModItemTiers.STEEL, properties)
     );
 
-    public static final ItemEntry<Item> STEEL_SPEAR = handheldItem(
-            "steel_spear",
-            properties -> new Item(properties) //FIXME backport mod?
-    );
+    public static final ItemEntry<Item> STEEL_SPEAR = registerSpear();
 
+	private static ItemEntry<Item> registerSpear() {
+        if (Platform.isLoaded("spears")) {
+            ItemEntry<Item> steelSpear = new ItemEntry<>(Alloyed.asResource("steel_spear"), SpearsCompat.registerSpear());
+            ITEMS.add(steelSpear.asItem());
+            return steelSpear;
+        } else return registerItem("steel_spear", Item::new, new Item.Properties(), true);
+	}
 
     public static final ItemEntry<Item> STEEL_PICKAXE = handheldItem(
             "steel_pickaxe",
@@ -98,7 +104,7 @@ public class ModItems {
 
     public static final ItemEntry<Item> STEEL_HORSE_ARMOR = registerItem("steel_horse_armor", properties -> new AnimalArmorItem(ModArmourMaterials.STEEL, AnimalArmorItem.BodyType.EQUESTRIAN, false, properties.stacksTo(1)));
 
-    public static final ItemEntry<Item> STEEL_NAUTILUS_ARMOR = registerItem("steel_nautilus_armor", properties -> new Item(properties.stacksTo(1)));
+    public static final ItemEntry<Item> STEEL_NAUTILUS_ARMOR = registerItem("steel_nautilus_armor", properties -> new Item(properties.stacksTo(1)), new Item.Properties(), true);
 
     // End Item Entries
 
