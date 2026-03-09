@@ -3,6 +3,7 @@ package com.molybdenum.alloyed;
 import com.molybdenum.alloyed.client.registry.ModSoundEvents;
 import com.molybdenum.alloyed.common.compat.VanillaAlloyedBlocks;
 import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
+import com.molybdenum.alloyed.common.compat.createdeco.CreateAlloyedDecoBlocks;
 import com.molybdenum.alloyed.common.config.ModConfig;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
@@ -46,9 +47,7 @@ public class Alloyed {
 
     public static void registerBlocks() {
         ModBlocks.register();
-        if (Platform.isLoaded("create")) {
-            CreateAlloyedBlocks.register();
-        } else {
+        if (!Platform.isLoaded("create")) {
             VanillaAlloyedBlocks.register();
         }
     }

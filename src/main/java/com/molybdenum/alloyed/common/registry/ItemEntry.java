@@ -30,4 +30,8 @@ public class ItemEntry<T extends Item> implements Supplier<T> {
 	public T get() {
 		return this.raw != null ? this.raw : this.supplier.get();
 	}
+
+	public Item asItem() {
+		return raw;
+	}
 }

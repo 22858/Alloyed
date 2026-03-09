@@ -2,6 +2,8 @@ package com.molybdenum.alloyed.common.compat.create;
 
 import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.client.registry.ModTransformers;
+import com.molybdenum.alloyed.common.compat.create.connected.SteelSheetMetalCTBehaviour;
+import com.molybdenum.alloyed.common.compat.create.connected.SteelSheetSlabCTBehaviour;
 import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
 import com.molybdenum.alloyed.common.content.blocks.AlloyedShaftBlock;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;

@@ -152,7 +152,7 @@ dependencies {
         exclude(group = "me.shedaniel")
     }
 
-    compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
+    implementation("maven.modrinth:create-deco:${property("deps.create_deco")}")
 
     // Create
     implementation("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }

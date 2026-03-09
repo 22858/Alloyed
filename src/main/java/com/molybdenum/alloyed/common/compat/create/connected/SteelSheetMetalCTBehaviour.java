@@ -1,4 +1,4 @@
-package com.molybdenum.alloyed.common.compat.create;
+package com.molybdenum.alloyed.common.compat.create.connected;
 
 import com.molybdenum.alloyed.common.registry.ModSpriteShifts;
 import com.simibubi.create.foundation.block.connected.HorizontalCTBehaviour;

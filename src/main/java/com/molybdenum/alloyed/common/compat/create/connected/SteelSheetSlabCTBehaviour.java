@@ -1,4 +1,4 @@
-package com.molybdenum.alloyed.common.compat.create;
+package com.molybdenum.alloyed.common.compat.create.connected;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

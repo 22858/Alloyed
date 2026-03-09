@@ -7,12 +7,14 @@ import com.molybdenum.alloyed.client.screen.ForgeScreen;
 import com.molybdenum.alloyed.common.CommonEventsHandler;
 import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
 import com.molybdenum.alloyed.common.compat.create.CreateCompat;
+import com.molybdenum.alloyed.common.compat.createdeco.CreateAlloyedDecoBlocks;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.registry.ModBlockSetTypes;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.screen.ModMenuTypes;
+import com.molybdenum.alloyed.common.util.Platform;
 import com.simibubi.create.AllBlockEntityTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
@@ -43,6 +45,9 @@ public class NeoForgeEntrypoint {
 			eventBus.addListener(NeoForgeEntrypoint::clientSetup);
 		}
 		if (ModList.get().isLoaded("create")) {
+			CreateAlloyedBlocks.register();
+			if (Platform.isLoaded("createdeco"))
+				CreateAlloyedDecoBlocks.register();
 			CreateCompat.register(eventBus);
 		}
 		eventBus.addListener(NeoForgeEntrypoint::commonSetup);
