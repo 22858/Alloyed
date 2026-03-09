@@ -1,8 +1,8 @@
 {
   "type": "alloyed:forging_shaped",
   "key": {
-    "#": "#c:rods/wooden",
-    "X": "#c:ingots/netherite"
+    "#": {"tag": "c:rods/wooden"},
+    "X": {"tag": "c:ingots/netherite"}
   },
   "pattern": [
     "  X",
