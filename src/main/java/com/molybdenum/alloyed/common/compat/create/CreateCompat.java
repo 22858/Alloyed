@@ -9,6 +9,8 @@ import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WeatheringCopper;
+//? neoforge
+/*import net.neoforged.bus.api.IEventBus;*/
 
 import java.util.List;
 
@@ -24,5 +26,15 @@ public class CreateCompat {
 		var waxedBlock = registerBlock("waxed_"+id, ConnectedPillarBlock::new, ModBlocks.bronzeProperties());
 		Platform.addWaxable(block.get(), waxedBlock.get());
 		return List.of(block, waxedBlock);
+	}
+
+	public static void register(
+			//? neoforge
+			/*IEventBus eventBus*/
+	) {
+		CreateAlloyedBlocks.REGISTRATE.registerEventListeners(
+				//? neoforge
+				/*eventBus*/
+		);
 	}
 }

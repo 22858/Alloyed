@@ -6,6 +6,7 @@ import com.molybdenum.alloyed.client.registry.ModSoundEvents;
 import com.molybdenum.alloyed.client.screen.ForgeScreen;
 import com.molybdenum.alloyed.common.CommonEventsHandler;
 import com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks;
+import com.molybdenum.alloyed.common.compat.create.CreateCompat;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
@@ -40,6 +41,9 @@ public class NeoForgeEntrypoint {
 		if (FMLEnvironment.dist.isClient()) {
 			AlloyedClient.onClientInit();
 			eventBus.addListener(NeoForgeEntrypoint::clientSetup);
+		}
+		if (ModList.get().isLoaded("create")) {
+			CreateCompat.register(eventBus);
 		}
 		eventBus.addListener(NeoForgeEntrypoint::commonSetup);
 		eventBus.addListener(NeoForgeEntrypoint::onRegister);
