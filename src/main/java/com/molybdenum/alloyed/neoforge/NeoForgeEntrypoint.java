@@ -33,7 +33,11 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+
+import static com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks.*;
+import static com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks.STEEL_SCAFFOLD;
 
 @Mod(Alloyed.MOD_ID)
 public class NeoForgeEntrypoint {
@@ -54,6 +58,8 @@ public class NeoForgeEntrypoint {
 		eventBus.addListener(NeoForgeEntrypoint::onRegister);
 		eventBus.addListener(NeoForgeEntrypoint::menuSetup);
 		eventBus.addListener(NeoForgeEntrypoint::packSetup);
+		eventBus.addListener(NeoForgeEntrypoint::addBlocks);
+		eventBus.addListener(NeoForgeEntrypoint::modifyTabs);
 	}
 
 	public static void onRegister(RegisterEvent event) {
@@ -96,6 +102,15 @@ public class NeoForgeEntrypoint {
 		event.modify(AllBlockEntityTypes.ENCASED_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_COGWHEEL.get(), CreateAlloyedBlocks.BRONZE_ENCASED_COGWHEEL.get());
 		event.modify(AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get(),  CreateAlloyedBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
 		event.modify(AllBlockEntityTypes.ENCASED_SHAFT.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get(), CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
+	}
+
+	private static void modifyTabs(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey().equals(ModCreativeModeTab.MAIN_TAB_KEY)) {
+			event.accept(BRONZE_CASING.asItem());
+			event.accept(STEEL_CASING.asItem());
+			event.accept(STEEL_LADDER.asItem());
+			event.accept(STEEL_SCAFFOLD.asItem());
+		}
 	}
 }
 *///?}

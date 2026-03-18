@@ -5,6 +5,7 @@ import com.simibubi.create.content.kinetics.simpleRelays.ShaftBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,10 +25,9 @@ public abstract class ShaftBlockMixin {
             at = @At(value = "INVOKE", target = "Lnet/createmod/catnip/placement/IPlacementHelper;matchesItem(Lnet/minecraft/world/item/ItemStack;)Z"),
             cancellable = true
     )
-    private void tryEncaseWithAlloyedCasings(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray, CallbackInfoReturnable<InteractionResult> cir) {
+    private void tryEncaseWithAlloyedCasings(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult ray, CallbackInfoReturnable<ItemInteractionResult> cir) {
         ItemStack heldItem = player.getItemInHand(hand);
-        InteractionResult result = EncasingHelper
-                .tryEncase(EncasingHelper.EncaseType.SHAFT, state, world, pos, heldItem, player, hand, ray);
+        ItemInteractionResult result = EncasingHelper.tryEncase(EncasingHelper.EncaseType.SHAFT, state, world, pos, heldItem, player, hand, ray);
 
         if (result.consumesAction()) {
             cir.setReturnValue(result);

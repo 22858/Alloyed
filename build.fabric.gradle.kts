@@ -196,7 +196,7 @@ dependencies {
 
 
     // Create
-    modCompileOnly("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
+    modImplementation("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
     modImplementation("net.createmod.ponder:Ponder-Fabric-${property("deps.minecraft")}:${property("deps.ponder")}")
     modImplementation("com.tterrag.registrate_fabric:Registrate-Fabric:${property("deps.registrate")}")
     modImplementation("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")

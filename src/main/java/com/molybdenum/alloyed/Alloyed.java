@@ -37,8 +37,8 @@ public class Alloyed {
 
         ModBlockSetTypes.register();
         registerBlocks();
-        ModCreativeModeTab.register();
         registerItems();
+        ModCreativeModeTab.register();
         ModSoundEvents.register();
         ModRecipes.register();
         ModBlockEntities.register();

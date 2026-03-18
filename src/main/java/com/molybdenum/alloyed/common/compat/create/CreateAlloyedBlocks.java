@@ -4,7 +4,6 @@ import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.client.registry.ModTransformers;
 import com.molybdenum.alloyed.common.compat.create.connected.SteelSheetMetalCTBehaviour;
 import com.molybdenum.alloyed.common.compat.create.connected.SteelSheetSlabCTBehaviour;
-import com.molybdenum.alloyed.common.content.blocks.SteelDoorBlock;
 import com.molybdenum.alloyed.common.content.blocks.AlloyedShaftBlock;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
@@ -23,18 +22,15 @@ import com.simibubi.create.foundation.block.connected.RotatedPillarCTBehaviour;
 import com.simibubi.create.foundation.data.BuilderTransformers;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.TagGen;
-import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.createmod.catnip.data.Couple;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings("unused")
 public class CreateAlloyedBlocks {
 
 	public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Alloyed.MOD_ID);
@@ -91,7 +87,7 @@ public class CreateAlloyedBlocks {
 
 	public static final BlockEntry<CasingBlock> STEEL_CASING = REGISTRATE.block("steel_casing", CasingBlock::new)
 			.transform(BuilderTransformers.casing(() -> ModSpriteShifts.STEEL_CASING))
-			.properties(ModBlocks::steelProperties)
+			.properties(ModBlocks::steelProperties).item().build()
 			.register();
 
 	public static final BlockEntry<AlloyedShaftBlock> STEEL_ENCASED_SHAFT = REGISTRATE
@@ -123,6 +119,7 @@ public class CreateAlloyedBlocks {
 							() -> DataIngredient.tag(AllTags.commonItemTag("ingots/steel")), MapColor.COLOR_GRAY,
 							ModSpriteShifts.STEEL_SCAFFOLD, ModSpriteShifts.STEEL_SCAFFOLD_INSIDE, ModSpriteShifts.STEEL_CASING))
 					.properties(ModBlocks::steelProperties)
+					.item().build()
 					.register();
 
 	public static final BlockEntry<Block> STEEL_SHEET_METAL = REGISTRATE
@@ -154,27 +151,19 @@ public class CreateAlloyedBlocks {
 			.block("steel_ladder", MetalLadderBlock::new)
 			.transform(BuilderTransformers.ladder("steel",
 					() -> DataIngredient.tag(ModTags.Items.STEEL_SHEET), MapColor.COLOR_GRAY))
+			.item().build()
 			.register();
 
 	public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = REGISTRATE
 			.block("steel_mesh_fence", FenceBlock::new)
 			.initialProperties(() -> Blocks.IRON_BLOCK)
 			.properties(properties -> properties.sound(SoundType.CHAIN))
-			.item()
-			.build()
+			.item().build()
 			.register();
 
 
 	public static void register() {
 		Alloyed.LOGGER.debug("Registering ModBlocks!");
-	}
-
-	public static BlockBehaviour.@NotNull Properties steelProperties(BlockBehaviour.Properties properties) {
-		return properties.sound(SoundType.NETHERITE_BLOCK).strength(5, 14).mapColor(MapColor.COLOR_GRAY);
-	}
-
-	public static BlockBehaviour.@NotNull Properties bronzeProperties(BlockBehaviour.Properties properties) {
-		return properties.sound(SoundType.COPPER).strength(3, 6).mapColor(MapColor.COLOR_ORANGE);
 	}
 
 	private static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state, CTSpriteShiftEntry pillar, CTSpriteShiftEntry cap) {
@@ -187,79 +176,5 @@ public class CreateAlloyedBlocks {
 				.onRegister(CreateRegistrate.connectedTextures(() -> new RotatedPillarCTBehaviour(pillar, cap)))
 				.register();
 		return List.of(block, waxedBlock);
-	}
-
-
-	private static List<BlockEntry<? extends Block>> registerCutBronzeSet(String id, WeatheringCopper.WeatherState state) {
-		var block = registerCutBronze(id, state);
-		var stairs = registerCutBronzeStairs(id, state);
-		var slab = registerCutBronzeSlab(id, state);
-		var waxedBlock = REGISTRATE
-				.block("waxed_"+id,(Block::new))
-				.initialProperties(() -> Blocks.CUT_COPPER)
-				.properties(ModBlocks::steelProperties)
-				.simpleItem()
-				.onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-				.register();
-		var waxedStairs = REGISTRATE
-				.block("waxed_"+id+"_stairs", properties ->
-						new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties))
-				.initialProperties(() -> Blocks.CUT_COPPER)
-				.properties(ModBlocks::steelProperties)
-				.item().build()
-				.onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-				.register();
-		var waxedSlab = REGISTRATE
-				.block("waxed_"+id+"_slab", SlabBlock::new)
-				.initialProperties(() -> Blocks.CUT_COPPER)
-				.properties(ModBlocks::steelProperties)
-				.item().build()
-				.onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
-				.register();
-		return List.of(block, stairs, slab, waxedBlock, waxedStairs, waxedSlab);
-	}
-
-	private static BlockEntry<? extends Block> registerCutBronze(String id, WeatheringCopper.WeatherState state) {
-		return REGISTRATE
-				.block(id,(properties -> new WeatheringCopperFullBlock(state, properties)))
-				.initialProperties(() -> Blocks.CUT_COPPER)
-				.properties(ModBlocks::steelProperties)
-				.simpleItem()
-				.onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-				.register();
-	}
-
-	private static BlockEntry<? extends SlabBlock> registerCutBronzeSlab(String id, WeatheringCopper.WeatherState state) {
-		return REGISTRATE
-				.block(id+"_slab", (p)-> new WeatheringCopperSlabBlock(state, p))
-				.initialProperties(() -> Blocks.CUT_COPPER)
-				.properties(ModBlocks::steelProperties)
-				.item().build()
-				.onRegister(CreateRegistrate.connectedTextures(SteelSheetSlabCTBehaviour::new))
-				.register();
-	}
-
-	private static BlockEntry<WeatheringCopperStairBlock> registerCutBronzeStairs(String id, WeatheringCopper.WeatherState state) {
-		return REGISTRATE
-				.block(id+"_stairs", properties ->
-						new WeatheringCopperStairBlock(state, Blocks.BRICK_STAIRS.defaultBlockState(), properties))
-				.initialProperties(() -> Blocks.CUT_COPPER)
-				.properties(ModBlocks::steelProperties)
-				.item().build()
-				.onRegister(CreateRegistrate.connectedTextures(SteelSheetMetalCTBehaviour::new))
-				.register();
-	}
-
-	private static BlockBuilder<SteelDoorBlock, CreateRegistrate> steelDoorBlock(boolean locked, BlockEntry<SteelDoorBlock> normalDoor) {
-		String path = "block/" + (locked ? "locked_" : "") + "steel_door/";
-		String name = (locked ? "locked_" : "") + "steel_door";
-
-		return REGISTRATE
-				.block(name, properties -> new SteelDoorBlock(properties, locked)).item().build()
-				.properties(properties -> properties
-						.noOcclusion()
-						.sound(SoundType.METAL)
-						.strength(5)
-						.requiresCorrectToolForDrops());
 	}
 }

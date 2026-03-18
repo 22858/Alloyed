@@ -5,6 +5,7 @@ import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
 import com.molybdenum.alloyed.common.registry.BlockEntry;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.util.Platform;
+import com.simibubi.create.AllBlockEntityTypes;
 import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.world.level.block.Block;
@@ -37,4 +38,15 @@ public class CreateCompat {
 				/*eventBus*/
 		);
 	}
+
+	//? fabric {
+	public static void addBlocks() {
+		AllBlockEntityTypes.ENCASED_COGWHEEL.get().addSupportedBlock(CreateAlloyedBlocks.STEEL_ENCASED_COGWHEEL.get());
+		AllBlockEntityTypes.ENCASED_COGWHEEL.get().addSupportedBlock(CreateAlloyedBlocks.BRONZE_ENCASED_COGWHEEL.get());
+		AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.get().addSupportedBlock(CreateAlloyedBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get());
+		AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.get().addSupportedBlock(CreateAlloyedBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
+		AllBlockEntityTypes.ENCASED_SHAFT.get().addSupportedBlock(CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get());
+		AllBlockEntityTypes.ENCASED_SHAFT.get().addSupportedBlock(CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
+	}
+	//?}
 }
