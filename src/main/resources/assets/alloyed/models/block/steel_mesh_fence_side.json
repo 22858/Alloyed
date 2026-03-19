@@ -4,6 +4,7 @@
     "particle": "alloyed:block/steel_chain_link",
     "0": "alloyed:block/steel_chain_link"
   },
+  "render_type": "cutout",
   "elements": [
     {
       "from": [8, 0, 8],
