@@ -70,7 +70,7 @@ public class ModBlocks {
 
     public static final BlockEntry<TrapDoorBlock> STEEL_TRAPDOOR = registerBlock("steel_trapdoor", properties -> new TrapDoorBlock(ModBlockSetTypes.STEEL, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_TRAPDOOR));
 
-    public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = registerBlock("steel_mesh_fence", FenceBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN));
+    public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = registerBlock("steel_mesh_fence", FenceBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).sound(SoundType.CHAIN), true, !Platform.isLoaded("createdeco"));
     public static final BlockEntry<ForgeBlock> FORGE = registerBlock("forge", ForgeBlock::new);
 
 
@@ -177,16 +177,16 @@ public class ModBlocks {
     }
 
     public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings) {
-        return registerBlock(id, factory, settings, true);
+        return registerBlock(id, factory, settings, true, false);
     }
 
-    public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings, boolean b) {
+    public static <T extends Block> BlockEntry<T> registerBlock(String id, Function<BlockBehaviour.Properties, T> factory, BlockBehaviour.Properties settings, boolean b, boolean hideFromCreative) {
         ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, id));
         T block = factory.apply(settings);
         var entry = Registry.register(BuiltInRegistries.BLOCK, key, block);
         BlockEntry<T> tBlockEntry = new BlockEntry<>(key.location(), entry);
         if (b)
-            ModItems.registerBlockItem(tBlockEntry);
+            ModItems.registerBlockItem(tBlockEntry, hideFromCreative);
         return tBlockEntry;
     }
 

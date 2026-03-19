@@ -24,33 +24,33 @@ public class ModItems {
 
     // Ingots
 
-    public static final ItemEntry<Item> BRONZE_INGOT = taggedIngredient(
+    public static final ItemEntry<Item> BRONZE_INGOT = registerItem(
             "bronze_ingot"
     );
 
-    public static final ItemEntry<Item> STEEL_INGOT = taggedIngredient(
+    public static final ItemEntry<Item> STEEL_INGOT = registerItem(
             "steel_ingot"
     );
 
     // Nuggets
 
-    public static final ItemEntry<Item> BRONZE_NUGGET = taggedIngredient(
+    public static final ItemEntry<Item> BRONZE_NUGGET = registerItem(
             "bronze_nugget"
     );
 
-    public static final ItemEntry<Item> STEEL_NUGGET = taggedIngredient(
+    public static final ItemEntry<Item> STEEL_NUGGET = registerItem(
             "steel_nugget"
     );
 
     // Sheets
 
-    public static final ItemEntry<Item> BRONZE_SHEET = taggedIngredient("bronze_sheet", ModTags.Items.BRONZE_SHEET);
+    public static final ItemEntry<Item> BRONZE_SHEET = registerItem("bronze_sheet");
 
-    public static final ItemEntry<Item> STEEL_SHEET = taggedIngredient("steel_sheet", ModTags.Items.STEEL_SHEET);
+    public static final ItemEntry<Item> STEEL_SHEET = registerItem("steel_sheet");
 
     // Steel toolset.
 
-    public static final ItemEntry<Item> STEEL_SWORD = handheldItem(
+    public static final ItemEntry<Item> STEEL_SWORD = registerItem(
             "steel_sword",
             properties -> new SwordItem(ModItemTiers.STEEL, properties)
     );
@@ -65,24 +65,24 @@ public class ModItems {
         } else return registerItem("steel_spear", Item::new, new Item.Properties(), true);
 	}
 
-    public static final ItemEntry<Item> STEEL_PICKAXE = handheldItem(
+    public static final ItemEntry<Item> STEEL_PICKAXE = registerItem(
             "steel_pickaxe",
             properties -> new PickaxeItem(ModItemTiers.STEEL, properties)
     );
 
-    public static final ItemEntry<Item> STEEL_AXE = handheldItem(
+    public static final ItemEntry<Item> STEEL_AXE = registerItem(
             "steel_axe",
             properties -> new AxeItem(ModItemTiers.STEEL, properties)
     );
 
 
-    public static final ItemEntry<Item> STEEL_SHOVEL = handheldItem(
+    public static final ItemEntry<Item> STEEL_SHOVEL = registerItem(
             "steel_shovel",
             properties -> new ShovelItem(ModItemTiers.STEEL, properties)
     );
 
 
-    public static final ItemEntry<Item> STEEL_HOE = handheldItem(
+    public static final ItemEntry<Item> STEEL_HOE = registerItem(
             "steel_hoe",
             properties -> new HoeItem(ModItemTiers.STEEL, properties)
     );
@@ -112,13 +112,7 @@ public class ModItems {
         Alloyed.LOGGER.debug("Registering ModItems!");
     }
 
-    @SafeVarargs
-    public static <T extends Item> ItemEntry<Item> handheldItem(String name, Function<Item.Properties, T> factory, TagKey<Item>... tags) {
-        return (ItemEntry<Item>) registerItem(name, factory);
-    }
-
-    @SafeVarargs
-    private static ItemEntry<Item> taggedIngredient(String name, TagKey<Item>... tags) {
+    private static ItemEntry<Item> registerItem(String name) {
         return registerItem(name, Item::new);
     }
 
@@ -135,8 +129,8 @@ public class ModItems {
         return registerItem(id, factory, settings, false);
     }
 
-    public static ItemEntry<?> registerBlockItem(BlockEntry<?> blockEntry) {
-        return registerItem(blockEntry.getId().getPath(), (properties)-> new BlockItem(blockEntry.get(), properties), new Item.Properties());
+    public static ItemEntry<?> registerBlockItem(BlockEntry<?> blockEntry, boolean hideFromCreative) {
+        return registerItem(blockEntry.getId().getPath(), (properties)-> new BlockItem(blockEntry.get(), properties), new Item.Properties(), hideFromCreative);
     }
 
     private static <T extends Item> ItemEntry<T> registerItem(String id, Function<Item.Properties, T> factory) {
