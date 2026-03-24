@@ -10,8 +10,10 @@ import com.simibubi.create.content.decoration.palettes.ConnectedPillarBlock;
 import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WeatheringCopper;
-//? neoforge
-/*import net.neoforged.bus.api.IEventBus;*/
+//? neoforge {
+/*import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+*///?}
 
 import java.util.List;
 
@@ -48,5 +50,11 @@ public class CreateCompat {
 		AllBlockEntityTypes.ENCASED_SHAFT.get().addSupportedBlock(CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get());
 		AllBlockEntityTypes.ENCASED_SHAFT.get().addSupportedBlock(CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
 	}
-	//?}
+	//?} else {
+	/*public static void addBlocks(final BlockEntityTypeAddBlocksEvent event) {
+		event.modify(AllBlockEntityTypes.ENCASED_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_COGWHEEL.get(), CreateAlloyedBlocks.BRONZE_ENCASED_COGWHEEL.get());
+		event.modify(AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get(),  CreateAlloyedBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
+		event.modify(AllBlockEntityTypes.ENCASED_SHAFT.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get(), CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
+	}
+	*///?}
 }

@@ -12,11 +12,8 @@ import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.ModBlockEntities;
 import com.molybdenum.alloyed.common.registry.ModBlockSetTypes;
-import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.screen.ModMenuTypes;
 import com.molybdenum.alloyed.common.util.Platform;
-import com.simibubi.create.AllBlockEntityTypes;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
@@ -32,7 +29,6 @@ import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
-import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
@@ -53,12 +49,12 @@ public class NeoForgeEntrypoint {
 			if (Platform.isLoaded("createdeco"))
 				CreateAlloyedDecoBlocks.register();
 			CreateCompat.register(eventBus);
+			eventBus.addListener(CreateCompat::addBlocks);
 		}
 		eventBus.addListener(NeoForgeEntrypoint::commonSetup);
 		eventBus.addListener(NeoForgeEntrypoint::onRegister);
 		eventBus.addListener(NeoForgeEntrypoint::menuSetup);
 		eventBus.addListener(NeoForgeEntrypoint::packSetup);
-		eventBus.addListener(NeoForgeEntrypoint::addBlocks);
 		eventBus.addListener(NeoForgeEntrypoint::modifyTabs);
 	}
 
@@ -96,12 +92,6 @@ public class NeoForgeEntrypoint {
 		if (Alloyed.CONFIG.integratedForges)
 			event.addPackFinders(Alloyed.asResource("resourcepacks/integrated_forges"), PackType.SERVER_DATA, Component.literal("Alloyed: Integrated Forges"), PackSource.FEATURE, true, Pack.Position.TOP);
 
-	}
-
-	public static void addBlocks(final BlockEntityTypeAddBlocksEvent event) {
-		event.modify(AllBlockEntityTypes.ENCASED_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_COGWHEEL.get(), CreateAlloyedBlocks.BRONZE_ENCASED_COGWHEEL.get());
-		event.modify(AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get(),  CreateAlloyedBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
-		event.modify(AllBlockEntityTypes.ENCASED_SHAFT.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get(), CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
 	}
 
 	private static void modifyTabs(BuildCreativeModeTabContentsEvent event) {
