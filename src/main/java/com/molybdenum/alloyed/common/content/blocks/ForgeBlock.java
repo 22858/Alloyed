@@ -11,11 +11,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -25,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -91,12 +94,20 @@ public class ForgeBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (blockEntity instanceof ForgeBlockEntity forgeBlockEntity) {
-			forgeBlockEntity.drops();
+	protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (!state.is(newState.getBlock())) {
+			BlockEntity blockentity = level.getBlockEntity(pos);
+			if (blockentity instanceof ForgeBlockEntity forgeBlockEntity) {
+				if (level instanceof ServerLevel) {
+					forgeBlockEntity.drops();
+				}
+				super.onRemove(state, level, pos, newState, isMoving);
+				level.updateNeighbourForOutputSignal(pos, this);
+			} else {
+				super.onRemove(state, level, pos, newState, isMoving);
+			}
 		}
-		super.onRemove(state, level, pos, newState, movedByPiston);
+
 	}
 
 	@Override
