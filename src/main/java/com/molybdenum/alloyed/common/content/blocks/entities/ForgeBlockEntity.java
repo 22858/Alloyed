@@ -294,7 +294,7 @@ public class ForgeBlockEntity extends BlockEntity implements
 		ItemStack recipeRemainder = slotStack.getRecipeRemainder();
 		//? neoforge
 		/*ItemStack recipeRemainder = slotStack.getCraftingRemainingItem();*/
-		if (recipeRemainder.isEmpty()) return null;
+		if (recipeRemainder == null) return ItemStack.EMPTY;
 		return recipeRemainder;
 	}
 
