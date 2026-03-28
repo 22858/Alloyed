@@ -3,6 +3,7 @@ package com.molybdenum.alloyed.common.integration.emi;
 import com.molybdenum.alloyed.Alloyed;
 import com.molybdenum.alloyed.common.content.recipes.ModRecipes;
 import com.molybdenum.alloyed.common.content.recipes.ShapedForgingRecipe;
+import com.molybdenum.alloyed.common.content.recipes.ShapelessForgingRecipe;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.screen.ModMenuTypes;
 import dev.emi.emi.api.EmiEntrypoint;
@@ -23,6 +24,9 @@ public class AlloyedEMIPlugin implements EmiPlugin {
         registry.addCategory(FORGING);
         registry.addWorkstation(FORGING, EmiStack.of(ModBlocks.FORGE.get()));
         for (RecipeHolder<ShapedForgingRecipe> recipe : registry.getRecipeManager().getAllRecipesFor(ModRecipes.SHAPED_FORGING_TYPE.get())) {
+            registry.addRecipe(new ForgingEmiRecipe(recipe.id(), recipe.value()));
+        }
+        for (RecipeHolder<ShapelessForgingRecipe> recipe : registry.getRecipeManager().getAllRecipesFor(ModRecipes.SHAPELESS_FORGING_TYPE.get())) {
             registry.addRecipe(new ForgingEmiRecipe(recipe.id(), recipe.value()));
         }
         registry.addRecipeHandler(ModMenuTypes.FORGE_MENU.get(), new ForgingEmiRecipeHandler());
