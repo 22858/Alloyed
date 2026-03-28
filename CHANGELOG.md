@@ -1,3 +1,10 @@
+## [3.0.2]
+
+### Fixed
+- Crash opening creative inventory without Create on 1.21.1 NeoForge
+
+## [3.0.0]
+
 ### Added
 - Create has been made an optional dependency. With Create present, Steel and Bronze both have casing blocks, make use of Create recipes, and will use Create's connected textures system. Other functions of the mod will continue to work without Create present.
 - The Alloy Forge: a new workstation used for crafting Steel and Bronze and Steel tools.
