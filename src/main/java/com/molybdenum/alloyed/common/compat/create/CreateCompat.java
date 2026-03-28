@@ -2,6 +2,7 @@ package com.molybdenum.alloyed.common.compat.create;
 
 import com.molybdenum.alloyed.client.ponder.AlloyedPonderPlugin;
 import com.molybdenum.alloyed.common.content.blocks.WeatheringBronzePillarBlock;
+import com.molybdenum.alloyed.common.item.ModCreativeModeTab;
 import com.molybdenum.alloyed.common.registry.BlockEntry;
 import com.molybdenum.alloyed.common.registry.ModBlocks;
 import com.molybdenum.alloyed.common.util.Platform;
@@ -13,10 +14,12 @@ import net.minecraft.world.level.block.WeatheringCopper;
 //? neoforge {
 /*import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 *///?}
 
 import java.util.List;
 
+import static com.molybdenum.alloyed.common.compat.create.CreateAlloyedBlocks.*;
 import static com.molybdenum.alloyed.common.registry.ModBlocks.registerBlock;
 
 public class CreateCompat {
@@ -55,6 +58,14 @@ public class CreateCompat {
 		event.modify(AllBlockEntityTypes.ENCASED_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_COGWHEEL.get(), CreateAlloyedBlocks.BRONZE_ENCASED_COGWHEEL.get());
 		event.modify(AllBlockEntityTypes.ENCASED_LARGE_COGWHEEL.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_LARGE_COGWHEEL.get(),  CreateAlloyedBlocks.BRONZE_ENCASED_LARGE_COGWHEEL.get());
 		event.modify(AllBlockEntityTypes.ENCASED_SHAFT.getKey(), CreateAlloyedBlocks.STEEL_ENCASED_SHAFT.get(), CreateAlloyedBlocks.BRONZE_ENCASED_SHAFT.get());
+	}
+	public static void modifyTabs(BuildCreativeModeTabContentsEvent event) {
+		if (event.getTabKey().equals(ModCreativeModeTab.MAIN_TAB_KEY)) {
+			event.accept(BRONZE_CASING.asItem());
+			event.accept(STEEL_CASING.asItem());
+			event.accept(STEEL_LADDER.asItem());
+			event.accept(STEEL_SCAFFOLD.asItem());
+		}
 	}
 	*///?}
 }

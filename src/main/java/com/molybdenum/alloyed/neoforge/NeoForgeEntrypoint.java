@@ -50,12 +50,12 @@ public class NeoForgeEntrypoint {
 				CreateAlloyedDecoBlocks.register();
 			CreateCompat.register(eventBus);
 			eventBus.addListener(CreateCompat::addBlocks);
+			eventBus.addListener(CreateCompat::modifyTabs);
 		}
 		eventBus.addListener(NeoForgeEntrypoint::commonSetup);
 		eventBus.addListener(NeoForgeEntrypoint::onRegister);
 		eventBus.addListener(NeoForgeEntrypoint::menuSetup);
 		eventBus.addListener(NeoForgeEntrypoint::packSetup);
-		eventBus.addListener(NeoForgeEntrypoint::modifyTabs);
 	}
 
 	public static void onRegister(RegisterEvent event) {
@@ -92,15 +92,6 @@ public class NeoForgeEntrypoint {
 		if (Alloyed.CONFIG.integratedForges)
 			event.addPackFinders(Alloyed.asResource("resourcepacks/integrated_forges"), PackType.SERVER_DATA, Component.literal("Alloyed: Integrated Forges"), PackSource.FEATURE, true, Pack.Position.TOP);
 
-	}
-
-	private static void modifyTabs(BuildCreativeModeTabContentsEvent event) {
-		if (event.getTabKey().equals(ModCreativeModeTab.MAIN_TAB_KEY)) {
-			event.accept(BRONZE_CASING.asItem());
-			event.accept(STEEL_CASING.asItem());
-			event.accept(STEEL_LADDER.asItem());
-			event.accept(STEEL_SCAFFOLD.asItem());
-		}
 	}
 }
 *///?}
