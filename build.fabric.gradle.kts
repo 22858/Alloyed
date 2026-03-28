@@ -192,7 +192,7 @@ dependencies {
     }
 
     modCompileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
-    modImplementation("maven.modrinth:backported-spears:${property("deps.spears")}")
+    modCompileOnly("maven.modrinth:backported-spears:${property("deps.spears")}")
 
 
     // Create

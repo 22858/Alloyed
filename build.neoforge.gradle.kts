@@ -153,10 +153,10 @@ dependencies {
     }
 
     compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
-    implementation("maven.modrinth:backported-spears:${property("deps.spears")}")
+    compileOnly("maven.modrinth:backported-spears:${property("deps.spears")}")
 
     // Create
-    compileOnly("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }
+    implementation("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }
     implementation("net.createmod.ponder:ponder-neoforge:${property("deps.ponder")}+mc${property("deps.minecraft")}")
     compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${property("deps.minecraft")}:${property("deps.flywheel")}")
     runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${property("deps.minecraft")}:${property("deps.flywheel")}")
