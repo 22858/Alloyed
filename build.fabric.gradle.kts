@@ -194,6 +194,7 @@ dependencies {
     modCompileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
     modCompileOnly("maven.modrinth:backported-spears:${property("deps.spears")}")
 
+    implementation("maven.modrinth:always-a-bigger-fish:${property("deps.bigger_fish")}")
 
     // Create
     modCompileOnly("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
