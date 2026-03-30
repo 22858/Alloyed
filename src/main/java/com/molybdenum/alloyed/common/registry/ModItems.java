@@ -89,10 +89,10 @@ public class ModItems {
     );
 
 
-    public static final ItemEntry<ShearsItem> STEEL_SHEARS = registerItem("steel_shears", properties -> new ShearsItem(properties.component(DataComponents.TOOL, ShearsItem.createToolProperties()).durability(750).repairable(ModTags.Items.STEEL_INGOT)));
+    public static final ItemEntry<ShearsItem> STEEL_SHEARS = registerItem("steel_shears", properties -> new ShearsItem(properties.component(DataComponents.TOOL, ShearsItem.createToolProperties()).durability(750)));
 
 
-    public static final ItemEntry<Item> STEEL_FISHING_ROD = registerItem("steel_fishing_rod", properties -> registerFishingRod(properties.stacksTo(1).repairable(ModTags.Items.STEEL_INGOT)));
+    public static final ItemEntry<Item> STEEL_FISHING_ROD = registerItem("steel_fishing_rod", properties -> registerFishingRod(properties.stacksTo(1)));
 
     // Steel Armour
     public static final ItemEntry<Item> STEEL_HELMET = registerItem("steel_helmet", properties -> new ArmorItem(ModArmourMaterials.STEEL, ArmorItem.Type.HELMET, properties.durability(330)));

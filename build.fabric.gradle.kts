@@ -194,7 +194,7 @@ dependencies {
     modCompileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
     modCompileOnly("maven.modrinth:backported-spears:${property("deps.spears")}")
 
-    implementation("maven.modrinth:always-a-bigger-fish:${property("deps.bigger_fish")}")
+    modCompileOnly("maven.modrinth:always-a-bigger-fish:${property("deps.bigger_fish")}")
 
     // Create
     modCompileOnly("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
@@ -272,8 +272,8 @@ val additionalVersions: List<String> = additionalVersionsStr
     ?: emptyList()
 
 publishMods {
-    file = tasks.jar.map { it.archiveFile.get() }
-    additionalFiles.from(tasks.named<org.gradle.jvm.tasks.Jar>("sourcesJar").map { it.archiveFile.get() })
+    file = tasks.remapJar.map { it.archiveFile.get() }
+    additionalFiles.from(tasks.remapSourcesJar.map { it.archiveFile.get() })
 
     type = if (stonecutter.eval(stonecutter.current.version, ">=1.21.2")) {
         ALPHA
@@ -291,10 +291,9 @@ publishMods {
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
         requires("fabric-api")
-        requires("create-fabric")
-        if (hasProperty("deps.emi")) {
-            optional("emi")
-        }
+        optional("mcqoy")
+        optional("emi")
+
     }
 
     curseforge {
@@ -303,10 +302,8 @@ publishMods {
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
         requires("fabric-api")
-        requires("create-fabric")
-        if (hasProperty("deps.emi")) {
-            optional("emi")
-        }
+        optional("mcqoy")
+        optional("emi")
     }
 }
 

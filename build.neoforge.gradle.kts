@@ -155,7 +155,7 @@ dependencies {
     compileOnly("maven.modrinth:create-deco:${property("deps.create_deco")}")
     compileOnly("maven.modrinth:backported-spears:${property("deps.spears")}")
 
-    implementation("maven.modrinth:always-a-bigger-fish:${property("deps.bigger_fish")}")
+    compileOnly("maven.modrinth:always-a-bigger-fish:${property("deps.bigger_fish")}")
 
     // Create
     implementation("com.simibubi.create:create-${property("deps.minecraft")}:${property("deps.create")}:slim") { isTransitive = false }
@@ -217,6 +217,7 @@ publishMods {
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
         optional("mcqoy")
+        optional("emi")
     }
 
     curseforge {
@@ -224,5 +225,6 @@ publishMods {
         accessToken = env.CURSEFORGE_API_KEY.orNull()
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
+        optional("emi")
     }
 }
