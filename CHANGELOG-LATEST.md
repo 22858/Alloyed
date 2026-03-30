@@ -3,3 +3,4 @@
 
 ### Fixed
 - Steel Knives, Shears, and Fishing Rods now have a repair ingredient.
+- Crash on startup on Fabric 1.21.1.

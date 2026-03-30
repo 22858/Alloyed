@@ -197,14 +197,14 @@ dependencies {
     modCompileOnly("maven.modrinth:always-a-bigger-fish:${property("deps.bigger_fish")}")
 
     // Create
-    modCompileOnly("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
-    modCompileOnly("net.createmod.ponder:Ponder-Fabric-${property("deps.minecraft")}:${property("deps.ponder")}")
-    modCompileOnly("com.tterrag.registrate_fabric:Registrate-Fabric:${property("deps.registrate")}")
-    modCompileOnly("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")
+    modImplementation("com.simibubi.create:create-fucked-up-1.21.1:${property("deps.create")}") { isTransitive = false }
+    modImplementation("net.createmod.ponder:Ponder-Fabric-${property("deps.minecraft")}:${property("deps.ponder")}")
+    modImplementation("com.tterrag.registrate_fabric:Registrate-Fabric:${property("deps.registrate")}")
+    modImplementation("dev.engine-room.flywheel:flywheel-fabric-${property("deps.minecraft")}:${property("deps.flywheel")}")
 
 
-//    val modules = listOf("base", "client_events", "mixin_extensions", "milk", "model_data", "model_loader", "models", "obj_loader", "recipe_book_categories", "tags")
-//    for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
+    val modules = listOf("base", "client_events", "mixin_extensions", "milk", "model_data", "model_loader", "models", "obj_loader", "recipe_book_categories", "tags")
+    for (it in modules) modImplementation("io.github.fabricators_of_create.Porting-Lib:$it:"+property("deps.porting_lib"))
 
 }
 
@@ -275,11 +275,7 @@ publishMods {
     file = tasks.remapJar.map { it.archiveFile.get() }
     additionalFiles.from(tasks.remapSourcesJar.map { it.archiveFile.get() })
 
-    type = if (stonecutter.eval(stonecutter.current.version, ">=1.21.2")) {
-        ALPHA
-    } else {
-        STABLE
-    }
+    type = BETA
     displayName = "${property("mod.name")} ${property("mod.version")} for ${stonecutter.current.version} Fabric"
     version = "${property("mod.version")}+${property("deps.minecraft")}-fabric"
     changelog = provider { rootProject.file("CHANGELOG-LATEST.md").readText() }
