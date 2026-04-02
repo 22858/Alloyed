@@ -68,24 +68,24 @@ public class ModItems {
 
     public static final ItemEntry<Item> STEEL_PICKAXE = registerItem(
             "steel_pickaxe",
-            properties -> new PickaxeItem(ModItemTiers.STEEL, properties)
+            properties -> new PickaxeItem(ModItemTiers.STEEL, properties.attributes(PickaxeItem.createAttributes(ModItemTiers.STEEL, 1, -2.8F)))
     );
 
     public static final ItemEntry<Item> STEEL_AXE = registerItem(
             "steel_axe",
-            properties -> new AxeItem(ModItemTiers.STEEL, properties)
+            properties -> new AxeItem(ModItemTiers.STEEL, properties.attributes(AxeItem.createAttributes(ModItemTiers.STEEL, 5.0F, -3.0F)))
     );
 
 
     public static final ItemEntry<Item> STEEL_SHOVEL = registerItem(
             "steel_shovel",
-            properties -> new ShovelItem(ModItemTiers.STEEL, properties)
+            properties -> new ShovelItem(ModItemTiers.STEEL, properties.attributes(ShovelItem.createAttributes(ModItemTiers.STEEL, 1.5F, -3.0F)))
     );
 
 
     public static final ItemEntry<Item> STEEL_HOE = registerItem(
             "steel_hoe",
-            properties -> new HoeItem(ModItemTiers.STEEL, properties)
+            properties -> new HoeItem(ModItemTiers.STEEL, properties.attributes(HoeItem.createAttributes(ModItemTiers.STEEL, -3, 0.0F)))
     );
 
 

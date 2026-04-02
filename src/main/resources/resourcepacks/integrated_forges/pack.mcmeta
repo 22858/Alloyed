@@ -1,7 +1,6 @@
 {
   "pack": {
     "description": "Integrates the Forge into vanilla progression",
-    "min_format": 94,
-    "max_format": 100
+    "pack_format": 48
   }
 }

@@ -226,5 +226,6 @@ publishMods {
         minecraftVersions.add(stonecutter.current.version)
         minecraftVersions.addAll(additionalVersions)
         optional("emi")
+        optional("mcqoy")
     }
 }
