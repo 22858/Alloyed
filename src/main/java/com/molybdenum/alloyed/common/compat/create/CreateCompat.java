@@ -61,11 +61,22 @@ public class CreateCompat {
 	}
 	public static void modifyTabs(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTabKey().equals(ModCreativeModeTab.MAIN_TAB_KEY)) {
+//			addAll(event, BRONZE_PILLAR);
+//			addAll(event, EXPOSED_BRONZE_PILLAR);
+//			addAll(event, WEATHERED_BRONZE_PILLAR);
+//			addAll(event, OXIDIZED_BRONZE_PILLAR);
 			event.accept(BRONZE_CASING.asItem());
 			event.accept(STEEL_CASING.asItem());
 			event.accept(STEEL_LADDER.asItem());
 			event.accept(STEEL_SCAFFOLD.asItem());
+//			event.accept(STEEL_SHEET_METAL.asItem());
+//			event.accept(STEEL_SHEET_STAIRS.asItem());
+//			event.accept(STEEL_SHEET_SLAB.asItem());
 		}
 	}
+
+    private static void addAll(BuildCreativeModeTabContentsEvent event, List<com.tterrag.registrate.util.entry.BlockEntry<? extends Block>> bronzePillar) {
+        bronzePillar.forEach(event::accept);
+    }
 	*///?}
 }

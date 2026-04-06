@@ -37,12 +37,6 @@ public class ModBlocks {
     public static final List<BlockEntry<? extends Block>> CUT_WEATHERED_BRONZE = registerCutBronzeSet("cut_weathered_bronze", WeatheringCopper.WeatherState.WEATHERED);
     public static final List<BlockEntry<? extends Block>> CUT_OXIDIZED_BRONZE = registerCutBronzeSet("cut_oxidized_bronze", WeatheringCopper.WeatherState.OXIDIZED);
 
-    public static final List<BlockEntry<? extends Block>> BRONZE_PILLAR = registerBronzePillarSet("bronze_pillar", WeatheringCopper.WeatherState.UNAFFECTED);
-    public static final List<BlockEntry<? extends Block>> EXPOSED_BRONZE_PILLAR = registerBronzePillarSet("exposed_bronze_pillar", WeatheringCopper.WeatherState.EXPOSED);
-    public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_PILLAR = registerBronzePillarSet("weathered_bronze_pillar", WeatheringCopper.WeatherState.WEATHERED);
-    public static final List<BlockEntry<? extends Block>> OXIDIZED_BRONZE_PILLAR = registerBronzePillarSet("oxidized_bronze_pillar", WeatheringCopper.WeatherState.OXIDIZED);
-
-
     public static final BlockEntry<BronzeBellBlock> BRONZE_BELL = registerBlock("bronze_bell", BronzeBellBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK).noOcclusion()
             .sound(SoundType.ANVIL));
 
@@ -58,13 +52,6 @@ public class ModBlocks {
 
     public static final BlockEntry<SteelDoorBlock> LOCKED_STEEL_DOOR =
             steelDoorBlock(true, STEEL_DOOR);
-
-    public static final BlockEntry<Block> STEEL_SHEET_METAL = registerBlock("steel_sheet_metal",Block::new, Blocks.IRON_BLOCK);
-
-    public static final BlockEntry<StairBlock> STEEL_SHEET_STAIRS = registerBlock("steel_sheet_stairs", properties ->
-            new StairBlock(Blocks.BRICK_STAIRS.defaultBlockState(), properties));
-
-    public static final BlockEntry<SlabBlock> STEEL_SHEET_SLAB = registerBlock("steel_sheet_slab", SlabBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK));
 
     public static final BlockEntry<IronBarsBlock> STEEL_BARS = registerBlock("steel_bars", IronBarsBlock::new, BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BARS));
 

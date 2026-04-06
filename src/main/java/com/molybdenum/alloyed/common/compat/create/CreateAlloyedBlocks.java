@@ -35,16 +35,6 @@ public class CreateAlloyedBlocks {
 
 	public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(Alloyed.MOD_ID);
 
-	// BRONZE
-
-	public static final CopperBlockSet BRONZE_BLOCKS = new CopperBlockSet( // Ignore that it says COPPER block set. The code works for any oxidizing metal.
-			REGISTRATE,
-			"bronze_block",
-			"bronze_block",
-			new CopperBlockSet.Variant<?>[] { CopperBlockSet.BlockVariant.INSTANCE },
-			"bronze/"
-	);
-
 	public static final List<BlockEntry<? extends Block>> BRONZE_PILLAR = registerBronzePillarSet("bronze_pillar", WeatheringCopper.WeatherState.UNAFFECTED, ModSpriteShifts.BRONZE_PILLAR, ModSpriteShifts.BRONZE_CAP);
 	public static final List<BlockEntry<? extends Block>> EXPOSED_BRONZE_PILLAR = registerBronzePillarSet("exposed_bronze_pillar", WeatheringCopper.WeatherState.EXPOSED, ModSpriteShifts.EXPOSED_BRONZE_PILLAR, ModSpriteShifts.EXPOSED_BRONZE_CAP);
 	public static final List<BlockEntry<? extends Block>> WEATHERED_BRONZE_PILLAR = registerBronzePillarSet("weathered_bronze_pillar", WeatheringCopper.WeatherState.WEATHERED, ModSpriteShifts.WEATHERED_BRONZE_PILLAR, ModSpriteShifts.WEATHERED_BRONZE_CAP);
@@ -153,14 +143,6 @@ public class CreateAlloyedBlocks {
 					() -> DataIngredient.tag(ModTags.Items.STEEL_SHEET), MapColor.COLOR_GRAY))
 			.item().build()
 			.register();
-
-	public static final BlockEntry<FenceBlock> STEEL_MESH_FENCE = REGISTRATE
-			.block("steel_mesh_fence", FenceBlock::new)
-			.initialProperties(() -> Blocks.IRON_BLOCK)
-			.properties(properties -> properties.sound(SoundType.CHAIN))
-			.item().build()
-			.register();
-
 
 	public static void register() {
 		Alloyed.LOGGER.debug("Registering ModBlocks!");
