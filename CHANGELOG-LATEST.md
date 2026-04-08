@@ -1,2 +1,2 @@
 ### Fixed
-- Crash with Create on NeoForge.
+- Crash without Create on NeoForge.

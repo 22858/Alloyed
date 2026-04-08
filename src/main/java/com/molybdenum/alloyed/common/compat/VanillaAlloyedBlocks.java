@@ -7,8 +7,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import java.util.List;
 
-import static com.molybdenum.alloyed.common.compat.create.CreateCompat.registerBronzePillarSet;
 import static com.molybdenum.alloyed.common.registry.ModBlocks.registerBlock;
+import static com.molybdenum.alloyed.common.registry.ModBlocks.registerBronzePillarSet;
 
 public class VanillaAlloyedBlocks {
 	public static final BlockEntry<LadderBlock> STEEL_LADDER = registerBlock("steel_ladder", LadderBlock::new, BlockBehaviour.Properties.of().noOcclusion());

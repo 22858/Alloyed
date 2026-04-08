@@ -84,7 +84,7 @@ public class ModBlocks {
     public static void fixBronzeBlocks() {
     }
 
-    private static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state) {
+    public static List<BlockEntry<? extends Block>> registerBronzePillarSet(String id, WeatheringCopper.WeatherState state) {
         if (Platform.isLoaded("create")) {
             return CreateCompat.registerBronzePillarSet(id, state);
         } else {
